@@ -8,6 +8,10 @@ namespace Monefy.Domain.Implementation
     public class ExpenseBusinessService : IExpenseBusinessService
     {
         private readonly IUnitOfWork _unitOfWork;
+        public ExpenseBusinessService(IUnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork;
+        }
         public async Task<IEnumerable<EntityExpense>> GetAllExpensesAsync()
         {
             var expense = await _unitOfWork.ExpenseRepository.GetAllAsync();

@@ -8,6 +8,10 @@ namespace Monefy.Domain.Implementation
     public class WalletBusinessService : IWalletBusinessService
     {
         private IUnitOfWork _unitOfWork;
+        public WalletBusinessService(IUnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork;
+        }
         public async Task<IEnumerable<EntityWallet>> GetAllWalletsAsync()
         {
             var wallet = await _unitOfWork.WalletRepository.GetAllAsync();

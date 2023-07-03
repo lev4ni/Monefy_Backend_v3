@@ -7,6 +7,10 @@ namespace Monefy.Domain.Implementation
     public class CategoryBusinessService : ICategoryBusinessService
     {
         private readonly IUnitOfWork _unitOfWork;
+        public CategoryBusinessService(IUnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork;
+        }
         public async Task<IEnumerable<EntityCategory>> GetAllCategoriesAsync()
         {
             var category = await _unitOfWork.CategoryRepository.GetAllAsync();

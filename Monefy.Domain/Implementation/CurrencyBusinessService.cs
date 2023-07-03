@@ -7,7 +7,10 @@ namespace Monefy.Domain.Implementation
     public class CurrencyBusinessService : ICurrencyBusinessService
     {
         private readonly IUnitOfWork _unitOfWork;
-  
+        public CurrencyBusinessService(IUnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork;
+        }
         public async Task<IEnumerable<EntityCurrency>> GetAllCurrenciesAsync()
         {
             var currency = await _unitOfWork.CurrencyRepository.GetAllAsync();

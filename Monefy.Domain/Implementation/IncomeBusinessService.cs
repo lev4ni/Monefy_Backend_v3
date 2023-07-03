@@ -12,6 +12,10 @@ namespace Monefy.Domain.Implementation
     public class IncomeBusinessService : IIncomeBusinessService
     {
         private readonly IUnitOfWork _unitOfWork;
+        public IncomeBusinessService(IUnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork;
+        }
         public async Task<IEnumerable<EntityIncome>> GetAllIncomesAsync()
         {
             var income = await _unitOfWork.IncomeRepository.GetAllAsync();

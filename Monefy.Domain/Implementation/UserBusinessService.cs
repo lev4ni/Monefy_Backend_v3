@@ -7,6 +7,10 @@ namespace Monefy.Domain.Implementation
     public class UserBusinessService : IUserBusinessService
     {
         private readonly IUnitOfWork _unitOfWork;
+        public UserBusinessService(IUnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork;
+        }
         public async Task<IEnumerable<EntityUser>> GetAllUsersAsync()
         {
             var users = await _unitOfWork.UserRepository.GetAllAsync();
