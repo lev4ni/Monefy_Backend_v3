@@ -1,4 +1,5 @@
-﻿using Monefy.Domain.Contracts;
+﻿using Monefy.Business.RepositoryContracts;
+using Monefy.Domain.Contracts;
 using Monefy.Entities;
 using System;
 using System.Collections.Generic;
@@ -10,29 +11,35 @@ namespace Monefy.Domain.Implementation
 {
     public class IncomeBusinessService : IIncomeBusinessService
     {
-        public Task CreateIncomeAsync(EntityIncome income)
+        private readonly IUnitOfWork _unitOfWork;
+        public async Task<IEnumerable<EntityIncome>> GetAllIncomesAsync()
         {
-            throw new NotImplementedException();
+            var income = await _unitOfWork.IncomeRepository.GetAllAsync();
+            await _unitOfWork.SaveChangesAsync();
+            return income;
         }
 
-        public Task DeleteIncomeAsync(Guid id)
+        public async Task<EntityIncome> GetIncomeByIdAsync(Guid guid)
         {
-            throw new NotImplementedException();
+            var income = await _unitOfWork.IncomeRepository.GetByIdAsync(guid);
+            await _unitOfWork.SaveChangesAsync();
+            return income;
+        }
+        public async Task CreateIncomeAsync(EntityIncome income)
+        {
+            await _unitOfWork.IncomeRepository.AddAsync(income);
+            await _unitOfWork.SaveChangesAsync();
         }
 
-        public Task<IEnumerable<EntityIncome>> GetAllIncomesAsync()
+        public async Task UpdateIncomeAsync(EntityIncome income)
         {
-            throw new NotImplementedException();
+            await _unitOfWork.IncomeRepository.UpdateAsync(income);
+            await _unitOfWork.SaveChangesAsync();
         }
-
-        public Task<EntityIncome> GetIncomeByIdAsync(Guid guid)
+        public async Task DeleteIncomeAsync(Guid id)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task UpdateIncomeAsync(EntityIncome income)
-        {
-            throw new NotImplementedException();
+           await _unitOfWork.IncomeRepository.DeleteAsync(id);
+            await _unitOfWork.SaveChangesAsync();
         }
     }
 }

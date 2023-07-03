@@ -1,33 +1,38 @@
-﻿using Monefy.Domain.Contracts;
+﻿using Monefy.Business.RepositoryContracts;
+using Monefy.Domain.Contracts;
 using Monefy.Entities;
-
 
 namespace Monefy.Domain.Implementation
 {
     public class CategoryBusinessService : ICategoryBusinessService
     {
-        public Task<IEnumerable<EntityCategory>> GetAllCategoriesAsync()
+        private readonly IUnitOfWork _unitOfWork;
+        public async Task<IEnumerable<EntityCategory>> GetAllCategoriesAsync()
         {
-            throw new NotImplementedException();
+            var category = await _unitOfWork.CategoryRepository.GetAllAsync();
+            await _unitOfWork.SaveChangesAsync();
+            return category;
         }
-        public Task CreateCategoryAsync(EntityCategory category)
+        public async Task<EntityCategory> GetCategoryByIdAsync(Guid guid)
         {
-            throw new NotImplementedException();
+            var categoryGuid = await _unitOfWork.CategoryRepository.GetByIdAsync(guid);
+            await _unitOfWork.SaveChangesAsync();
+            return categoryGuid;
         }
-
-        public Task DeleteCategoryAsync(Guid id)
+        public async Task CreateCategoryAsync(EntityCategory category)
         {
-            throw new NotImplementedException();
+            await _unitOfWork.CategoryRepository.AddAsync(category);
+            await _unitOfWork.SaveChangesAsync();
         }
-
-        public Task<EntityCategory> GetCategoryByIdAsync(Guid guid)
+        public async Task UpdateCategoryAsync(EntityCategory category)
         {
-            throw new NotImplementedException();
+            await _unitOfWork.CategoryRepository.UpdateAsync(category);
+            await _unitOfWork.SaveChangesAsync();
         }
-
-        public Task UpdateCategoryAsync(EntityCategory category)
+        public async Task DeleteCategoryAsync(Guid id)
         {
-            throw new NotImplementedException();
+            await _unitOfWork.CategoryRepository.DeleteAsync(id);
+            await _unitOfWork.SaveChangesAsync();
         }
     }
 }

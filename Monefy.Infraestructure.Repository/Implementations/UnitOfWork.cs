@@ -6,11 +6,8 @@ namespace Monefy.Infraestructure.Repository.Implementations
 {
     public class UnitOfWork : IUnitOfWork, IDisposable
     {
-
-        
         private readonly DataBaseContext _categoryContext;
     
-
         public ICategoryRepository CategoryRepository { get; }
         public ICurrencyRepository CurrencyRepository { get; }
         public IExpenseRepository ExpenseRepository { get; }
@@ -18,11 +15,9 @@ namespace Monefy.Infraestructure.Repository.Implementations
         public IWalletRepository WalletRepository { get; }
         public IIncomeRepository IncomeRepository { get; }
 
-
         public UnitOfWork(
             DataBaseContext categoryContext, 
        
-
             ICategoryRepository categoryRepository, 
             ICurrencyRepository currencyRepository,
             IExpenseRepository expenseRepository,
@@ -32,7 +27,6 @@ namespace Monefy.Infraestructure.Repository.Implementations
         {
             _categoryContext = categoryContext;
             
-
             CategoryRepository = categoryRepository;
             CurrencyRepository = currencyRepository;
             ExpenseRepository = expenseRepository;

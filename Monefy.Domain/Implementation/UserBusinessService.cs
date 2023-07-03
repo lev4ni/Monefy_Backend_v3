@@ -1,34 +1,38 @@
-﻿using Monefy.Domain.Contracts;
+﻿using Monefy.Business.RepositoryContracts;
+using Monefy.Domain.Contracts;
 using Monefy.Entities;
-
 
 namespace Monefy.Domain.Implementation
 {
     public class UserBusinessService : IUserBusinessService
     {
-        public Task CreateUserAsync(EntityUser user)
+        private readonly IUnitOfWork _unitOfWork;
+        public async Task<IEnumerable<EntityUser>> GetAllUsersAsync()
         {
-            throw new NotImplementedException();
+            var users = await _unitOfWork.UserRepository.GetAllAsync();
+            await _unitOfWork.SaveChangesAsync();
+            return users;
         }
-
-        public Task DeleteUserAsync(Guid id)
+        public async Task<EntityUser> GetUserByIdAsync(Guid guid)
         {
-            throw new NotImplementedException();
+            var usersGuid = await _unitOfWork.UserRepository.GetByIdAsync(guid);
+            await _unitOfWork.SaveChangesAsync();
+            return usersGuid;
         }
-
-        public Task<IEnumerable<EntityUser>> GetAllUsersAsync()
+        public async Task CreateUserAsync(EntityUser user)
         {
-            throw new NotImplementedException();
+            await _unitOfWork.UserRepository.AddAsync(user);
+            await _unitOfWork.SaveChangesAsync();
         }
-
-        public Task<EntityUser> GetUserByIdAsync(Guid guid)
+        public async Task UpdateUserAsync(EntityUser user)
         {
-            throw new NotImplementedException();
+            await _unitOfWork.UserRepository.UpdateAsync(user);
+            await _unitOfWork.SaveChangesAsync();
         }
-
-        public Task UpdateUserAsync(EntityUser user)
+        public async Task DeleteUserAsync(Guid id)
         {
-            throw new NotImplementedException();
+            await _unitOfWork.UserRepository.DeleteAsync(id);
+            await _unitOfWork.SaveChangesAsync();
         }
     }
 }

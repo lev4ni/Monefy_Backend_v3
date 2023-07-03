@@ -1,38 +1,41 @@
-﻿using Monefy.Domain.Contracts;
+﻿using Monefy.Business.RepositoryContracts;
+using Monefy.Domain.Contracts;
 using Monefy.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Monefy.Domain.Implementation
 {
     public class ExpenseBusinessService : IExpenseBusinessService
     {
-        public Task CreateExpenseAsync(EntityExpense expense)
+        private readonly IUnitOfWork _unitOfWork;
+        public async Task<IEnumerable<EntityExpense>> GetAllExpensesAsync()
         {
-            throw new NotImplementedException();
+            var expense = await _unitOfWork.ExpenseRepository.GetAllAsync();
+            await _unitOfWork.SaveChangesAsync();
+            return expense;
         }
 
-        public Task DeleteExpenseAsync(Guid id)
+        public async Task<EntityExpense> GetExpenseByIdAsync(Guid guid)
         {
-            throw new NotImplementedException();
+            var expenseGuid = await _unitOfWork.ExpenseRepository.GetByIdAsync(guid);
+            await _unitOfWork.SaveChangesAsync();
+            return expenseGuid;
+        }
+        public async Task CreateExpenseAsync(EntityExpense expense)
+        {
+            await _unitOfWork.ExpenseRepository.AddAsync(expense);
+            await _unitOfWork.SaveChangesAsync();
         }
 
-        public Task<IEnumerable<EntityExpense>> GetAllExpensesAsync()
+        public async Task UpdateExpenseAsync(EntityExpense expense)
         {
-            throw new NotImplementedException();
+            await _unitOfWork.ExpenseRepository.UpdateAsync(expense);
+            await _unitOfWork.SaveChangesAsync();
         }
-
-        public Task<EntityExpense> GetExpenseByIdAsync(Guid guid)
+        public async Task DeleteExpenseAsync(Guid id)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task UpdateExpenseAsync(EntityExpense expense)
-        {
-            throw new NotImplementedException();
+            await _unitOfWork.ExpenseRepository.DeleteAsync(id);
+            await _unitOfWork.SaveChangesAsync();
         }
     }
 }

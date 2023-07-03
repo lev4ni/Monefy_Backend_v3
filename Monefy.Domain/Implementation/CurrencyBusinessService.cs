@@ -1,38 +1,40 @@
-﻿using Monefy.Domain.Contracts;
+﻿using Monefy.Business.RepositoryContracts;
+using Monefy.Domain.Contracts;
 using Monefy.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Monefy.Domain.Implementation
 {
     public class CurrencyBusinessService : ICurrencyBusinessService
     {
-        public Task CreateCurrencyAsync(EntityCurrency currency)
+        private readonly IUnitOfWork _unitOfWork;
+  
+        public async Task<IEnumerable<EntityCurrency>> GetAllCurrenciesAsync()
         {
-            throw new NotImplementedException();
+            var currency = await _unitOfWork.CurrencyRepository.GetAllAsync();
+            await _unitOfWork.SaveChangesAsync();
+            return currency;
+        }
+        public async Task<EntityCurrency> GetCurrencyByIdAsync(Guid guid)
+        {
+            var currencyGuid = await _unitOfWork.CurrencyRepository.GetByIdAsync(guid);
+            await _unitOfWork.SaveChangesAsync();
+            return currencyGuid;
+        }
+        public async Task CreateCurrencyAsync(EntityCurrency currency)
+        {
+            await _unitOfWork.CurrencyRepository.AddAsync(currency);
+            await _unitOfWork.SaveChangesAsync();
         }
 
-        public Task DeleteCurrencyAsync(Guid id)
+        public async Task UpdateCurrencyAsync(EntityCurrency currency)
         {
-            throw new NotImplementedException();
+            await _unitOfWork.CurrencyRepository.UpdateAsync(currency);
+            await _unitOfWork.SaveChangesAsync();
         }
-
-        public Task<IEnumerable<EntityCurrency>> GetAllCurrenciesAsync()
+        public async Task DeleteCurrencyAsync(Guid id)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<EntityCurrency> GetCurrencyByIdAsync(Guid guid)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task UpdateCurrencyAsync(EntityCurrency currency)
-        {
-            throw new NotImplementedException();
+            await _unitOfWork.CurrencyRepository.DeleteAsync(id);
+            await _unitOfWork.SaveChangesAsync();
         }
     }
 }

@@ -1,38 +1,39 @@
-﻿using Monefy.Domain.Contracts;
+﻿using Monefy.Business.RepositoryContracts;
+using Monefy.Domain.Contracts;
 using Monefy.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Monefy.Domain.Implementation
 {
     public class WalletBusinessService : IWalletBusinessService
     {
-        public Task CreateWalletAsync(EntityWallet wallet)
+        private IUnitOfWork _unitOfWork;
+        public async Task<IEnumerable<EntityWallet>> GetAllWalletsAsync()
         {
-            throw new NotImplementedException();
+            var wallet = await _unitOfWork.WalletRepository.GetAllAsync();
+            await _unitOfWork.SaveChangesAsync();
+            return wallet;
         }
-
-        public Task DeleteWalletAsync(Guid id)
+        public async Task<EntityWallet> GetWalletByIdAsync(Guid guid)
         {
-            throw new NotImplementedException();
+            var wattetGuid = await _unitOfWork.WalletRepository.GetByIdAsync(guid);
+            await _unitOfWork.SaveChangesAsync();
+            return wattetGuid;
         }
-
-        public Task<IEnumerable<EntityWallet>> GetAllWalletsAsync()
+        public async Task CreateWalletAsync(EntityWallet wallet)
         {
-            throw new NotImplementedException();
+            await _unitOfWork.WalletRepository.AddAsync(wallet);
+            await _unitOfWork.SaveChangesAsync();
         }
-
-        public Task<EntityWallet> GetWalletByIdAsync(Guid guid)
+        public async Task UpdateWalletAsync(EntityWallet wallet)
         {
-            throw new NotImplementedException();
+            await _unitOfWork.WalletRepository.UpdateAsync(wallet);
+            await _unitOfWork.SaveChangesAsync();
         }
-
-        public Task UpdateWalletAsync(EntityWallet wallet)
+        public async Task DeleteWalletAsync(Guid id)
         {
-            throw new NotImplementedException();
+            await _unitOfWork.WalletRepository.DeleteAsync(id);
+            await _unitOfWork.SaveChangesAsync();
         }
     }
 }
