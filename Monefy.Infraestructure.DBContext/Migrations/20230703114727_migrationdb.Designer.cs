@@ -12,7 +12,7 @@ using Monefy.Infraestructure.DBContext;
 namespace Monefy.Infraestructure.DBContext.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    [Migration("20230703114158_migrationdb")]
+    [Migration("20230703114727_migrationdb")]
     partial class migrationdb
     {
         /// <inheritdoc />
