@@ -1,7 +1,7 @@
 ﻿
 namespace Monefy.Entities
 {
-    public class Category
+    public class EntityCategory
     {
         public int Id { get; set; }
         public string? Name { get; set; }

@@ -19,7 +19,7 @@ namespace Monefy.Application.Implementation
 
         public async Task CreateIncomeAsync(IncomeDTO incomeDTO)
         {
-            await _incomeBusinessService.CreateIncomeAsync(_mapper.Map<Income>(incomeDTO));
+            await _incomeBusinessService.CreateIncomeAsync(_mapper.Map<EntityIncome>(incomeDTO));
         }
 
         public async Task DeleteIncomeAsync(Guid id)
@@ -41,7 +41,7 @@ namespace Monefy.Application.Implementation
 
         public async Task UpdateIncomeAsync(IncomeDTO incomeDTO)
         {
-            await _incomeBusinessService.UpdateIncomeAsync(_mapper.Map<Income>(incomeDTO));
+            await _incomeBusinessService.UpdateIncomeAsync(_mapper.Map<EntityIncome>(incomeDTO));
         }
     }
 }

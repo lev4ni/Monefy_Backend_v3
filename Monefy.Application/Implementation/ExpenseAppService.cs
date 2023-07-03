@@ -18,7 +18,7 @@ namespace Monefy.Application.Implementation
 
         public async Task CreateExpenseAsync(ExpenseDTO ExpenseDTO)
         {
-            await _ExpenseBusinessService.CreateExpenseAsync(_mapper.Map<Expense>(ExpenseDTO));
+            await _ExpenseBusinessService.CreateExpenseAsync(_mapper.Map<EntityExpense>(ExpenseDTO));
         }
 
         public async Task DeleteExpenseAsync(Guid id)
@@ -40,7 +40,7 @@ namespace Monefy.Application.Implementation
 
         public async Task UpdateExpenseAsync(ExpenseDTO ExpenseDTO)
         {
-            await _ExpenseBusinessService.UpdateExpenseAsync(_mapper.Map<Expense>(ExpenseDTO));
+            await _ExpenseBusinessService.UpdateExpenseAsync(_mapper.Map<EntityExpense>(ExpenseDTO));
         }
     }
 }

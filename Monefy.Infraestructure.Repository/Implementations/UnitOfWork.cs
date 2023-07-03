@@ -7,15 +7,9 @@ namespace Monefy.Infraestructure.Repository.Implementations
     public class UnitOfWork : IUnitOfWork, IDisposable
     {
 
-        //private readonly DataBaseContext _dataBaseContext;
-
         
-        private readonly CategoryContext _categoryContext;
-        private readonly CurrencyContext _currencyContext;
-        private readonly ExpenseContext _expenseContext;
-        private readonly UserContext _userContext;
-        private readonly WalletContext _walletContext;
-        private readonly IncomeContext _incomeContext;
+        private readonly DataBaseContext _categoryContext;
+    
 
         public ICategoryRepository CategoryRepository { get; }
         public ICurrencyRepository CurrencyRepository { get; }
@@ -26,12 +20,8 @@ namespace Monefy.Infraestructure.Repository.Implementations
 
 
         public UnitOfWork(
-            CategoryContext categoryContext, 
-            CurrencyContext currencyContext, 
-            ExpenseContext expenseContext,
-            UserContext userContext,
-            WalletContext walletContext,
-            IncomeContext incomeContext,
+            DataBaseContext categoryContext, 
+       
 
             ICategoryRepository categoryRepository, 
             ICurrencyRepository currencyRepository,
@@ -41,11 +31,7 @@ namespace Monefy.Infraestructure.Repository.Implementations
             IIncomeRepository incomeRepository)
         {
             _categoryContext = categoryContext;
-            _currencyContext = currencyContext;
-            _expenseContext = expenseContext;
-            _userContext = userContext;
-            _walletContext = walletContext;
-            _incomeContext = incomeContext;
+            
 
             CategoryRepository = categoryRepository;
             CurrencyRepository = currencyRepository;
@@ -58,11 +44,7 @@ namespace Monefy.Infraestructure.Repository.Implementations
         public async Task<int> SaveChangesAsync()
         {
             await _categoryContext.SaveChangesAsync();
-            await _currencyContext.SaveChangesAsync();
-            await _expenseContext.SaveChangesAsync();
-            await _userContext.SaveChangesAsync();
-            await _walletContext.SaveChangesAsync();
-            await _incomeContext.SaveChangesAsync();
+           
             return await _categoryContext.SaveChangesAsync();
         }
 
@@ -75,11 +57,7 @@ namespace Monefy.Infraestructure.Repository.Implementations
                 if (disposing)
                 {
                     _categoryContext.Dispose();
-                    _currencyContext.Dispose();
-                    _expenseContext.Dispose();
-                    _userContext.Dispose();
-                    _walletContext.Dispose();
-                    _incomeContext.Dispose();
+                    
                 }
             }
             this.disposed = true;

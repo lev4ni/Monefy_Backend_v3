@@ -9,10 +9,10 @@ namespace Monefy.Domain.Contracts
 {
     public interface IIncomeBusinessService
     {
-        Task<IEnumerable<Income>> GetAllIncomesAsync();
-        Task<Income> GetIncomeByIdAsync(Guid guid);
-        Task CreateIncomeAsync(Income income);
-        Task UpdateIncomeAsync(Income income);
+        Task<IEnumerable<EntityIncome>> GetAllIncomesAsync();
+        Task<EntityIncome> GetIncomeByIdAsync(Guid guid);
+        Task CreateIncomeAsync(EntityIncome income);
+        Task UpdateIncomeAsync(EntityIncome income);
         Task DeleteIncomeAsync(Guid id);
     }
 }

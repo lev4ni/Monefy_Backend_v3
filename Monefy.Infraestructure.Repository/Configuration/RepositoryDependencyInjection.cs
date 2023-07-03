@@ -27,39 +27,12 @@ namespace Monefy.Infraestructure.Repository.Configuration
             services.AddTransient<IWalletRepository, WalletRepository>();
             services.AddTransient<IIncomeRepository, IncomeRepository>();
 
-            services.AddDbContext<CategoryContext>(
+            services.AddDbContext<DataBaseContext>(
                 options =>
                 {
                     options.UseSqlServer(connectionString);
                 });
 
-            services.AddDbContext<CurrencyContext>(
-                options =>
-                {
-                    options.UseSqlServer(connectionString);
-                });
-
-            services.AddDbContext<ExpenseContext>(
-                options =>
-                {
-                    options.UseSqlServer(connectionString);
-                });
-
-            services.AddDbContext<UserContext>(
-                options =>
-                {
-                    options.UseSqlServer(connectionString);
-                });
-            services.AddDbContext<WalletContext>(
-               options =>
-               {
-                   options.UseSqlServer(connectionString);
-               });
-            services.AddDbContext<IncomeContext>(
-               options =>
-               {
-                   options.UseSqlServer(connectionString);
-               });
 
             return services;
         }

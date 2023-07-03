@@ -9,10 +9,10 @@ namespace Monefy.Business.RepositoryContracts
 {
     public interface ICurrencyRepository
     {
-        Task<IEnumerable<Currency>> GetAllAsync();
-        Task<Currency> GetByIdAsync(Guid id);
-        Task AddAsync(Currency currency);
-        Task UpdateAsync(Currency currency);
+        Task<IEnumerable<EntityCurrency>> GetAllAsync();
+        Task<EntityCurrency> GetByIdAsync(Guid id);
+        Task AddAsync(EntityCurrency currency);
+        Task UpdateAsync(EntityCurrency currency);
         Task DeleteAsync(Guid id);
     }
 }

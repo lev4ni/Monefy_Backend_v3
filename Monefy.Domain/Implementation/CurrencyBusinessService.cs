@@ -10,7 +10,7 @@ namespace Monefy.Domain.Implementation
 {
     public class CurrencyBusinessService : ICurrencyBusinessService
     {
-        public Task CreateCurrencyAsync(Currency currency)
+        public Task CreateCurrencyAsync(EntityCurrency currency)
         {
             throw new NotImplementedException();
         }
@@ -20,17 +20,17 @@ namespace Monefy.Domain.Implementation
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Currency>> GetAllCurrenciesAsync()
+        public Task<IEnumerable<EntityCurrency>> GetAllCurrenciesAsync()
         {
             throw new NotImplementedException();
         }
 
-        public Task<Currency> GetCurrencyByIdAsync(Guid guid)
+        public Task<EntityCurrency> GetCurrencyByIdAsync(Guid guid)
         {
             throw new NotImplementedException();
         }
 
-        public Task UpdateCurrencyAsync(Currency currency)
+        public Task UpdateCurrencyAsync(EntityCurrency currency)
         {
             throw new NotImplementedException();
         }

@@ -7,37 +7,37 @@ using Monefy.Business.RepositoryContracts;
 
 namespace Monefy.Infraestructure.Repository.Implementations
 {
-    public class CategoryRepository : GenericRepository<Category> , ICategoryRepository
+    public class CategoryRepository : GenericRepository<EntityCategory> , ICategoryRepository
     {
        // private readonly CategoryContext _dbContext;
         private readonly IMapper _mapper;
 
-        public CategoryRepository(CategoryContext dbContext, IMapper mapper) : base(dbContext)
+        public CategoryRepository(DataBaseContext dbContext, IMapper mapper) : base(dbContext)
         {
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<Category>> GetAllAsync()
+        public async Task<IEnumerable<EntityCategory>> GetAllAsync()
         {
             var categoryDataModels = await base.GetAllAsync();
-            return _mapper.Map<IEnumerable<Category>>(categoryDataModels);
+            return _mapper.Map<IEnumerable<EntityCategory>>(categoryDataModels);
         }
 
-        public async Task<Category> GetByIdAsync(Guid id)
+        public async Task<EntityCategory> GetByIdAsync(Guid id)
         {
             var categoryDataModels = await base.GetByIdAsync(id);
-            return _mapper.Map<Category>(categoryDataModels);
+            return _mapper.Map<EntityCategory>(categoryDataModels);
         }
 
-        public async Task AddAsync(Category category)
+        public async Task AddAsync(EntityCategory category)
         {
-            var categoryDataModels = _mapper.Map<Category>(category);
+            var categoryDataModels = _mapper.Map<EntityCategory>(category);
             await base.AddAsync(categoryDataModels);
         }
 
-        public async Task UpdateAsync(Category category)
+        public async Task UpdateAsync(EntityCategory category)
         {
-            var categoryDataModels = _mapper.Map<Category>(category);
+            var categoryDataModels = _mapper.Map<EntityCategory>(category);
             await base.UpdateAsync(categoryDataModels);
         }
 

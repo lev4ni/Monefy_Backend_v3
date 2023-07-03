@@ -1,12 +1,12 @@
 ﻿
 namespace Monefy.Entities
 {
-    public class Wallet
+    public class EntityWallet
     {
         public int Id { get; set; }
         public string? Name { get; set; }
-        public User? User { get; set; }
-        public Currency? Currency { get; set; }
+        //public EntityUser? User { get; set; }
+       //public EntityCurrency? Currency { get; set; }
         public float TotalIncome { get; set; }
         public float TotalExpent { get; set; }
         public float TotalBalance { get; set; }

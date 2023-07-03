@@ -10,7 +10,7 @@ namespace Monefy.Domain.Implementation
 {
     public class WalletBusinessService : IWalletBusinessService
     {
-        public Task CreateWalletAsync(Wallet wallet)
+        public Task CreateWalletAsync(EntityWallet wallet)
         {
             throw new NotImplementedException();
         }
@@ -20,17 +20,17 @@ namespace Monefy.Domain.Implementation
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Wallet>> GetAllWalletsAsync()
+        public Task<IEnumerable<EntityWallet>> GetAllWalletsAsync()
         {
             throw new NotImplementedException();
         }
 
-        public Task<Wallet> GetWalletByIdAsync(Guid guid)
+        public Task<EntityWallet> GetWalletByIdAsync(Guid guid)
         {
             throw new NotImplementedException();
         }
 
-        public Task UpdateWalletAsync(Wallet wallet)
+        public Task UpdateWalletAsync(EntityWallet wallet)
         {
             throw new NotImplementedException();
         }

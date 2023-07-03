@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Monefy.Infraestructure.DataModels
 {
     [Table("User")]
-    public class UserDataModel
+    public class User
     {
         [Key] public int Id_User { get; set; }
         public Guid Guid { get; set; } = Guid.NewGuid();

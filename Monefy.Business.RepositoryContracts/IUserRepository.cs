@@ -4,10 +4,10 @@ namespace Monefy.Business.RepositoryContracts
 {
     public interface IUserRepository
     {
-        Task<IEnumerable<User>> GetAllAsync();
-        Task<User> GetByIdAsync(Guid id);
-        Task AddAsync(User user);
-        Task UpdateAsync(User user);
+        Task<IEnumerable<EntityUser>> GetAllAsync();
+        Task<EntityUser> GetByIdAsync(Guid id);
+        Task AddAsync(EntityUser user);
+        Task UpdateAsync(EntityUser user);
         Task DeleteAsync(Guid id);
     }
 }

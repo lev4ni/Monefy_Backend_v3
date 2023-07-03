@@ -10,7 +10,7 @@ namespace Monefy.Domain.Implementation
 {
     public class ExpenseBusinessService : IExpenseBusinessService
     {
-        public Task CreateExpenseAsync(Expense expense)
+        public Task CreateExpenseAsync(EntityExpense expense)
         {
             throw new NotImplementedException();
         }
@@ -20,17 +20,17 @@ namespace Monefy.Domain.Implementation
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Expense>> GetAllExpensesAsync()
+        public Task<IEnumerable<EntityExpense>> GetAllExpensesAsync()
         {
             throw new NotImplementedException();
         }
 
-        public Task<Expense> GetExpenseByIdAsync(Guid guid)
+        public Task<EntityExpense> GetExpenseByIdAsync(Guid guid)
         {
             throw new NotImplementedException();
         }
 
-        public Task UpdateExpenseAsync(Expense expense)
+        public Task UpdateExpenseAsync(EntityExpense expense)
         {
             throw new NotImplementedException();
         }

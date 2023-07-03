@@ -6,11 +6,11 @@ namespace Monefy.Domain.Implementation
 {
     public class CategoryBusinessService : ICategoryBusinessService
     {
-        public Task<IEnumerable<Category>> GetAllCategoriesAsync()
+        public Task<IEnumerable<EntityCategory>> GetAllCategoriesAsync()
         {
             throw new NotImplementedException();
         }
-        public Task CreateCategoryAsync(Category category)
+        public Task CreateCategoryAsync(EntityCategory category)
         {
             throw new NotImplementedException();
         }
@@ -20,12 +20,12 @@ namespace Monefy.Domain.Implementation
             throw new NotImplementedException();
         }
 
-        public Task<Category> GetCategoryByIdAsync(Guid guid)
+        public Task<EntityCategory> GetCategoryByIdAsync(Guid guid)
         {
             throw new NotImplementedException();
         }
 
-        public Task UpdateCategoryAsync(Category category)
+        public Task UpdateCategoryAsync(EntityCategory category)
         {
             throw new NotImplementedException();
         }

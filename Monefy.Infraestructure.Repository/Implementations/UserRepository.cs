@@ -6,36 +6,36 @@ using Monefy.Infraestructure.DBContext;
 
 namespace Monefy.Infraestructure.Repository.Implementations
 {
-    public class UserRepository : GenericRepository<User>, IUserRepository
+    public class UserRepository : GenericRepository<EntityUser>, IUserRepository
     {
         private readonly IMapper _mapper;
 
-        public UserRepository(CategoryContext dbContext, IMapper mapper) : base(dbContext)
+        public UserRepository(DataBaseContext dbContext, IMapper mapper) : base(dbContext)
         {
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<User>> GetAllAsync()
+        public async Task<IEnumerable<EntityUser>> GetAllAsync()
         {
             var userDataModels = await base.GetAllAsync();
-            return _mapper.Map<IEnumerable<User>>(userDataModels);
+            return _mapper.Map<IEnumerable<EntityUser>>(userDataModels);
         }
 
-        public async Task<User> GetByIdAsync(Guid id)
+        public async Task<EntityUser> GetByIdAsync(Guid id)
         {
             var userDataModel = await base.GetByIdAsync(id);
-            return _mapper.Map<User>(userDataModel);
+            return _mapper.Map<EntityUser>(userDataModel);
         }
 
-        public async Task AddAsync(User user)
+        public async Task AddAsync(EntityUser user)
         {
-            var userDataModel = _mapper.Map<User>(user);
+            var userDataModel = _mapper.Map<EntityUser>(user);
             await base.AddAsync(userDataModel);
         }
 
-        public async Task UpdateAsync(User user)
+        public async Task UpdateAsync(EntityUser user)
         {
-            var usertDataModel = _mapper.Map<User>(user);
+            var usertDataModel = _mapper.Map<EntityUser>(user);
             await base.UpdateAsync(usertDataModel);
         }
 

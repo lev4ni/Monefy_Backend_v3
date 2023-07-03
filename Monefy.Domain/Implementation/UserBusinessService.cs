@@ -6,7 +6,7 @@ namespace Monefy.Domain.Implementation
 {
     public class UserBusinessService : IUserBusinessService
     {
-        public Task CreateUserAsync(User user)
+        public Task CreateUserAsync(EntityUser user)
         {
             throw new NotImplementedException();
         }
@@ -16,17 +16,17 @@ namespace Monefy.Domain.Implementation
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<User>> GetAllUsersAsync()
+        public Task<IEnumerable<EntityUser>> GetAllUsersAsync()
         {
             throw new NotImplementedException();
         }
 
-        public Task<User> GetUserByIdAsync(Guid guid)
+        public Task<EntityUser> GetUserByIdAsync(Guid guid)
         {
             throw new NotImplementedException();
         }
 
-        public Task UpdateUserAsync(User user)
+        public Task UpdateUserAsync(EntityUser user)
         {
             throw new NotImplementedException();
         }

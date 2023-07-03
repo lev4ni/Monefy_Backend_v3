@@ -1,7 +1,7 @@
 ﻿
 namespace Monefy.Entities
 {
-    public class Currency
+    public class EntityCurrency
     {
         public int Id { get; set; }
         public string? CurrencyName { get; set; }

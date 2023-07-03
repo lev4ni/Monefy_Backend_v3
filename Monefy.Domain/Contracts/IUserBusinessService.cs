@@ -9,10 +9,10 @@ namespace Monefy.Domain.Contracts
 {
     public interface IUserBusinessService
     {
-        Task<IEnumerable<User>> GetAllUsersAsync();
-        Task<User> GetUserByIdAsync(Guid guid);
-        Task CreateUserAsync(User user);
-        Task UpdateUserAsync(User user);
+        Task<IEnumerable<EntityUser>> GetAllUsersAsync();
+        Task<EntityUser> GetUserByIdAsync(Guid guid);
+        Task CreateUserAsync(EntityUser user);
+        Task UpdateUserAsync(EntityUser user);
         Task DeleteUserAsync(Guid id);
     }
 }

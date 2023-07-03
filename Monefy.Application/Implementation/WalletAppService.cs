@@ -18,7 +18,7 @@ namespace Monefy.Application.Implementation
 
         public async Task CreateWalletAsync(WalletDTO walletDTO)
         {
-            await _walletBusinessService.CreateWalletAsync(_mapper.Map<Wallet>(walletDTO));
+            await _walletBusinessService.CreateWalletAsync(_mapper.Map<EntityWallet>(walletDTO));
         }
 
         public async Task DeleteWalletAsync(Guid id)
@@ -40,7 +40,7 @@ namespace Monefy.Application.Implementation
 
         public async Task UpdateWalletAsync(WalletDTO walletDTO)
         {
-            await _walletBusinessService.UpdateWalletAsync(_mapper.Map<Wallet>(walletDTO));
+            await _walletBusinessService.UpdateWalletAsync(_mapper.Map<EntityWallet>(walletDTO));
         }
     }
 }

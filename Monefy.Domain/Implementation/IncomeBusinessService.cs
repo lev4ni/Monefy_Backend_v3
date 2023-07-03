@@ -10,7 +10,7 @@ namespace Monefy.Domain.Implementation
 {
     public class IncomeBusinessService : IIncomeBusinessService
     {
-        public Task CreateIncomeAsync(Income income)
+        public Task CreateIncomeAsync(EntityIncome income)
         {
             throw new NotImplementedException();
         }
@@ -20,17 +20,17 @@ namespace Monefy.Domain.Implementation
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Income>> GetAllIncomesAsync()
+        public Task<IEnumerable<EntityIncome>> GetAllIncomesAsync()
         {
             throw new NotImplementedException();
         }
 
-        public Task<Income> GetIncomeByIdAsync(Guid guid)
+        public Task<EntityIncome> GetIncomeByIdAsync(Guid guid)
         {
             throw new NotImplementedException();
         }
 
-        public Task UpdateIncomeAsync(Income income)
+        public Task UpdateIncomeAsync(EntityIncome income)
         {
             throw new NotImplementedException();
         }

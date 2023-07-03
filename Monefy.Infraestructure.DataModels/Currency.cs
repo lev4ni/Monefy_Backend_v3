@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Monefy.Infraestructure.DataModels
 {
     [Table("Currency")]
-    public class CurrencyDataModel
+    public class Currency
     {
         [Key]
         public int Id_Currency { get; set; }

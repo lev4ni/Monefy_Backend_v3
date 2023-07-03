@@ -5,10 +5,10 @@ namespace Monefy.Business.RepositoryContracts
 {
     public interface ICategoryRepository
     {
-        Task<IEnumerable<Category>> GetAllAsync();
-        Task<Category> GetByIdAsync(Guid id);
-        Task AddAsync(Category category);
-        Task UpdateAsync(Category category);
+        Task<IEnumerable<EntityCategory>> GetAllAsync();
+        Task<EntityCategory> GetByIdAsync(Guid id);
+        Task AddAsync(EntityCategory category);
+        Task UpdateAsync(EntityCategory category);
         Task DeleteAsync(Guid id);
     }
 }

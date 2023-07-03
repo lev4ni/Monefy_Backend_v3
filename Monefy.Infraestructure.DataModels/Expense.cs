@@ -5,7 +5,7 @@ using Monefy.Entities;
 namespace Monefy.Infraestructure.DataModels
 {
     [Table("Expense")]
-    public class ExpenseDataModel
+    public class Expense
     {
         [Key]
         public int Id { get; set; }

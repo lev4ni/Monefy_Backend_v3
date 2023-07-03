@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Monefy.Infraestructure.DataModels
 {
     [Table("Category")]
-    public class CategoryDataModel
+    public class Category
     {
         [Key]
         public int Id_Category { get; set; }

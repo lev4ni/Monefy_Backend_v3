@@ -8,23 +8,23 @@ namespace Monefy.Application.Configuration
     {
         public AutoMapperProfile() 
         {
-            CreateMap<CategoryDTO, Category>();
-            CreateMap<Category, CategoryDTO>();
+            CreateMap<CategoryDTO, EntityCategory>();
+            CreateMap<EntityCategory, CategoryDTO>();
 
-            CreateMap<CurrencyDTO, Currency>();
-            CreateMap<Currency, CurrencyDTO>();
+            CreateMap<CurrencyDTO, EntityCurrency>();
+            CreateMap<EntityCurrency, CurrencyDTO>();
 
-            CreateMap<ExpenseDTO, Expense>();
-            CreateMap<Expense, ExpenseDTO>();
+            CreateMap<ExpenseDTO, EntityExpense>();
+            CreateMap<EntityExpense, ExpenseDTO>();
 
-            CreateMap<IncomeDTO, Income>();
-            CreateMap<Income, IncomeDTO>();
+            CreateMap<IncomeDTO, EntityIncome>();
+            CreateMap<EntityIncome, IncomeDTO>();
 
-            CreateMap<UserDTO, User>();
-            CreateMap<User, UserDTO>();
+            CreateMap<UserDTO, EntityUser>();
+            CreateMap<EntityUser, UserDTO>();
 
-            CreateMap<WalletDTO, Wallet>();
-            CreateMap<Wallet, WalletDTO>();
+            CreateMap<WalletDTO, EntityWallet>();
+            CreateMap<EntityWallet, WalletDTO>();
         }
     }
 }

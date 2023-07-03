@@ -18,7 +18,7 @@ namespace Monefy.Application.Implementation
 
         public async Task CreateUserAsync(UserDTO userDTO)
         {
-            await _userBusinessService.CreateUserAsync(_mapper.Map<User>(userDTO));
+            await _userBusinessService.CreateUserAsync(_mapper.Map<EntityUser>(userDTO));
         }
 
         public async Task DeleteUserAsync(Guid id)
@@ -40,7 +40,7 @@ namespace Monefy.Application.Implementation
 
         public async Task UpdateUseryAsync(UserDTO userDTO)
         {
-            await _userBusinessService.UpdateUserAsync(_mapper.Map<User>(userDTO));
+            await _userBusinessService.UpdateUserAsync(_mapper.Map<EntityUser>(userDTO));
         }
     }
 }
