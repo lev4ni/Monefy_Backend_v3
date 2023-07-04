@@ -5,42 +5,46 @@ namespace Monefy.Infraestructure.Repository.Implementations
 {
         public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
         {
-            private readonly DbContext _context;
+          
             private readonly DbSet<TEntity> _dbSet;
 
-            public GenericRepository(DbContext context)
+           /* public GenericRepository(DbContext context)
             {
                 _context = context;
                 _dbSet = _context.Set<TEntity>();
+            }*/
+            public GenericRepository()
+            {
+
             }
 
-            public async Task<TEntity> GetByIdAsync(Guid id)
+            public async Task<TEntity> GetByIdAsync(Guid id, DbContext context)
             {
-                return await _dbSet.FindAsync(id);
+                return await context.Set<TEntity>().FindAsync(id);
             }
 
-            public async Task<IEnumerable<TEntity>> GetAllAsync()
+            public async Task<IEnumerable<TEntity>> GetAllAsync(DbContext context)
             {
-                return await _dbSet.ToListAsync();
+                return await context.Set<TEntity>().ToListAsync();
             }
 
-            public async Task AddAsync(TEntity entity)
+            public async Task AddAsync(TEntity entity, DbContext context)
             {
-                await _dbSet.AddAsync(entity);
+                await context.Set<TEntity>().AddAsync(entity);
             }
 
-            public async Task UpdateAsync(TEntity entity)
+            public async Task UpdateAsync(TEntity entity, DbContext context)
             {
-                _dbSet.Update(entity);
+                 context.Set<TEntity>().Update(entity);
                 await Task.CompletedTask;
             }
 
-            public async Task DeleteAsync(Guid id)
+            public async Task DeleteAsync(Guid id, DbContext context)
             {
-                var entity = await _dbSet.FindAsync(id);
+                var entity = await context.Set<TEntity>().FindAsync(id);
                 if (entity != null)
                 {
-                    _dbSet.Remove(entity);
+                context.Set<TEntity>().Remove(entity);
                 }
                 await Task.CompletedTask;
             }

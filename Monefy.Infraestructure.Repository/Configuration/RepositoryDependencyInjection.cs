@@ -20,6 +20,7 @@ namespace Monefy.Infraestructure.Repository.Configuration
             services.AddAutoMapper(typeof(WalletRepository));
             services.AddAutoMapper(typeof(IncomeRepository));
 
+            services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddTransient<ICategoryRepository, CategoryRepository>();
             services.AddTransient<ICurrencyRepository, CurrencyRepository>();
             services.AddTransient<IExpenseRepository, ExpenseRepository>();

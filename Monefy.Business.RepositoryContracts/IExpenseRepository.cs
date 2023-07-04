@@ -1,4 +1,5 @@
-﻿using Monefy.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using Monefy.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
