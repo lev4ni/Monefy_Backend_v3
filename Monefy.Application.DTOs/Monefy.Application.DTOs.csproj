@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Monefy.Entities\Monefy.Entities.csproj" />
+    <ProjectReference Include="..\Monefy.Infraestructure.DataModels\Monefy.Infraestructure.DataModels.csproj" />
   </ItemGroup>
 
 </Project>
