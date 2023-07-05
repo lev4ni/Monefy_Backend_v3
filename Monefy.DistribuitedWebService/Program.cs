@@ -1,4 +1,5 @@
 using Monefy.Application.Configuration;
+using Monefy.Infraestructure.DBContext;
 
 var builder = WebApplication.CreateBuilder(args);
 
