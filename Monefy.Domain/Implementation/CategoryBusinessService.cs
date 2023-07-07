@@ -7,9 +7,9 @@ namespace Monefy.Domain.Implementation
     public class CategoryBusinessService : ICategoryBusinessService
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly ICategoryRepository _categoryRepository;
+        private readonly ICategoryInfraestrucutureService _categoryRepository;
 
-        public CategoryBusinessService(IUnitOfWork unitOfWork, ICategoryRepository categoryRepository)
+        public CategoryBusinessService(IUnitOfWork unitOfWork, ICategoryInfraestrucutureService categoryRepository)
         {
             _unitOfWork = unitOfWork;
             _categoryRepository = categoryRepository;

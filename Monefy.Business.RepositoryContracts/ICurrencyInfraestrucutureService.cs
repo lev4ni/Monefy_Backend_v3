@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace Monefy.Business.RepositoryContracts
 {
-    public interface IWalletRepository
+    public interface ICurrencyInfraestrucutureService
     {
-        Task<IEnumerable<EntityWallet>> GetAllAsync();
-        Task<EntityWallet> GetByIdAsync(Guid id);
-        Task AddAsync(EntityWallet wallet);
-        Task UpdateAsync(EntityWallet wallet);
+        Task<IEnumerable<EntityCurrency>> GetAllAsync();
+        Task<EntityCurrency> GetByIdAsync(Guid id);
+        Task AddAsync(EntityCurrency currency);
+        Task UpdateAsync(EntityCurrency currency);
         Task DeleteAsync(Guid id);
     }
 }

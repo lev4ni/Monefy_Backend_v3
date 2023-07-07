@@ -4,7 +4,7 @@ using Monefy.Entities;
 
 namespace Monefy.Business.RepositoryContracts
 {
-    public interface ICategoryRepository
+    public interface ICategoryInfraestrucutureService
     {
         Task<IEnumerable<EntityCategory>> GetAllAsync();
         Task<EntityCategory> GetByIdAsync(Guid id);

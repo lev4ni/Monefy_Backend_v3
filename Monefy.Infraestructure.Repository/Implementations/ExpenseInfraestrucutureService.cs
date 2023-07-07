@@ -7,13 +7,13 @@ using Monefy.Infraestructure.DBContext;
 
 namespace Monefy.Infraestructure.Repository.Implementations
 {
-    public class ExpenseRepository : IExpenseRepository
+    public class ExpenseInfraestrucutureService : IExpenseInfraestrucutureService
     {
         private readonly IMapper _mapper;
         private readonly IGenericRepository<Expense> _genericRepository;
         private readonly DataBaseContext _dataBaseContext;
 
-        public ExpenseRepository(IMapper mapper, IGenericRepository<Expense> genericRepository, DataBaseContext context)
+        public ExpenseInfraestrucutureService(IMapper mapper, IGenericRepository<Expense> genericRepository, DataBaseContext context)
         {
             _mapper = mapper;
             _genericRepository = genericRepository;
