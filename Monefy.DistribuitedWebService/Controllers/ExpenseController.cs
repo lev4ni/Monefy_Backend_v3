@@ -10,14 +10,6 @@ namespace Monefy.DistribuitedWebService.Controllers
     [ApiController]
     public class ExpenseController : Controller
     {
-        /*
-        Task<IEnumerable<ExpenseDTO>> GetAllExpensesAsync();
-        Task<ExpenseDTO> GetExpenseByIdAsync(Guid id);
-        Task CreateExpenseAsync(ExpenseDTO ExpenseDTO);
-        Task UpdateExpenseAsync(ExpenseDTO ExpenseDTO);
-        Task DeleteExpenseAsync(Guid id);
-        */
-
         private readonly IExpenseAppService _expenseAppService;
 
         public ExpenseController(IExpenseAppService expenseAppService)

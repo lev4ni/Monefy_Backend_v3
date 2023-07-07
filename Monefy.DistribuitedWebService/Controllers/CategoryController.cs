@@ -5,7 +5,7 @@ using Monefy.Application.DTOs;
 namespace Monefy.DistribuitedWebService.Controllers
 {
     [ApiController]
-    [Route("v{version:apiVersion}/[controller]")]
+    [Route("{version:apiVersion}/[controller]")]
     public class CategoryController : Controller
     {
         private readonly ICategoryAppService _categoryAppService;
