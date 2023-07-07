@@ -3,7 +3,7 @@ using Monefy.Entities;
 
 namespace Monefy.Business.RepositoryContracts
 {
-    public interface IUserRepository
+    public interface IUserInfraestrucutureService
     {
         Task<IEnumerable<EntityUser>> GetAllAsync();
         Task<EntityUser> GetByIdAsync(Guid id);

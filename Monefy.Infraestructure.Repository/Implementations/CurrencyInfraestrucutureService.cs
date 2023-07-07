@@ -7,13 +7,13 @@ using Monefy.Infraestructure.DBContext;
 
 namespace Monefy.Infraestructure.Repository.Implementations
 {
-    public class CurrencyRepository : ICurrencyRepository
+    public class CurrencyInfraestrucutureService : ICurrencyInfraestrucutureService
     {
         private readonly IMapper _mapper;
         private readonly IGenericRepository<Currency> _genericRepository;
         private readonly DataBaseContext _dataBaseContext;
 
-        public CurrencyRepository(IMapper mapper, IGenericRepository<Currency> genericRepository, DataBaseContext context)
+        public CurrencyInfraestrucutureService(IMapper mapper, IGenericRepository<Currency> genericRepository, DataBaseContext context)
         {
             _mapper = mapper;
             _genericRepository = genericRepository;

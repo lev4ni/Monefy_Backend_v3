@@ -8,22 +8,22 @@ namespace Monefy.Infraestructure.Repository.Implementations
     {
         private readonly DataBaseContext _categoryContext;
     
-        public ICategoryRepository CategoryRepository { get; }
-        public ICurrencyRepository CurrencyRepository { get; }
-        public IExpenseRepository ExpenseRepository { get; }
-        public IUserRepository UserRepository { get; }
-        public IWalletRepository WalletRepository { get; }
-        public IIncomeRepository IncomeRepository { get; }
+        public ICategoryInfraestrucutureService CategoryRepository { get; }
+        public ICurrencyInfraestrucutureService CurrencyRepository { get; }
+        public IExpenseInfraestrucutureService ExpenseRepository { get; }
+        public IUserInfraestrucutureService UserRepository { get; }
+        public IWalletInfraestrucutureService WalletRepository { get; }
+        public IIncomeInfraestrucutureService IncomeRepository { get; }
 
         public UnitOfWork(
             DataBaseContext categoryContext, 
        
-            ICategoryRepository categoryRepository, 
-            ICurrencyRepository currencyRepository,
-            IExpenseRepository expenseRepository,
-            IUserRepository userRepository,
-            IWalletRepository walletRepository,
-            IIncomeRepository incomeRepository)
+            ICategoryInfraestrucutureService categoryRepository, 
+            ICurrencyInfraestrucutureService currencyRepository,
+            IExpenseInfraestrucutureService expenseRepository,
+            IUserInfraestrucutureService userRepository,
+            IWalletInfraestrucutureService walletRepository,
+            IIncomeInfraestrucutureService incomeRepository)
         {
             _categoryContext = categoryContext;
             

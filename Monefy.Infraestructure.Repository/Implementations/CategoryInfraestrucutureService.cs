@@ -7,13 +7,13 @@ using Monefy.Business.RepositoryContracts;
 
 namespace Monefy.Infraestructure.Repository.Implementations
 {
-    public class CategoryRepository : ICategoryRepository
+    public class CategoryInfraestrucutureService : ICategoryInfraestrucutureService
     {
         private readonly IMapper _mapper;
         private readonly IGenericRepository<Category> _genericRepository;
         private readonly DataBaseContext _dataBaseContext;
 
-        public CategoryRepository(IMapper mapper, IGenericRepository<Category> genericRepository, DataBaseContext context)
+        public CategoryInfraestrucutureService(IMapper mapper, IGenericRepository<Category> genericRepository, DataBaseContext context)
         {
             _mapper = mapper;
             _genericRepository = genericRepository;

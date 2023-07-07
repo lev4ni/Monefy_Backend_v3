@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Monefy.Business.RepositoryContracts
 {
-    public interface IIncomeRepository
+    public interface IIncomeInfraestrucutureService
     {
         Task<IEnumerable<EntityIncome>> GetAllAsync();
         Task<EntityIncome> GetByIdAsync(Guid id);

@@ -7,13 +7,13 @@ using Monefy.Infraestructure.DBContext;
 
 namespace Monefy.Infraestructure.Repository.Implementations
 {
-    public class WalletRepository :  IWalletRepository
+    public class WalletInfraestrucutureService :  IWalletInfraestrucutureService
     {
         private readonly IMapper _mapper;
         private readonly IGenericRepository<Wallet> _genericRepository;
         private readonly DataBaseContext _dataBaseContext;
 
-        public WalletRepository(IMapper mapper, IGenericRepository<Wallet> genericRepository, DataBaseContext context)
+        public WalletInfraestrucutureService(IMapper mapper, IGenericRepository<Wallet> genericRepository, DataBaseContext context)
         {
             _mapper = mapper;
             _genericRepository = genericRepository;
