@@ -8,11 +8,13 @@ using Monefy.Business.RepositoryContracts;
 namespace Monefy.Infraestructure.Repository.Configuration
 {
     public static class RepositoryDependencyInjection
+
     {
        public static IServiceCollection AddInfraestructure(this IServiceCollection services, string connectionString)
         {
             services.AddTransient<IUnitOfWork, UnitOfWork>();
 
+            //services.AddAutoMapper(typeof(LiteDbCategoryRepository));
             services.AddAutoMapper(typeof(CategoryRepository));
             services.AddAutoMapper(typeof(CurrencyRepository));
             services.AddAutoMapper(typeof(ExpenseRepository));
@@ -22,6 +24,8 @@ namespace Monefy.Infraestructure.Repository.Configuration
 
             services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddTransient<ICategoryRepository, CategoryRepository>();
+            //services.AddTransient<ICategoryRepository, LiteDbCategoryRepository>();
+
             services.AddTransient<ICurrencyRepository, CurrencyRepository>();
             services.AddTransient<IExpenseRepository, ExpenseRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
@@ -33,7 +37,6 @@ namespace Monefy.Infraestructure.Repository.Configuration
                 {
                     options.UseSqlServer(connectionString);
                 });
-
 
             return services;
         }

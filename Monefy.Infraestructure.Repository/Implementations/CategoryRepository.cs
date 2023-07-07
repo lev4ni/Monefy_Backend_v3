@@ -9,14 +9,9 @@ namespace Monefy.Infraestructure.Repository.Implementations
 {
     public class CategoryRepository : ICategoryRepository
     {
-     
         private readonly IMapper _mapper;
         private readonly IGenericRepository<Category> _genericRepository;
         private readonly DataBaseContext _dataBaseContext;
-       /* public CategoryRepository(DataBaseContext dbContext, IMapper mapper) : base(dbContext)
-        {
-            _mapper = mapper;
-        }*/
 
         public CategoryRepository(IMapper mapper, IGenericRepository<Category> genericRepository, DataBaseContext context)
         {

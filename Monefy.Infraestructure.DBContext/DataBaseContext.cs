@@ -23,10 +23,11 @@ namespace Monefy.Infraestructure.DBContext
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseSqlServer("DefaultConnection");
-            }
+            if (!optionsBuilder.IsConfigured) 
+            {       
+            //optionsBuilder.UseSqlServer("DefaultConnection");
+            optionsBuilder.UseSqlite("DatabaseLocation");
+        }
         }
     }
 }
