@@ -14,8 +14,8 @@ namespace Monefy.Infraestructure.Repository.Configuration
         {
             services.AddTransient<IUnitOfWork, UnitOfWork>();
 
-            services.AddAutoMapper(typeof(LiteDbCategoryRepository));
-            //services.AddAutoMapper(typeof(CategoryRepository));
+            //services.AddAutoMapper(typeof(LiteDbCategoryRepository));
+            services.AddAutoMapper(typeof(CategoryRepository));
             services.AddAutoMapper(typeof(CurrencyRepository));
             services.AddAutoMapper(typeof(ExpenseRepository));
             services.AddAutoMapper(typeof(UserRepository));
@@ -23,8 +23,8 @@ namespace Monefy.Infraestructure.Repository.Configuration
             services.AddAutoMapper(typeof(IncomeRepository));
 
             services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-            //services.AddTransient<ICategoryRepository, CategoryRepository>();
-            services.AddTransient<ICategoryRepository, LiteDbCategoryRepository>();
+            services.AddTransient<ICategoryRepository, CategoryRepository>();
+            //services.AddTransient<ICategoryRepository, LiteDbCategoryRepository>();
 
             services.AddTransient<ICurrencyRepository, CurrencyRepository>();
             services.AddTransient<IExpenseRepository, ExpenseRepository>();
