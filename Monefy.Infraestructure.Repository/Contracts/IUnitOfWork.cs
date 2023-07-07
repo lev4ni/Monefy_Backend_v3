@@ -1,6 +1,8 @@
 ﻿
 
-namespace Monefy.Business.RepositoryContracts
+using Monefy.Business.RepositoryContracts;
+
+namespace Monefy.Infraestructure.Repository.Contracts
 {
     public interface IUnitOfWork : IDisposable
     {

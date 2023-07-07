@@ -3,7 +3,7 @@ using Monefy.Infraestructure.DBContext;
 using Monefy.Infraestructure.Repository.Implementations;
 using Microsoft.EntityFrameworkCore;
 using Monefy.Business.RepositoryContracts;
-
+using Monefy.Infraestructure.Repository.Contracts;
 
 namespace Monefy.Infraestructure.Repository.Configuration
 {
@@ -24,7 +24,6 @@ namespace Monefy.Infraestructure.Repository.Configuration
 
             services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddTransient<ICategoryInfraestrucutureService, CategoryInfraestrucutureService>();
-            //services.AddTransient<ICategoryRepository, LiteDbCategoryRepository>();
 
             services.AddTransient<ICurrencyInfraestrucutureService, CurrencyInfraestrucutureService>();
             services.AddTransient<IExpenseInfraestrucutureService, ExpenseInfraestrucutureService>();

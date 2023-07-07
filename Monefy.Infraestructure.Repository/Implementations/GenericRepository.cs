@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Monefy.Business.RepositoryContracts;
+using Monefy.Infraestructure.Repository.Contracts;
 
 namespace Monefy.Infraestructure.Repository.Implementations
 {

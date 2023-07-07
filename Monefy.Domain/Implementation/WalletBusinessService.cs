@@ -1,7 +1,6 @@
-﻿using Monefy.Business.RepositoryContracts;
-using Monefy.Domain.Contracts;
+﻿using Monefy.Domain.Contracts;
 using Monefy.Entities;
-
+using Monefy.Infraestructure.Repository.Contracts;
 
 namespace Monefy.Domain.Implementation
 {

@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
 using Monefy.Entities;
 using Monefy.Infraestructure.DBContext;
 using Monefy.Infraestructure.DataModels;
 using Monefy.Business.RepositoryContracts;
+using Monefy.Infraestructure.Repository.Contracts;
 
 namespace Monefy.Infraestructure.Repository.Implementations
 {

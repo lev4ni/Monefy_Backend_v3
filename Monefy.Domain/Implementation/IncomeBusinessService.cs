@@ -1,11 +1,7 @@
 ﻿using Monefy.Business.RepositoryContracts;
 using Monefy.Domain.Contracts;
 using Monefy.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Monefy.Infraestructure.Repository.Contracts;
 
 namespace Monefy.Domain.Implementation
 {
