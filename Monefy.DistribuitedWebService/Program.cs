@@ -1,5 +1,6 @@
+using Microsoft.AspNetCore.Mvc;
 using Monefy.Application.Configuration;
-using Monefy.Infraestructure.DBContext;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,13 @@ builder.Services.AddCors(options =>
                .AllowAnyMethod();
     });
 });
+
+builder.Services.AddApiVersioning(options => {
+    options.ReportApiVersions = true;
+    options.AssumeDefaultVersionWhenUnspecified = true;
+    options.DefaultApiVersion = new ApiVersion(1, 0);
+});
+
 
 var app = builder.Build();
 

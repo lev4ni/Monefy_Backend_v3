@@ -5,7 +5,7 @@ using Monefy.Application.DTOs;
 namespace Monefy.DistribuitedWebService.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("v{version:apiVersion}/[controller]")]
     public class CategoryController : Controller
     {
         private readonly ICategoryAppService _categoryAppService;
@@ -16,6 +16,7 @@ namespace Monefy.DistribuitedWebService.Controllers
         }
 
         [HttpGet]
+        [ApiVersion("1.0")]
         public async Task<IActionResult> GetAllCategories()
         {
             var category = await _categoryAppService.GetAllCategoriesAsync();
@@ -27,6 +28,7 @@ namespace Monefy.DistribuitedWebService.Controllers
         }
        
         [HttpGet("{id}")]
+        [ApiVersion("1.0")]
         public async Task<IActionResult> GetCategoryById(Guid id)
         {
             var category = await _categoryAppService.GetCategoryByIdAsync(id);
@@ -39,10 +41,20 @@ namespace Monefy.DistribuitedWebService.Controllers
             return Ok(category);
         }
         [HttpPost]
-        public async Task<IActionResult> CreateCategory(CategoryDTO category)
+        [ApiVersion("1.0")]
+        public async Task<IActionResult> CreateCategory(CategoryDTO categoryDTO)
         {
-            await _categoryAppService.CreateCategoryAsync(category);
+            await _categoryAppService.CreateCategoryAsync(categoryDTO);
             return Ok();
         }
+
+        [HttpDelete]
+        [ApiVersion("1.0")]
+        public async Task<IActionResult> DeleteCategory(Guid id)
+        {
+            await _categoryAppService.DeleteCategoryAsync(id);
+            return Ok();
+        }
+        
     }
 }

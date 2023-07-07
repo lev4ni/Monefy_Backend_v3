@@ -25,7 +25,7 @@ namespace Monefy.Infraestructure.DBContext
         {
             if (!optionsBuilder.IsConfigured) 
             {       
-            //optionsBuilder.UseSqlServer("DefaultConnection");
+           //optionsBuilder.UseSqlServer("DefaultConnection");
             optionsBuilder.UseSqlite("DatabaseLocation");
         }
         }
