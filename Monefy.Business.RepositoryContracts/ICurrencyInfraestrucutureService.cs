@@ -15,5 +15,6 @@ namespace Monefy.Business.RepositoryContracts
         Task AddAsync(EntityCurrency currency);
         Task UpdateAsync(EntityCurrency currency);
         Task DeleteAsync(int id);
+
     }
 }

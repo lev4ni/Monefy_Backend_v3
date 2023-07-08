@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Monefy.Application.Contracts;
 using Monefy.Application.DTOs;
-using Monefy.Business.RepositoryContracts;
 using Monefy.Domain.Contracts;
 using Monefy.Domain.Implementation;
 using Monefy.Entities;
@@ -35,6 +34,7 @@ namespace Monefy.Application.Implementation
         }
 
         public async Task<IncomeDTO> GetIncomeByIdAsync(int id)
+
         {
             var income = await _incomeBusinessService.GetIncomeByIdAsync(id);
             return _mapper.Map<IncomeDTO>(income);

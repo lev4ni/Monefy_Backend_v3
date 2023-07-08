@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Monefy.Application.Contracts;
 using Monefy.Application.DTOs;
-using Monefy.Business.RepositoryContracts;
 using Monefy.Domain.Contracts;
 using Monefy.Entities;
 
@@ -15,6 +14,7 @@ namespace Monefy.Application.Implementation
         {
             _mapper = mapper;
 			_userBusinessService = userBusinessService;
+
         }
 
         public async Task CreateUserAsync(UserDTO userDTO)
@@ -23,6 +23,7 @@ namespace Monefy.Application.Implementation
         }
 
         public async Task DeleteUserAsync(int id)
+
         {
             await _userBusinessService.DeleteUserAsync(id);
         }
@@ -34,6 +35,7 @@ namespace Monefy.Application.Implementation
         }
 
         public async Task<UserDTO> GetUserByIdAsync(int id)
+
         {
             var user = await _userBusinessService.GetUserByIdAsync(id);
             return _mapper.Map<UserDTO>(user);

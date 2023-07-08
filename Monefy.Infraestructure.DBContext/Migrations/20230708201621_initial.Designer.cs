@@ -12,7 +12,7 @@ using Monefy.Infraestructure.DBContext;
 namespace Monefy.Infraestructure.DBContext.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    [Migration("20230708193108_initial")]
+    [Migration("20230708201621_initial")]
     partial class initial
     {
         /// <inheritdoc />

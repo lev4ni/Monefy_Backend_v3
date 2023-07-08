@@ -9,5 +9,6 @@ namespace Monefy.Domain.Contracts
         Task CreateWalletAsync(EntityWallet wallet);
         Task UpdateWalletAsync(EntityWallet wallet);
         Task DeleteWalletAsync(int id);
+
     }
 }

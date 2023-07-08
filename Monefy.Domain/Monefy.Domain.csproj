@@ -20,6 +20,7 @@
     <ProjectReference Include="..\Monefy.Business.RepositoryContracts\Monefy.Business.RepositoryContracts.csproj" />
     <ProjectReference Include="..\Monefy.Entities\Monefy.Entities.csproj" />
     <ProjectReference Include="..\Monefy.Infraestructure.DataModels\Monefy.Infraestructure.DataModels.csproj" />
+    <ProjectReference Include="..\Monefy.Infraestructure.Repository\Monefy.Infraestructure.Repository.csproj" />
   </ItemGroup>
 
 </Project>

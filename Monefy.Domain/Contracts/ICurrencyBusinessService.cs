@@ -14,5 +14,6 @@ namespace Monefy.Domain.Contracts
         Task CreateCurrencyAsync(EntityCurrency currency);
         Task UpdateCurrencyAsync(EntityCurrency currency);
         Task DeleteCurrencyAsync(int id);
+
     }
 }

@@ -6,6 +6,7 @@ using Monefy.Business.RepositoryContracts;
 using Monefy.Infraestructure.Repository.Contracts;
 using Monefy.Infraestructure.Repository.repositories;
 
+
 namespace Monefy.Infraestructure.Repository.Configuration
 {
     public static class RepositoryDependencyInjection
@@ -20,6 +21,7 @@ namespace Monefy.Infraestructure.Repository.Configuration
             services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
             services.AddTransient<ICategoryInfraestrucutureService, CategoryInfraestrucutureService>();
+
             services.AddTransient<ICurrencyInfraestrucutureService, CurrencyInfraestrucutureService>();
             services.AddTransient<IExpenseInfraestrucutureService, ExpenseInfraestrucutureService>();
             services.AddTransient<IUserInfraestrucutureService, UserInfraestrucutureService>();

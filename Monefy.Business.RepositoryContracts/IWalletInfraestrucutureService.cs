@@ -15,5 +15,6 @@ namespace Monefy.Business.RepositoryContracts
         Task AddAsync(EntityWallet wallet);
         Task UpdateAsync(EntityWallet wallet);
         Task DeleteAsync(int id);
+
     }
 }

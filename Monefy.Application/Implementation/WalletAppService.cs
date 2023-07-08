@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Monefy.Application.Contracts;
 using Monefy.Application.DTOs;
-using Monefy.Business.RepositoryContracts;
 using Monefy.Domain.Contracts;
 using Monefy.Entities;
 
@@ -15,6 +14,7 @@ namespace Monefy.Application.Implementation
         {
             _mapper = mapper;
 			_walletBusinessService = walletBusinessService;
+
         }
 
         public async Task CreateWalletAsync(WalletDTO walletDTO)
@@ -23,6 +23,7 @@ namespace Monefy.Application.Implementation
         }
 
         public async Task DeleteWalletAsync(int id)
+
         {
             await _walletBusinessService.DeleteWalletAsync(id);
         }
@@ -34,6 +35,7 @@ namespace Monefy.Application.Implementation
         }
 
         public async Task<WalletDTO> GetWalletByIdAsync(int id)
+
         {
             var wallet = await _walletBusinessService.GetWalletByIdAsync(id);
             return _mapper.Map<WalletDTO>(wallet);

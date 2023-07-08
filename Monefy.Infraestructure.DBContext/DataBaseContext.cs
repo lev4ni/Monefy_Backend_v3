@@ -20,7 +20,6 @@ namespace Monefy.Infraestructure.DBContext
         public DbSet<User> User { get; set; }
         public DbSet<Wallet> Wallet { get; set; }
 
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             
