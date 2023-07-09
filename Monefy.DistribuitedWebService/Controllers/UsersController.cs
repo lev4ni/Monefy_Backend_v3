@@ -1,4 +1,5 @@
 ﻿using Azure;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.IdentityModel.Tokens;
@@ -15,10 +16,12 @@ namespace Monefy.DistribuitedWebService.Controllers
     public class UsersController : Controller
     {
         private readonly IUserAppService _userAppService;
+        private readonly IConfiguration _configuration;
 
-        public UsersController(IUserAppService userAppService)
+        public UsersController(IUserAppService userAppService, IConfiguration configuration)
         {
             _userAppService = userAppService;
+            _configuration = configuration;
         }
 
         [HttpPost("login")]
@@ -48,7 +51,7 @@ namespace Monefy.DistribuitedWebService.Controllers
 
         private object GenerateToken(UserDTO user)
         {
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Guid.NewGuid().ToString()));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Key"]));
             var claims = new List<Claim>()
             {
                 new Claim("id", user.Id.ToString()),
@@ -70,6 +73,7 @@ namespace Monefy.DistribuitedWebService.Controllers
 
         [HttpGet]
         [ApiVersion("1.0")]
+        [Authorize]
         public async Task<IActionResult> GetAllUsers()
         {
             var user = await _userAppService.GetAllUsersAsync();
@@ -82,6 +86,7 @@ namespace Monefy.DistribuitedWebService.Controllers
 
         [HttpGet("{id}")]
         [ApiVersion("1.0")]
+        [Authorize]
         public async Task<IActionResult> GetUserById(int id)
         {
             var user = await _userAppService.GetUserByIdAsync(id);
@@ -113,6 +118,7 @@ namespace Monefy.DistribuitedWebService.Controllers
 
         [HttpDelete]
         [ApiVersion("1.0")]
+        [Authorize]
         public async Task<IActionResult> DeleteUser(int id)
         {
             await _userAppService.DeleteUserAsync(id);

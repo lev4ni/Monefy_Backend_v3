@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Monefy.Application.Contracts;
 using Monefy.Application.DTOs;
 
@@ -8,6 +9,7 @@ namespace Monefy.DistribuitedWebService.Controllers
 {
     [ApiController]
     [Route("v{version:apiVersion}/[controller]")]
+    [Authorize]
     public class IncomesController : Controller
     {
         private readonly IIncomeAppService _incomeAppService;

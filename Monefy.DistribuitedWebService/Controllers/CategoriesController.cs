@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Monefy.Application.Contracts;
 using Monefy.Application.DTOs;
 
@@ -6,6 +7,7 @@ namespace Monefy.DistribuitedWebService.Controllers
 {
     [ApiController]
     [Route("{version:apiVersion}/[controller]")]
+    [Authorize]
     public class CategoriesController : Controller
     {
         private readonly ICategoryAppService _categoryAppService;

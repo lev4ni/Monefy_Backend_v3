@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Monefy.Application.Contracts;
 using Monefy.Application.DTOs;
 using Monefy.Application.Implementation;
@@ -7,6 +8,7 @@ namespace Monefy.DistribuitedWebService.Controllers
 {
     [ApiController]
     [Route("v{version:apiVersion}/[controller]")]
+    [Authorize]
     public class WalletsController : Controller
     {
         private readonly IWalletAppService _walletAppService;
