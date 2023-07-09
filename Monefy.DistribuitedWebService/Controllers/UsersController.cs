@@ -1,21 +1,28 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Azure;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Monefy.Application.Contracts;
 using Monefy.Application.DTOs;
-using Monefy.Application.Implementation;
 
 namespace Monefy.DistribuitedWebService.Controllers
 {
     [Route("v{version:apiVersion}/[controller]")]
     [ApiController]
-    public class UserController : Controller
+    public class UsersController : Controller
     {
         private readonly IUserAppService _userAppService;
 
-        public UserController(IUserAppService userAppService)
+        public UsersController(IUserAppService userAppService)
         {
             _userAppService = userAppService;
         }
+
+        //[HttpGet]
+        //[ApiVersion("1.0")]
+        //public async Task<IActionResult> Login(UserDTO user)
+        //{
+        //    var userDB = _userAppService.GetUserByIdAsync();
+        //}
 
         [HttpGet]
         [ApiVersion("1.0")]
@@ -44,21 +51,31 @@ namespace Monefy.DistribuitedWebService.Controllers
         }
         [HttpPost]
         [ApiVersion("1.0")]
-        public async Task<IActionResult> CreateUser(UserDTO userDTO)
+        public async Task<IActionResult> Register(UserDTO userDTO)
         {
-            await _userAppService.CreateUserAsync(userDTO);
-            return Ok();
+            try
+            {
+                userDTO.Password = BCrypt.Net.BCrypt.HashPassword(userDTO.Password);
+                await _userAppService.CreateUserAsync(userDTO);
+                return Ok();
+            }
+            catch(Exception ex) 
+            {
+                if (ex.InnerException is SqlException sqlException && sqlException.Number == 2601) 
+                    return BadRequest(new { Success = false, Message = "That name or email already exists." });
+                else return BadRequest(new { Success = false, Message = "Error creating user." });    
+            }
         }
 
         [HttpDelete]
         [ApiVersion("1.0")]
-        public async Task<IActionResult> DeleteCategory(int id)
+        public async Task<IActionResult> DeleteUser(int id)
         {
             await _userAppService.DeleteUserAsync(id);
             return Ok();
         }
 
-    } 
+    }
 }
 
 

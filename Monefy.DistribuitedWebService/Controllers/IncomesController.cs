@@ -8,11 +8,11 @@ namespace Monefy.DistribuitedWebService.Controllers
 {
     [ApiController]
     [Route("v{version:apiVersion}/[controller]")]
-    public class IncomeController : Controller
+    public class IncomesController : Controller
     {
         private readonly IIncomeAppService _incomeAppService;
 
-        public IncomeController(IIncomeAppService incomeAppService)
+        public IncomesController(IIncomeAppService incomeAppService)
         {
             _incomeAppService = incomeAppService;
         }

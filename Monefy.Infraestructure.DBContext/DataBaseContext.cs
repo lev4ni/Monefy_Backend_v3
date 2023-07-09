@@ -22,7 +22,13 @@ namespace Monefy.Infraestructure.DBContext
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.Name)
+                .IsUnique();
+
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.Email)
+                .IsUnique();
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

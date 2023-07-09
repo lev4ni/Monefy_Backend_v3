@@ -45,5 +45,10 @@ namespace Monefy.Application.Implementation
         {
             await _userBusinessService.UpdateUserAsync(_mapper.Map<EntityUser>(userDTO));
         }
+
+        public async Task<bool> ValidateUser(UserDTO userDTO)
+        {
+            return await _userBusinessService.ValidateUser(_mapper.Map<EntityUser>(userDTO));
+        }
     }
 }

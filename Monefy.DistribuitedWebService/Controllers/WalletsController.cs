@@ -7,11 +7,11 @@ namespace Monefy.DistribuitedWebService.Controllers
 {
     [ApiController]
     [Route("v{version:apiVersion}/[controller]")]
-    public class WalletController : Controller
+    public class WalletsController : Controller
     {
         private readonly IWalletAppService _walletAppService;
 
-        public WalletController(IWalletAppService walletAppService)
+        public WalletsController(IWalletAppService walletAppService)
         {
             _walletAppService = walletAppService;
         }

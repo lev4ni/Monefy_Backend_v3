@@ -39,5 +39,10 @@ namespace Monefy.Domain.Implementation
 			await _userInfraestrucutureService.DeleteAsync(id);
 			await _unitOfWork.SaveChangesAsync();
 		}
-	}
+
+        public async Task<bool> ValidateUser(EntityUser entityUser)
+        {
+			return await _userInfraestrucutureService.ValidateUser(entityUser);
+        }
+    }
 }

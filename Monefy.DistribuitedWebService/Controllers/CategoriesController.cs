@@ -6,11 +6,11 @@ namespace Monefy.DistribuitedWebService.Controllers
 {
     [ApiController]
     [Route("{version:apiVersion}/[controller]")]
-    public class CategoryController : Controller
+    public class CategoriesController : Controller
     {
         private readonly ICategoryAppService _categoryAppService;
 
-        public CategoryController(ICategoryAppService categoryAppService)
+        public CategoriesController(ICategoryAppService categoryAppService)
         {
             _categoryAppService = categoryAppService;
         }
