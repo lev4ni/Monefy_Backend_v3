@@ -11,5 +11,6 @@ namespace Monefy.Infraestructure.Repository.Contracts
         Task AddAsync(TEntity entity, DbContext context);
         Task UpdateAsync(TEntity entity, DbContext context);
         Task DeleteAsync(int id, DbContext context);
+  
     }
 }

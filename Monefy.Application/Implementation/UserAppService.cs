@@ -13,7 +13,7 @@ namespace Monefy.Application.Implementation
         public UserAppService(IMapper mapper, IUserBusinessService userBusinessService)
         {
             _mapper = mapper;
-			_userBusinessService = userBusinessService;
+            _userBusinessService = userBusinessService;
 
         }
 
@@ -45,5 +45,6 @@ namespace Monefy.Application.Implementation
         {
             await _userBusinessService.UpdateUserAsync(_mapper.Map<EntityUser>(userDTO));
         }
+        
     }
-}
+  }

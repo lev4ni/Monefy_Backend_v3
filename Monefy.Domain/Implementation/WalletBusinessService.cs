@@ -1,6 +1,7 @@
 using Monefy.Business.RepositoryContracts;
 using Monefy.Domain.Contracts;
 using Monefy.Entities;
+using Monefy.Infraestructure.DataModels;
 
 namespace Monefy.Domain.Implementation
 {
@@ -38,5 +39,11 @@ namespace Monefy.Domain.Implementation
 			await _walletInfraestrucutureService.DeleteAsync(id);
 			await _unitOfWork.SaveChangesAsync();
 		}
-	}
+		public async Task<IEnumerable<EntityWallet>> GetUsersWalletAsync(int id)
+		{
+			var usersWallet = await _walletInfraestrucutureService.GetUsersWalletAsync(id);
+			return usersWallet;
+        }
+
+    }
 }

@@ -45,5 +45,11 @@ namespace Monefy.Application.Implementation
         {
             await _walletBusinessService.UpdateWalletAsync(_mapper.Map<EntityWallet>(walletDTO));
         }
+
+        public async Task <IEnumerable<WalletDTO>> GetUsersWalletAsync(int id)
+        {
+            var usersWallet = await _walletBusinessService.GetUsersWalletAsync(id);
+            return _mapper.Map < IEnumerable<WalletDTO>>(usersWallet);
+        }
     }
 }

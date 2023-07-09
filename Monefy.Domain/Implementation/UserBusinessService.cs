@@ -39,5 +39,6 @@ namespace Monefy.Domain.Implementation
 			await _userInfraestrucutureService.DeleteAsync(id);
 			await _unitOfWork.SaveChangesAsync();
 		}
+		
 	}
 }

@@ -48,6 +48,7 @@ namespace Monefy.Infraestructure.Repository.Implementations
         {
             await _genericRepository.DeleteAsync(id, _dataBaseContext);
         }
+       
     }
 
 }
