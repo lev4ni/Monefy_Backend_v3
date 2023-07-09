@@ -26,8 +26,8 @@ namespace Monefy.Infraestructure.Repository.Implementations
 
             public async Task<IEnumerable<TEntity>> GetAllAsync(DbContext context)
             {
-                return await context.Set<TEntity>().ToListAsync();
-            }
+                return await context.Set<TEntity>().ToListAsync(); //Where(w => w.UserId == id)
+        }
 
             public async Task AddAsync(TEntity entity, DbContext context)
             {
