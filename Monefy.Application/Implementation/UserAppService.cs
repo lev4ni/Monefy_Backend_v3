@@ -45,6 +45,18 @@ namespace Monefy.Application.Implementation
         {
             await _userBusinessService.UpdateUserAsync(_mapper.Map<EntityUser>(userDTO));
         }
-        
+        public async Task RegisterUserAsync(UserDTO userDTO)
+        {
+            // Mapear el objeto UserDTO a EntityUser
+            var user = _mapper.Map<EntityUser>(userDTO);
+
+            await _userBusinessService.RegisterUserAsync(user);
+        }
+
+        public async Task<UserDTO> AuthenticateUserAsync(string name, string password)
+        {
+            var user = await _userBusinessService.AuthenticateUserAsync(name, password);
+            return _mapper.Map<UserDTO>(user);
+        }
     }
   }

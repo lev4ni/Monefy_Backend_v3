@@ -52,12 +52,31 @@ namespace Monefy.DistribuitedWebService.Controllers
 
         [HttpDelete]
         [ApiVersion("1.0")]
-        public async Task<IActionResult> DeleteCategory(int id)
+        public async Task<IActionResult> DeleteUser(int id)
         {
             await _userAppService.DeleteUserAsync(id);
             return Ok();
         }
 
+        [HttpPost("Register")]
+        [ApiVersion("1.0")]
+        public async Task<IActionResult> Register(UserDTO userDTO)
+        {
+            await _userAppService.RegisterUserAsync(userDTO);
+            return Ok();
+        }
+
+        [HttpPost("login")]
+        [ApiVersion("1.0")]
+        public async Task<IActionResult> Login(UserDTO userDTO)
+        {
+            var user = await _userAppService.AuthenticateUserAsync(userDTO.Name, userDTO.Password);
+            if (user == null)
+            {
+                return BadRequest("Invalid username or password");
+            }
+            return Ok(user);
+        }
     } 
 }
 

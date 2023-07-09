@@ -48,7 +48,12 @@ namespace Monefy.Infraestructure.Repository.Implementations
         {
             await _genericRepository.DeleteAsync(id, _dataBaseContext);
         }
-       
+
+        public async Task<EntityUser> GetUserByNameAsync(string name)
+        {
+            var userDataModel = await _genericRepository.SingleOrDefaultAsync(u => u.Name == name, _dataBaseContext);
+            return _mapper.Map<EntityUser>(userDataModel);
+        }
     }
 
 }

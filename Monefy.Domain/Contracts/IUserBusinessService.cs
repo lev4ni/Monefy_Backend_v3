@@ -1,9 +1,5 @@
 ﻿using Monefy.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Monefy.Domain.Contracts
 {
@@ -14,6 +10,8 @@ namespace Monefy.Domain.Contracts
         Task CreateUserAsync(EntityUser user);
         Task UpdateUserAsync(EntityUser user);
         Task DeleteUserAsync(int id);
+        Task RegisterUserAsync(EntityUser user);
+        Task<EntityUser> AuthenticateUserAsync(string name, string password);
 
     }
 }

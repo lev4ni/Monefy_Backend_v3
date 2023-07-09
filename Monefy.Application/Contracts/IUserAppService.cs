@@ -9,7 +9,9 @@ namespace Monefy.Application.Contracts
         Task CreateUserAsync(UserDTO UserDTO);
         Task UpdateUseryAsync(UserDTO UserDTO);
         Task DeleteUserAsync(int id);
+        Task RegisterUserAsync(UserDTO userDTO);
+        Task<UserDTO> AuthenticateUserAsync(string username, string password);
 
-        
+
     }
 }

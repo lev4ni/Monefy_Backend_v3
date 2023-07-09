@@ -39,6 +39,35 @@ namespace Monefy.Domain.Implementation
 			await _userInfraestrucutureService.DeleteAsync(id);
 			await _unitOfWork.SaveChangesAsync();
 		}
-		
-	}
+
+        public async Task<EntityUser> GetUserByNameAsync(string name)
+        {
+            return await _userInfraestrucutureService.GetUserByNameAsync(name);
+        }
+
+        public async Task RegisterUserAsync(EntityUser user)
+        {
+            var existingUser = await _userInfraestrucutureService.GetUserByNameAsync(user.Name);
+            if (existingUser != null)
+            {
+                throw new Exception("User with the same name already exists.");
+            }
+
+            // Implementar la lógica para registrar un nuevo usuario en _userInfraestrucutureService
+            await _userInfraestrucutureService.AddAsync(user);
+            await _unitOfWork.SaveChangesAsync();
+        }
+
+        public async Task<EntityUser?> AuthenticateUserAsync(string name, string password)
+        {
+            var user = await _userInfraestrucutureService.GetUserByNameAsync(name);
+
+            if (user != null && user.Password == password)
+            {
+                return user;
+            }
+            return null;
+        }
+
+    }
 }
