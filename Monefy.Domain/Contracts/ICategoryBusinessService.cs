@@ -6,9 +6,10 @@ namespace Monefy.Domain.Contracts
     public interface ICategoryBusinessService
     {
         Task<IEnumerable<EntityCategory>> GetAllCategoriesAsync();
-        Task<EntityCategory> GetCategoryByIdAsync(Guid guid);
+        Task<EntityCategory> GetCategoryByIdAsync(int guid);
         Task CreateCategoryAsync(EntityCategory category);
         Task UpdateCategoryAsync(EntityCategory category);
-        Task DeleteCategoryAsync(Guid id);
+        Task DeleteCategoryAsync(int id);
+
     }
 }

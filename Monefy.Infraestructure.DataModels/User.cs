@@ -7,9 +7,10 @@ namespace Monefy.Infraestructure.DataModels
     [Table("User")]
     public class User
     {
-        [Key] public int Id_User { get; set; }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
         public Guid Guid { get; set; } = Guid.NewGuid();
-        public Guid Guid_User { get; set; }
         public string? Name { get; set; }
         public string? Email { get; set; }
         public string? Password { get; set; }

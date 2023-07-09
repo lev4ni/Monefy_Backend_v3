@@ -1,42 +1,43 @@
-﻿using Monefy.Domain.Contracts;
+using Monefy.Business.RepositoryContracts;
+using Monefy.Domain.Contracts;
 using Monefy.Entities;
-using Monefy.Infraestructure.Repository.Contracts;
 
 namespace Monefy.Domain.Implementation
 {
-    public class UserBusinessService : IUserBusinessService
-    {
-        private readonly IUnitOfWork _unitOfWork;
-        public UserBusinessService(IUnitOfWork unitOfWork)
-        {
-            _unitOfWork = unitOfWork;
-        }
-        public async Task<IEnumerable<EntityUser>> GetAllUsersAsync()
-        {
-            var users = await _unitOfWork.UserRepository.GetAllAsync();
-            await _unitOfWork.SaveChangesAsync();
-            return users;
-        }
-        public async Task<EntityUser> GetUserByIdAsync(Guid guid)
-        {
-            var usersGuid = await _unitOfWork.UserRepository.GetByIdAsync(guid);
-            await _unitOfWork.SaveChangesAsync();
-            return usersGuid;
-        }
-        public async Task CreateUserAsync(EntityUser user)
-        {
-            await _unitOfWork.UserRepository.AddAsync(user);
-            await _unitOfWork.SaveChangesAsync();
-        }
-        public async Task UpdateUserAsync(EntityUser user)
-        {
-            await _unitOfWork.UserRepository.UpdateAsync(user);
-            await _unitOfWork.SaveChangesAsync();
-        }
-        public async Task DeleteUserAsync(Guid id)
-        {
-            await _unitOfWork.UserRepository.DeleteAsync(id);
-            await _unitOfWork.SaveChangesAsync();
-        }
-    }
+	public class UserBusinessService : IUserBusinessService
+	{
+		private readonly IUnitOfWork _unitOfWork;
+		private readonly IUserInfraestrucutureService _userInfraestrucutureService;
+		public UserBusinessService(IUnitOfWork unitOfWork, IUserInfraestrucutureService userInfraestrucutureService)
+		{
+			_unitOfWork = unitOfWork;
+			_userInfraestrucutureService = userInfraestrucutureService;
+
+		}
+		public async Task<IEnumerable<EntityUser>> GetAllUsersAsync()
+		{
+			var users = await _userInfraestrucutureService.GetAllAsync();
+			return users;
+		}
+		public async Task<EntityUser> GetUserByIdAsync(int id)
+		{
+			var usersGuid = await _userInfraestrucutureService.GetByIdAsync(id);
+			return usersGuid;
+		}
+		public async Task CreateUserAsync(EntityUser user)
+		{
+			await _userInfraestrucutureService.AddAsync(user);
+			await _unitOfWork.SaveChangesAsync();
+		}
+		public async Task UpdateUserAsync(EntityUser user)
+		{
+			await _userInfraestrucutureService.UpdateAsync(user);
+			await _unitOfWork.SaveChangesAsync();
+		}
+		public async Task DeleteUserAsync(int id)
+		{
+			await _userInfraestrucutureService.DeleteAsync(id);
+			await _unitOfWork.SaveChangesAsync();
+		}
+	}
 }

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Monefy.Infraestructure.DBContext.Migrations
 {
     /// <inheritdoc />
-    public partial class migrationdb : Migration
+    public partial class initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,7 +15,7 @@ namespace Monefy.Infraestructure.DBContext.Migrations
                 name: "Category",
                 columns: table => new
                 {
-                    Id_Category = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Guid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -26,14 +26,14 @@ namespace Monefy.Infraestructure.DBContext.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Category", x => x.Id_Category);
+                    table.PrimaryKey("PK_Category", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Currency",
                 columns: table => new
                 {
-                    Id_Currency = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Guid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CurrencyName = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -41,17 +41,16 @@ namespace Monefy.Infraestructure.DBContext.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Currency", x => x.Id_Currency);
+                    table.PrimaryKey("PK_Currency", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "User",
                 columns: table => new
                 {
-                    Id_User = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Guid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Guid_User = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -59,32 +58,32 @@ namespace Monefy.Infraestructure.DBContext.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_User", x => x.Id_User);
+                    table.PrimaryKey("PK_User", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Wallet",
                 columns: table => new
                 {
-                    Id_Wallet = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Guid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Id_User = table.Column<int>(type: "int", nullable: false),
-                    UserId_User = table.Column<int>(type: "int", nullable: true),
-                    TotalExpense = table.Column<float>(type: "real", nullable: true),
-                    TotalInCome = table.Column<float>(type: "real", nullable: true),
-                    TotalBalance = table.Column<float>(type: "real", nullable: true),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    TotalExpense = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    TotalIncome = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    TotalBalance = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Wallet", x => x.Id_Wallet);
+                    table.PrimaryKey("PK_Wallet", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Wallet_User_UserId_User",
-                        column: x => x.UserId_User,
+                        name: "FK_Wallet_User_UserId",
+                        column: x => x.UserId,
                         principalTable: "User",
-                        principalColumn: "Id_User");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -94,27 +93,26 @@ namespace Monefy.Infraestructure.DBContext.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Guid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Id_Wallet = table.Column<int>(type: "int", nullable: false),
-                    Amount = table.Column<float>(type: "real", nullable: false),
-                    TotalAmount = table.Column<float>(type: "real", nullable: false),
+                    WalletId = table.Column<int>(type: "int", nullable: false),
+                    Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Id_Category = table.Column<int>(type: "int", nullable: false),
+                    CategoryId = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Expense", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Expense_Category_Id_Category",
-                        column: x => x.Id_Category,
+                        name: "FK_Expense_Category_CategoryId",
+                        column: x => x.CategoryId,
                         principalTable: "Category",
-                        principalColumn: "Id_Category",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Expense_Wallet_Id_Wallet",
-                        column: x => x.Id_Wallet,
+                        name: "FK_Expense_Wallet_WalletId",
+                        column: x => x.WalletId,
                         principalTable: "Wallet",
-                        principalColumn: "Id_Wallet",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -125,53 +123,53 @@ namespace Monefy.Infraestructure.DBContext.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Guid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Id_Wallet = table.Column<int>(type: "int", nullable: false),
-                    Amount = table.Column<float>(type: "real", nullable: false),
+                    WalletId = table.Column<int>(type: "int", nullable: false),
+                    Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Id_Category = table.Column<int>(type: "int", nullable: false),
+                    CategoryId = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Income", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Income_Category_Id_Category",
-                        column: x => x.Id_Category,
+                        name: "FK_Income_Category_CategoryId",
+                        column: x => x.CategoryId,
                         principalTable: "Category",
-                        principalColumn: "Id_Category",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Income_Wallet_Id_Wallet",
-                        column: x => x.Id_Wallet,
+                        name: "FK_Income_Wallet_WalletId",
+                        column: x => x.WalletId,
                         principalTable: "Wallet",
-                        principalColumn: "Id_Wallet",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Expense_Id_Category",
+                name: "IX_Expense_CategoryId",
                 table: "Expense",
-                column: "Id_Category");
+                column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Expense_Id_Wallet",
+                name: "IX_Expense_WalletId",
                 table: "Expense",
-                column: "Id_Wallet");
+                column: "WalletId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Income_Id_Category",
+                name: "IX_Income_CategoryId",
                 table: "Income",
-                column: "Id_Category");
+                column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Income_Id_Wallet",
+                name: "IX_Income_WalletId",
                 table: "Income",
-                column: "Id_Wallet");
+                column: "WalletId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Wallet_UserId_User",
+                name: "IX_Wallet_UserId",
                 table: "Wallet",
-                column: "UserId_User");
+                column: "UserId");
         }
 
         /// <inheritdoc />

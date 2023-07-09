@@ -11,9 +11,10 @@ namespace Monefy.Business.RepositoryContracts
     public interface IWalletInfraestrucutureService
     {
         Task<IEnumerable<EntityWallet>> GetAllAsync();
-        Task<EntityWallet> GetByIdAsync(Guid id);
+        Task<EntityWallet> GetByIdAsync(int id);
         Task AddAsync(EntityWallet wallet);
         Task UpdateAsync(EntityWallet wallet);
-        Task DeleteAsync(Guid id);
+        Task DeleteAsync(int id);
+
     }
 }

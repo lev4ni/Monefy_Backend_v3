@@ -26,7 +26,7 @@ namespace Monefy.Infraestructure.Repository.Implementations
             return _mapper.Map<IEnumerable<EntityUser>>(userDataModels);
         }
 
-        public async Task<EntityUser> GetByIdAsync(Guid id)
+        public async Task<EntityUser> GetByIdAsync(int id)
         {
             var userDataModel = await _genericRepository.GetByIdAsync(id, _dataBaseContext);
             return _mapper.Map<EntityUser>(userDataModel);
@@ -40,11 +40,11 @@ namespace Monefy.Infraestructure.Repository.Implementations
 
         public async Task UpdateAsync(EntityUser user)
         {
-            var usertDataModel = _mapper.Map<User>(user);
-            await _genericRepository.UpdateAsync(usertDataModel, _dataBaseContext);
+            var userDataModel = _mapper.Map<User>(user);
+            await _genericRepository.UpdateAsync(userDataModel, _dataBaseContext);
         }
 
-        public async Task DeleteAsync(Guid id)
+        public async Task DeleteAsync(int id)
         {
             await _genericRepository.DeleteAsync(id, _dataBaseContext);
         }

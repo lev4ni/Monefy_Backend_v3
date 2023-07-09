@@ -6,9 +6,10 @@ namespace Monefy.Business.RepositoryContracts
     public interface IUserInfraestrucutureService
     {
         Task<IEnumerable<EntityUser>> GetAllAsync();
-        Task<EntityUser> GetByIdAsync(Guid id);
+        Task<EntityUser> GetByIdAsync(int id);
         Task AddAsync(EntityUser user);
         Task UpdateAsync(EntityUser user);
-        Task DeleteAsync(Guid id);
+        Task DeleteAsync(int id);
+
     }
 }

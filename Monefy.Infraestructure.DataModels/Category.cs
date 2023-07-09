@@ -7,7 +7,7 @@ namespace Monefy.Infraestructure.DataModels
     public class Category
     {
         [Key]
-        public int Id_Category { get; set; }
+        public int Id { get; set; }
         public Guid Guid { get; set; } = Guid.NewGuid();
         public string? Name { get; set; }
         public string? Description { get; set; }

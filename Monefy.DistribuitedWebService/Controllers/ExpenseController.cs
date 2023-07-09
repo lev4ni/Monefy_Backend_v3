@@ -27,7 +27,7 @@ namespace Monefy.DistribuitedWebService.Controllers
 
         [HttpGet("{id}")]
         [ApiVersion("1.0")]
-        public async Task<IActionResult> GetExpenseById(Guid id)
+        public async Task<IActionResult> GetExpenseById(int id)
         {
             var income = await _expenseAppService.GetExpenseByIdAsync(id);
 
@@ -56,7 +56,7 @@ namespace Monefy.DistribuitedWebService.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteExpense(Guid id)
+        public async Task<IActionResult> DeleteExpense(int id)
         {
             await _expenseAppService.DeleteExpenseAsync(id);
             return Ok();

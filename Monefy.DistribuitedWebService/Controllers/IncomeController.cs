@@ -27,7 +27,7 @@ namespace Monefy.DistribuitedWebService.Controllers
 
         [HttpGet("{id}")]
         [ApiVersion("1.0")]
-        public async Task<IActionResult> GetIncome(Guid id)
+        public async Task<IActionResult> GetIncome(int id)
         {
             var income = await _incomeAppService.GetIncomeByIdAsync(id);
 
@@ -48,7 +48,7 @@ namespace Monefy.DistribuitedWebService.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteIncome(Guid id)
+        public async Task<IActionResult> DeleteIncome(int id)
         {
             await _incomeAppService.DeleteIncomeAsync(id);
             return Ok();

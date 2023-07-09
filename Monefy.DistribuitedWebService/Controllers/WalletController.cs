@@ -26,7 +26,7 @@ namespace Monefy.DistribuitedWebService.Controllers
 
         [HttpGet("{id}")]
         [ApiVersion("1.0")]
-        public async Task<IActionResult> GetWalletById(Guid id)
+        public async Task<IActionResult> GetWalletById(int id)
         {
             var wallet = await _walletAppService.GetWalletByIdAsync(id);
             if (wallet == null)
@@ -54,7 +54,7 @@ namespace Monefy.DistribuitedWebService.Controllers
 
         [HttpDelete("{id}")]
         [ApiVersion("1.0")]
-        public async Task<IActionResult> DeleteWallet(Guid id)
+        public async Task<IActionResult> DeleteWallet(int id)
         {
             await _walletAppService.DeleteWalletAsync(id);
             return Ok();

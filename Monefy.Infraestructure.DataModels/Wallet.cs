@@ -1,4 +1,3 @@
-﻿using Monefy.Entities;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -8,14 +7,16 @@ namespace Monefy.Infraestructure.DataModels
     public class Wallet
     {
         [Key]
-        public int Id_Wallet { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
         public Guid Guid { get; set; } = Guid.NewGuid();
         public string? Name { get; set; }
-        [ForeignKey("Users")] public int Id_User { get; set; }
-        public User? User { get; set; }
-        public float? TotalExpense { get; set; }
-        public float? TotalInCome { get; set;}
-        public float? TotalBalance { get; set; }
+        [ForeignKey("User")]
+        public int UserId { get; set; }
+        public virtual User User { get; set; } = new User();
+        public decimal? TotalExpense { get; set; }
+        public decimal? TotalIncome { get; set; }
+        public decimal? TotalBalance { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
 
     }

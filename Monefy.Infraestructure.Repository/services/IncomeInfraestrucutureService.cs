@@ -26,7 +26,7 @@ namespace Monefy.Infraestructure.Repository.Implementations
             return _mapper.Map<IEnumerable<EntityIncome>>(incomeDataModels);
         }
 
-        public async Task<EntityIncome> GetByIdAsync(Guid id)
+        public async Task<EntityIncome> GetByIdAsync(int id)
         {
             var incomeDataModels = await _genericRepository.GetByIdAsync(id, _dataBaseContext);
             return _mapper.Map<EntityIncome>(incomeDataModels);
@@ -44,7 +44,7 @@ namespace Monefy.Infraestructure.Repository.Implementations
             await _genericRepository.UpdateAsync(incomeDataModels, _dataBaseContext);
         }
 
-        public async Task DeleteAsync(Guid id)
+        public async Task DeleteAsync(int id)
         {
             await _genericRepository.DeleteAsync(id, _dataBaseContext);
         }

@@ -5,9 +5,10 @@ namespace Monefy.Domain.Contracts
     public interface IWalletBusinessService
     {
         Task<IEnumerable<EntityWallet>> GetAllWalletsAsync();
-        Task<EntityWallet> GetWalletByIdAsync(Guid guid);
+        Task<EntityWallet> GetWalletByIdAsync(int guid);
         Task CreateWalletAsync(EntityWallet wallet);
         Task UpdateWalletAsync(EntityWallet wallet);
-        Task DeleteWalletAsync(Guid id);
+        Task DeleteWalletAsync(int id);
+
     }
 }

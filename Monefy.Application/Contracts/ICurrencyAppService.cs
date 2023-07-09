@@ -10,9 +10,9 @@ namespace Monefy.Application.Contracts
     public interface ICurrencyAppService
     {
         Task<IEnumerable<CurrencyDTO>> GetAllCurrenciesAsync();
-        Task<CurrencyDTO> GetCurrencyByIdAsync(Guid id);
+        Task<CurrencyDTO> GetCurrencyByIdAsync(int id);
         Task CreateCurrencyAsync(CurrencyDTO currencyDTO);
         Task UpdateCurrencyAsync(CurrencyDTO currencyDTO);
-        Task DeleteCurrencyAsync(Guid id);
+        Task DeleteCurrencyAsync(int id);
     }
 }

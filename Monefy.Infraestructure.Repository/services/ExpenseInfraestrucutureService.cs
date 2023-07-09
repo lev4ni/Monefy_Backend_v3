@@ -25,7 +25,7 @@ namespace Monefy.Infraestructure.Repository.Implementations
             return _mapper.Map<IEnumerable<EntityExpense>>(expenseDataModels);
         }
 
-        public async Task<EntityExpense> GetByIdAsync(Guid id)
+        public async Task<EntityExpense> GetByIdAsync(int id)
         {
             var expensetDataModel = await _genericRepository.GetByIdAsync(id, _dataBaseContext);
             return _mapper.Map<EntityExpense>(expensetDataModel);
@@ -43,7 +43,7 @@ namespace Monefy.Infraestructure.Repository.Implementations
             await _genericRepository.UpdateAsync(expensetDataModel, _dataBaseContext);
         }
 
-        public async Task DeleteAsync(Guid id)
+        public async Task DeleteAsync(int id)
         {
             await _genericRepository.DeleteAsync(id, _dataBaseContext);
         }

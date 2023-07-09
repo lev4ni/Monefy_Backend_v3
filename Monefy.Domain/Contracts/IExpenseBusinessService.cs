@@ -10,9 +10,10 @@ namespace Monefy.Domain.Contracts
     public interface IExpenseBusinessService
     {
         Task<IEnumerable<EntityExpense>> GetAllExpensesAsync();
-        Task<EntityExpense> GetExpenseByIdAsync(Guid guid);
+        Task<EntityExpense> GetExpenseByIdAsync(int guid);
         Task CreateExpenseAsync(EntityExpense expense);
         Task UpdateExpenseAsync(EntityExpense expense);
-        Task DeleteExpenseAsync(Guid id);
+        Task DeleteExpenseAsync(int id);
+
     }
 }

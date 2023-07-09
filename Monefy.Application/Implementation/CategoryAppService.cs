@@ -22,7 +22,7 @@ namespace Monefy.Application.Implementation
             return _mapper.Map<IEnumerable<CategoryDTO>>(categoryList);
         }
 
-        public async Task<CategoryDTO> GetCategoryByIdAsync(Guid id)
+        public async Task<CategoryDTO> GetCategoryByIdAsync(int id)
         {
             var category = await _categoryBusinessService.GetCategoryByIdAsync(id);
             return _mapper.Map<CategoryDTO>(category);
@@ -32,7 +32,7 @@ namespace Monefy.Application.Implementation
             await _categoryBusinessService.CreateCategoryAsync(_mapper.Map<EntityCategory>(categoryDTO));
         }
 
-        public async Task DeleteCategoryAsync(Guid id)
+        public async Task DeleteCategoryAsync(int id)
         {
             await _categoryBusinessService.DeleteCategoryAsync(id);
         }

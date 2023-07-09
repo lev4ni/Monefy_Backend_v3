@@ -29,7 +29,7 @@ namespace Monefy.DistribuitedWebService.Controllers
        
         [HttpGet("{id}")]
         [ApiVersion("1.0")]
-        public async Task<IActionResult> GetCategoryById(Guid id)
+        public async Task<IActionResult> GetCategoryById(int id)
         {
             var category = await _categoryAppService.GetCategoryByIdAsync(id);
            
@@ -50,7 +50,8 @@ namespace Monefy.DistribuitedWebService.Controllers
 
         [HttpDelete]
         [ApiVersion("1.0")]
-        public async Task<IActionResult> DeleteCategory(Guid id)
+
+        public async Task<IActionResult> DeleteCategory(int id)
         {
             await _categoryAppService.DeleteCategoryAsync(id);
             return Ok();

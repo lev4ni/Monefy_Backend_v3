@@ -4,6 +4,8 @@ using Monefy.Infraestructure.Repository.Implementations;
 using Microsoft.EntityFrameworkCore;
 using Monefy.Business.RepositoryContracts;
 using Monefy.Infraestructure.Repository.Contracts;
+using Monefy.Infraestructure.Repository.repositories;
+
 
 namespace Monefy.Infraestructure.Repository.Configuration
 {
@@ -14,15 +16,10 @@ namespace Monefy.Infraestructure.Repository.Configuration
         {
             services.AddTransient<IUnitOfWork, UnitOfWork>();
 
-            //services.AddAutoMapper(typeof(LiteDbCategoryRepository));
             services.AddAutoMapper(typeof(CategoryInfraestrucutureService));
-            services.AddAutoMapper(typeof(CurrencyInfraestrucutureService));
-            services.AddAutoMapper(typeof(ExpenseInfraestrucutureService));
-            services.AddAutoMapper(typeof(UserInfraestrucutureService));
-            services.AddAutoMapper(typeof(WalletInfraestrucutureService));
-            services.AddAutoMapper(typeof(IncomeInfraestrucutureService));
 
             services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+
             services.AddTransient<ICategoryInfraestrucutureService, CategoryInfraestrucutureService>();
 
             services.AddTransient<ICurrencyInfraestrucutureService, CurrencyInfraestrucutureService>();
@@ -34,7 +31,7 @@ namespace Monefy.Infraestructure.Repository.Configuration
             services.AddDbContext<DataBaseContext>(
                 options =>
                 {
-                    options.UseSqlServer(connectionString);
+                    options.UseSqlServer(connectionString).LogTo(Console.WriteLine);
                 });
 
             return services;

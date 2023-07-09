@@ -11,9 +11,10 @@ namespace Monefy.Business.RepositoryContracts
     public interface ICurrencyInfraestrucutureService
     {
         Task<IEnumerable<EntityCurrency>> GetAllAsync();
-        Task<EntityCurrency> GetByIdAsync(Guid id);
+        Task<EntityCurrency> GetByIdAsync(int id);
         Task AddAsync(EntityCurrency currency);
         Task UpdateAsync(EntityCurrency currency);
-        Task DeleteAsync(Guid id);
+        Task DeleteAsync(int id);
+
     }
 }

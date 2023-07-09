@@ -11,10 +11,10 @@ namespace Monefy.Application.Contracts
     public interface ICategoryAppService
     {
             Task<IEnumerable<CategoryDTO>> GetAllCategoriesAsync();
-            Task<CategoryDTO> GetCategoryByIdAsync(Guid id);
+            Task<CategoryDTO> GetCategoryByIdAsync(int id);
             Task CreateCategoryAsync(CategoryDTO categoryDTO);
             Task UpdateCategoryAsync(CategoryDTO categoryDTO);
-            Task DeleteCategoryAsync(Guid id);
+            Task DeleteCategoryAsync(int id);
     
     }
 }

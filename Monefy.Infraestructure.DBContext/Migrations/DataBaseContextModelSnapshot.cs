@@ -24,11 +24,11 @@ namespace Monefy.Infraestructure.DBContext.Migrations
 
             modelBuilder.Entity("Monefy.Infraestructure.DataModels.Category", b =>
                 {
-                    b.Property<int>("Id_Category")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id_Category"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -48,18 +48,18 @@ namespace Monefy.Infraestructure.DBContext.Migrations
                     b.Property<string>("UrlWeb")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id_Category");
+                    b.HasKey("Id");
 
                     b.ToTable("Category");
                 });
 
             modelBuilder.Entity("Monefy.Infraestructure.DataModels.Currency", b =>
                 {
-                    b.Property<int>("Id_Currency")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id_Currency"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("CurrencyName")
                         .HasColumnType("nvarchar(max)");
@@ -70,7 +70,7 @@ namespace Monefy.Infraestructure.DBContext.Migrations
                     b.Property<bool>("IsCrypto")
                         .HasColumnType("bit");
 
-                    b.HasKey("Id_Currency");
+                    b.HasKey("Id");
 
                     b.ToTable("Currency");
                 });
@@ -83,8 +83,11 @@ namespace Monefy.Infraestructure.DBContext.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<float>("Amount")
-                        .HasColumnType("real");
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -95,20 +98,14 @@ namespace Monefy.Infraestructure.DBContext.Migrations
                     b.Property<Guid>("Guid")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Id_Category")
+                    b.Property<int>("WalletId")
                         .HasColumnType("int");
-
-                    b.Property<int>("Id_Wallet")
-                        .HasColumnType("int");
-
-                    b.Property<float>("TotalAmount")
-                        .HasColumnType("real");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Id_Category");
+                    b.HasIndex("CategoryId");
 
-                    b.HasIndex("Id_Wallet");
+                    b.HasIndex("WalletId");
 
                     b.ToTable("Expense");
                 });
@@ -121,8 +118,11 @@ namespace Monefy.Infraestructure.DBContext.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<float>("Amount")
-                        .HasColumnType("real");
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -133,28 +133,25 @@ namespace Monefy.Infraestructure.DBContext.Migrations
                     b.Property<Guid>("Guid")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Id_Category")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Id_Wallet")
+                    b.Property<int>("WalletId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Id_Category");
+                    b.HasIndex("CategoryId");
 
-                    b.HasIndex("Id_Wallet");
+                    b.HasIndex("WalletId");
 
                     b.ToTable("Income");
                 });
 
             modelBuilder.Entity("Monefy.Infraestructure.DataModels.User", b =>
                 {
-                    b.Property<int>("Id_User")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id_User"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -165,27 +162,24 @@ namespace Monefy.Infraestructure.DBContext.Migrations
                     b.Property<Guid>("Guid")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("Guid_User")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id_User");
+                    b.HasKey("Id");
 
                     b.ToTable("User");
                 });
 
             modelBuilder.Entity("Monefy.Infraestructure.DataModels.Wallet", b =>
                 {
-                    b.Property<int>("Id_Wallet")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id_Wallet"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -193,27 +187,24 @@ namespace Monefy.Infraestructure.DBContext.Migrations
                     b.Property<Guid>("Guid")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Id_User")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<float?>("TotalBalance")
-                        .HasColumnType("real");
+                    b.Property<decimal?>("TotalBalance")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<float?>("TotalExpense")
-                        .HasColumnType("real");
+                    b.Property<decimal?>("TotalExpense")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<float?>("TotalInCome")
-                        .HasColumnType("real");
+                    b.Property<decimal?>("TotalIncome")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<int?>("UserId_User")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id_Wallet");
+                    b.HasKey("Id");
 
-                    b.HasIndex("UserId_User");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Wallet");
                 });
@@ -222,13 +213,13 @@ namespace Monefy.Infraestructure.DBContext.Migrations
                 {
                     b.HasOne("Monefy.Infraestructure.DataModels.Category", "Category")
                         .WithMany()
-                        .HasForeignKey("Id_Category")
+                        .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Monefy.Infraestructure.DataModels.Wallet", "Wallet")
                         .WithMany()
-                        .HasForeignKey("Id_Wallet")
+                        .HasForeignKey("WalletId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -241,13 +232,13 @@ namespace Monefy.Infraestructure.DBContext.Migrations
                 {
                     b.HasOne("Monefy.Infraestructure.DataModels.Category", "Category")
                         .WithMany()
-                        .HasForeignKey("Id_Category")
+                        .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Monefy.Infraestructure.DataModels.Wallet", "Wallet")
                         .WithMany()
-                        .HasForeignKey("Id_Wallet")
+                        .HasForeignKey("WalletId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -260,7 +251,9 @@ namespace Monefy.Infraestructure.DBContext.Migrations
                 {
                     b.HasOne("Monefy.Infraestructure.DataModels.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId_User");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("User");
                 });

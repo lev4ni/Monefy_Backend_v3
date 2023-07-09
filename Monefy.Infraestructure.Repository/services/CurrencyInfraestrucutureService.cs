@@ -26,7 +26,7 @@ namespace Monefy.Infraestructure.Repository.Implementations
             return _mapper.Map<IEnumerable<EntityCurrency>>(currencyDataModels);
         }
 
-        public async Task<EntityCurrency> GetByIdAsync(Guid id)
+        public async Task<EntityCurrency> GetByIdAsync(int id)
         {
             var currencytDataModel = await _genericRepository.GetByIdAsync(id, _dataBaseContext);
             return _mapper.Map<EntityCurrency>(currencytDataModel);
@@ -44,7 +44,7 @@ namespace Monefy.Infraestructure.Repository.Implementations
             await _genericRepository.UpdateAsync(currencytDataModel, _dataBaseContext);
         }
 
-        public async Task DeleteAsync(Guid id)
+        public async Task DeleteAsync(int id)
         {
             await _genericRepository.DeleteAsync(id, _dataBaseContext);
         }

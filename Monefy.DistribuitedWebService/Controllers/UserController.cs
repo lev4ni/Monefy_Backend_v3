@@ -31,7 +31,7 @@ namespace Monefy.DistribuitedWebService.Controllers
 
         [HttpGet("{id}")]
         [ApiVersion("1.0")]
-        public async Task<IActionResult> GetUserById(Guid id)
+        public async Task<IActionResult> GetUserById(int id)
         {
             var user = await _userAppService.GetUserByIdAsync(id);
 
@@ -52,7 +52,7 @@ namespace Monefy.DistribuitedWebService.Controllers
 
         [HttpDelete]
         [ApiVersion("1.0")]
-        public async Task<IActionResult> DeleteCategory(Guid id)
+        public async Task<IActionResult> DeleteCategory(int id)
         {
             await _userAppService.DeleteUserAsync(id);
             return Ok();

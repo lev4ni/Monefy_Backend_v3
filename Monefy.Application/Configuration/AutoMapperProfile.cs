@@ -23,7 +23,8 @@ namespace Monefy.Application.Configuration
             CreateMap<UserDTO, EntityUser>();
             CreateMap<EntityUser, UserDTO>();
 
-            CreateMap<WalletDTO, EntityWallet>();
+            CreateMap<WalletDTO, EntityWallet>()
+                .ForMember(dest => dest.User, opt => opt.MapFrom(src => new EntityUser { Id = src.UserId }));
             CreateMap<EntityWallet, WalletDTO>();
         }
     }

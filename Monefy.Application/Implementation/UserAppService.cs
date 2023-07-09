@@ -13,7 +13,8 @@ namespace Monefy.Application.Implementation
         public UserAppService(IMapper mapper, IUserBusinessService userBusinessService)
         {
             _mapper = mapper;
-            _userBusinessService = userBusinessService;
+			_userBusinessService = userBusinessService;
+
         }
 
         public async Task CreateUserAsync(UserDTO userDTO)
@@ -21,7 +22,8 @@ namespace Monefy.Application.Implementation
             await _userBusinessService.CreateUserAsync(_mapper.Map<EntityUser>(userDTO));
         }
 
-        public async Task DeleteUserAsync(Guid id)
+        public async Task DeleteUserAsync(int id)
+
         {
             await _userBusinessService.DeleteUserAsync(id);
         }
@@ -32,7 +34,8 @@ namespace Monefy.Application.Implementation
             return _mapper.Map<IEnumerable<UserDTO>>(userList);
         }
 
-        public async Task<UserDTO> GetUserByIdAsync(Guid id)
+        public async Task<UserDTO> GetUserByIdAsync(int id)
+
         {
             var user = await _userBusinessService.GetUserByIdAsync(id);
             return _mapper.Map<UserDTO>(user);

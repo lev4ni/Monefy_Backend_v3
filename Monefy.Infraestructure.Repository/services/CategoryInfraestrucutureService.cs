@@ -26,7 +26,7 @@ namespace Monefy.Infraestructure.Repository.Implementations
             return _mapper.Map<IEnumerable<EntityCategory>>(categoryDataModels);
         }
 
-        public async Task<EntityCategory> GetByIdAsync(Guid id)
+        public async Task<EntityCategory> GetByIdAsync(int id)
         {
             var categoryDataModels = await _genericRepository.GetByIdAsync(id, _dataBaseContext);
             return _mapper.Map<EntityCategory>(categoryDataModels);
@@ -44,7 +44,7 @@ namespace Monefy.Infraestructure.Repository.Implementations
             await _genericRepository.UpdateAsync(categoryDataModels, _dataBaseContext);
         }
 
-        public async Task DeleteAsync(Guid id)
+        public async Task DeleteAsync(int id)
         {
             await _genericRepository.DeleteAsync(id, _dataBaseContext);
         }

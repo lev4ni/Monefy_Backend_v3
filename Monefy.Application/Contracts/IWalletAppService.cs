@@ -6,9 +6,9 @@ namespace Monefy.Application.Contracts
     public interface IWalletAppService
     {
         Task<IEnumerable<WalletDTO>> GetAllWalletsAsync();
-        Task<WalletDTO> GetWalletByIdAsync(Guid id);
+        Task<WalletDTO> GetWalletByIdAsync(int id);
         Task CreateWalletAsync(WalletDTO walletDTO);
         Task UpdateWalletAsync(WalletDTO walletDTO);
-        Task DeleteWalletAsync(Guid id);
+        Task DeleteWalletAsync(int id);
     }
 }

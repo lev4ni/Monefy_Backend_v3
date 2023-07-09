@@ -1,45 +1,44 @@
 ﻿using Monefy.Business.RepositoryContracts;
 using Monefy.Domain.Contracts;
 using Monefy.Entities;
-using Monefy.Infraestructure.Repository.Contracts;
 
 namespace Monefy.Domain.Implementation
 {
-    public class IncomeBusinessService : IIncomeBusinessService
-    {
-        private readonly IUnitOfWork _unitOfWork;
-        public IncomeBusinessService(IUnitOfWork unitOfWork)
-        {
-            _unitOfWork = unitOfWork;
-        }
-        public async Task<IEnumerable<EntityIncome>> GetAllIncomesAsync()
-        {
-            var income = await _unitOfWork.IncomeRepository.GetAllAsync();
-            await _unitOfWork.SaveChangesAsync();
-            return income;
-        }
+	public class IncomeBusinessService : IIncomeBusinessService
+	{
+		private readonly IUnitOfWork _unitOfWork;
+		private readonly IIncomeInfraestrucutureService _incomeInfraestrucuture;
+		public IncomeBusinessService(IUnitOfWork unitOfWork, IIncomeInfraestrucutureService incomeInfraestrucuture)
+		{
+			_unitOfWork = unitOfWork;
+			_incomeInfraestrucuture = incomeInfraestrucuture;
+		}
+		public async Task<IEnumerable<EntityIncome>> GetAllIncomesAsync()
+		{
+			var income = await _incomeInfraestrucuture.GetAllAsync();
+			return income;
+		}
 
-        public async Task<EntityIncome> GetIncomeByIdAsync(Guid guid)
-        {
-            var income = await _unitOfWork.IncomeRepository.GetByIdAsync(guid);
-            await _unitOfWork.SaveChangesAsync();
-            return income;
-        }
-        public async Task CreateIncomeAsync(EntityIncome income)
-        {
-            await _unitOfWork.IncomeRepository.AddAsync(income);
-            await _unitOfWork.SaveChangesAsync();
-        }
+		public async Task<EntityIncome> GetIncomeByIdAsync(int id)
+		{
+			var income = await _incomeInfraestrucuture.GetByIdAsync(id);
+			return income;
+		}
+		public async Task CreateIncomeAsync(EntityIncome income)
+		{
+			await _incomeInfraestrucuture.AddAsync(income);
+			await _unitOfWork.SaveChangesAsync();
+		}
 
-        public async Task UpdateIncomeAsync(EntityIncome income)
-        {
-            await _unitOfWork.IncomeRepository.UpdateAsync(income);
-            await _unitOfWork.SaveChangesAsync();
-        }
-        public async Task DeleteIncomeAsync(Guid id)
-        {
-           await _unitOfWork.IncomeRepository.DeleteAsync(id);
-            await _unitOfWork.SaveChangesAsync();
-        }
-    }
+		public async Task UpdateIncomeAsync(EntityIncome income)
+		{
+			await _incomeInfraestrucuture.UpdateAsync(income);
+			await _unitOfWork.SaveChangesAsync();
+		}
+		public async Task DeleteIncomeAsync(int id)
+		{
+			await _incomeInfraestrucuture.DeleteAsync(id);
+			await _unitOfWork.SaveChangesAsync();
+		}
+	}
 }

@@ -11,6 +11,7 @@ namespace Monefy.Infraestructure.DBContext
         public DataBaseContext() { }
         public DataBaseContext(DbContextOptions<DataBaseContext> options) : base(options)
         {
+            Database.Migrate();
         }
         public DbSet<Category> Category { get; set; }
         public DbSet<Currency> Currency { get; set; }
@@ -19,16 +20,15 @@ namespace Monefy.Infraestructure.DBContext
         public DbSet<User> User { get; set; }
         public DbSet<Wallet> Wallet { get; set; }
 
-       
-
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            
+        }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured) 
-            {       
-           //optionsBuilder.UseSqlServer("DefaultConnection");
-            optionsBuilder.UseSqlite("DatabaseLocation");
+            
         }
-        }
+        
     }
 }
 
