@@ -14,6 +14,6 @@ namespace Monefy.Domain.Contracts
         Task CreateUserAsync(EntityUser user);
         Task UpdateUserAsync(EntityUser user);
         Task DeleteUserAsync(int id);
-        Task<bool> ValidateUser(EntityUser entityUser);
+        Task<EntityUser> ExistsUser(EntityUser entityUser);
     }
 }

@@ -14,10 +14,11 @@ namespace Monefy.Infraestructure.Repository.Implementations
         private readonly IUserRepository _userRepository;
         private readonly DataBaseContext _dataBaseContext;
 
-        public UserInfraestrucutureService(IMapper mapper, IGenericRepository<User> genericRepository, DataBaseContext context)
+        public UserInfraestrucutureService(IMapper mapper, IGenericRepository<User> genericRepository, IUserRepository userRepository, DataBaseContext context)
         {
             _mapper = mapper;
             _genericRepository = genericRepository;
+            _userRepository = userRepository;
             _dataBaseContext = context;
         }
 
@@ -50,9 +51,10 @@ namespace Monefy.Infraestructure.Repository.Implementations
             await _genericRepository.DeleteAsync(id, _dataBaseContext);
         }
 
-        public Task<bool> ValidateUser(EntityUser entityUser)
+        public async Task<EntityUser> ExistsUser(EntityUser entityUser)
         {
-            throw new NotImplementedException();
+            var user = await _userRepository.ExistsUser(_mapper.Map<User>(entityUser), _dataBaseContext);
+            return _mapper.Map<EntityUser>(user);
         }
     }
 

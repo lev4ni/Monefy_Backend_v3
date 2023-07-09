@@ -11,9 +11,11 @@ namespace Monefy.Infraestructure.Repository.repositories
 {
     public class UserRepository : IUserRepository
     {
-        public async Task<bool> ValidateUser(User user, DbContext context)
+        public async Task<User> ExistsUser(User user, DbContext context)
         {
-            return await context.Set<User>().AnyAsync( u => (u.Name == user.Name || u.Email == user.Email) && u.Password == user.Password);
+            var userDB = await context.Set<User>().FirstOrDefaultAsync( u => (u.Name == user.Name || u.Email == user.Email));
+            if (userDB == null) throw new ArgumentException();
+            else return userDB;
         }
     }
 }

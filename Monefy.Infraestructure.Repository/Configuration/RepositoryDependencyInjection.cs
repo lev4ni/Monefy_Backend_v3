@@ -19,6 +19,7 @@ namespace Monefy.Infraestructure.Repository.Configuration
             services.AddAutoMapper(typeof(CategoryInfraestrucutureService));
 
             services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddTransient<IUserRepository, UserRepository>();
 
             services.AddTransient<ICategoryInfraestrucutureService, CategoryInfraestrucutureService>();
 

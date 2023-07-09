@@ -40,9 +40,9 @@ namespace Monefy.Domain.Implementation
 			await _unitOfWork.SaveChangesAsync();
 		}
 
-        public async Task<bool> ValidateUser(EntityUser entityUser)
+        public async Task<EntityUser> ExistsUser(EntityUser entityUser)
         {
-			return await _userInfraestrucutureService.ValidateUser(entityUser);
+			return await _userInfraestrucutureService.ExistsUser(entityUser);
         }
     }
 }
