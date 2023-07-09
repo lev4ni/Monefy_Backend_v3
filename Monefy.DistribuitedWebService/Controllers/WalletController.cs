@@ -69,5 +69,21 @@ namespace Monefy.DistribuitedWebService.Controllers
             var users = await _walletAppService.GetUsersWalletAsync(idWallet);
             return Ok(users);
         }
+
+        [HttpGet("{walletId}/incomes")]
+        [ApiVersion("1.0")]
+        public async Task<IActionResult> GetWalletIncomes(int walletId)
+        {
+            var incomes = await _walletAppService.GetWalletIncomesAsync(walletId);
+            return Ok(incomes);
+        }
+
+        [HttpGet("{walletId}/expenses")]
+        [ApiVersion("1.0")]
+        public async Task<IActionResult> GetWalletExpenses(int walletId)
+        {
+            var expenses = await _walletAppService.GetWalletExpensesAsync(walletId);
+            return Ok(expenses);
+        }
     }
 }

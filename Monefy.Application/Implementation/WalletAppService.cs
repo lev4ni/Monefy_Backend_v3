@@ -10,10 +10,15 @@ namespace Monefy.Application.Implementation
     {
         private readonly IMapper _mapper;
         private readonly IWalletBusinessService _walletBusinessService;
-        public WalletAppService(IMapper mapper, IWalletBusinessService walletBusinessService)
+        private readonly IIncomeBusinessService _incomeBusinessService;
+        private readonly IExpenseBusinessService _expenseBusinessService;
+        public WalletAppService(IMapper mapper, IWalletBusinessService walletBusinessService,
+        IIncomeBusinessService incomeBusinessService, IExpenseBusinessService expenseBusinessService)
         {
             _mapper = mapper;
 			_walletBusinessService = walletBusinessService;
+            _incomeBusinessService = incomeBusinessService;
+            _expenseBusinessService = expenseBusinessService;
 
         }
 
@@ -50,6 +55,17 @@ namespace Monefy.Application.Implementation
         {
             var usersWallet = await _walletBusinessService.GetUsersWalletAsync(id);
             return _mapper.Map < IEnumerable<WalletDTO>>(usersWallet);
+        }
+        public async Task<IEnumerable<IncomeDTO>> GetWalletIncomesAsync(int walletId)
+        {
+            var incomes = await _incomeBusinessService.GetWalletIncomesAsync(walletId);
+            return _mapper.Map<IEnumerable<IncomeDTO>>(incomes);
+        }
+
+        public async Task<IEnumerable<ExpenseDTO>> GetWalletExpensesAsync(int walletId)
+        {
+            var expenses = await _expenseBusinessService.GetWalletExpensesAsync(walletId);
+            return _mapper.Map<IEnumerable<ExpenseDTO>>(expenses);
         }
     }
 }

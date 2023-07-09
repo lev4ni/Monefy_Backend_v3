@@ -9,11 +9,17 @@ namespace Monefy.Domain.Implementation
 	{
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IWalletInfraestrucutureService _walletInfraestrucutureService;
-		public WalletBusinessService(IUnitOfWork unitOfWork, IWalletInfraestrucutureService walletInfraestrucutureService)
-		{
+        private readonly IIncomeInfraestrucutureService _incomeInfraestrucutureService;
+        private readonly IExpenseInfraestrucutureService _expenseInfraestrucutureService;
+
+        public WalletBusinessService(IUnitOfWork unitOfWork, IWalletInfraestrucutureService walletInfraestrucutureService,
+        IIncomeInfraestrucutureService incomeInfraestrucutureService, IExpenseInfraestrucutureService expenseInfraestrucutureService)
+        {
 			_unitOfWork = unitOfWork;
 			_walletInfraestrucutureService = walletInfraestrucutureService;
-		}
+            _incomeInfraestrucutureService = incomeInfraestrucutureService;
+            _expenseInfraestrucutureService = expenseInfraestrucutureService;
+        }
 		public async Task<IEnumerable<EntityWallet>> GetAllWalletsAsync()
 		{
 			var wallet = await _walletInfraestrucutureService.GetAllAsync();
@@ -45,5 +51,15 @@ namespace Monefy.Domain.Implementation
 			return usersWallet;
         }
 
+
+        public async Task<IEnumerable<EntityIncome>> GetWalletIncomesAsync(int walletId)
+        {
+            return await _incomeInfraestrucutureService.GetWalletIncomesAsync(walletId);
+        }
+
+        public async Task<IEnumerable<EntityExpense>> GetWalletExpensesAsync(int walletId)
+        {
+            return await _expenseInfraestrucutureService.GetWalletExpensesAsync(walletId);
+        }
     }
 }
