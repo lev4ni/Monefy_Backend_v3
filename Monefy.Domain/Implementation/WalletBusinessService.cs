@@ -53,11 +53,10 @@ namespace Monefy.Domain.Implementation
 		}
 		public async Task<IEnumerable<EntityWallet>> GetUsersWalletAsync(int id)
 		{
-			//var usersWallet = await _walletInfraestrucutureService.GetUsersWalletAsync(id);
+			 await _walletInfraestrucutureService.GetUsersWalletAsync(id);
 
             /*Implementar aquí la porción de codigo de la capa de Infraestrcutura*/
             var user = await _userBusinessService.GetUserByIdAsync(id);
-
             if (user != null)
             {
                 var wallets = await _walletInfraestrucutureService.GetUsersWalletAsync(id);

@@ -1,13 +1,21 @@
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Monefy.Application.Configuration;
 using System.Text;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
+
+
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+
 
 
 builder.Services.AddControllers();
@@ -53,6 +61,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
         };
     });
 
+
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(builder =>
@@ -69,8 +78,23 @@ builder.Services.AddApiVersioning(options => {
     options.DefaultApiVersion = new ApiVersion(1, 0);
 });
 
+// Configuración de Health Checks
+builder.Services.AddHealthChecks()
+    .AddSqlServer(connectionString: builder.Configuration.GetConnectionString("DefaultConnection"),
+        name: "SqlServer",
+        failureStatus: HealthStatus.Unhealthy);
+
+builder.Services.AddHealthChecksUI().AddInMemoryStorage();
+
 
 var app = builder.Build();
+
+app.MapHealthChecks("/healthCheck", new HealthCheckOptions
+{
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+});
+
+app.MapHealthChecksUI();
 
 app.UseSwagger();
 app.UseSwaggerUI();
@@ -82,6 +106,8 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseCors();
+
+
 
 app.MapControllers();
 

@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
 using Monefy.Business.RepositoryContracts;
 using Monefy.Entities;
 using Monefy.Infraestructure.DataModels;
@@ -37,8 +36,8 @@ namespace Monefy.Infraestructure.Repository.Implementations
         public async Task AddAsync(EntityWallet wallet)
         {
             var walletDataModel = _mapper.Map<Wallet>(wallet);
-
-            var existingUser = await _genericRepositoryUser.GetByIdAsync(wallet.User.Id, _dataBaseContext);
+            await _genericRepositoryWallet.AddAsync(walletDataModel, _dataBaseContext);
+            /*var existingUser = await _genericRepositoryUser.GetByIdAsync(wallet.User.Id, _dataBaseContext);
             if (existingUser != null)
             {
                 walletDataModel.User = existingUser;
@@ -47,7 +46,7 @@ namespace Monefy.Infraestructure.Repository.Implementations
             else
             {
                 throw new Exception("User does not exists.");
-            }
+            }*/
 
         }
 
@@ -65,8 +64,9 @@ namespace Monefy.Infraestructure.Repository.Implementations
         public async Task<IEnumerable<EntityWallet>> GetUsersWalletAsync(int id)
         {
 
-            var user = await _genericRepositoryUser.GetByIdAsync(id, _dataBaseContext);
-            if (user != null)
+            var userWallets = await _genericRepositoryUser.GetByIdAsync(id, _dataBaseContext);
+            return _mapper.Map<IEnumerable<EntityWallet>>(userWallets);
+            /*if (user != null)
             {
                 var userWallets = await _dataBaseContext.Wallet
                     .Where(w => w.User.Id == id)
@@ -77,7 +77,7 @@ namespace Monefy.Infraestructure.Repository.Implementations
             else
             {
                 throw new Exception("User does not exist.");
-            }
+            }*/
 
         }
     }

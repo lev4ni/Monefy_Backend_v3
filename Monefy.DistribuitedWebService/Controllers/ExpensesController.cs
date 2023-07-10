@@ -87,13 +87,6 @@ namespace Monefy.DistribuitedWebService.Controllers
                 expense.Category.Description = category.Description;
                 expense.Category.UrlWeb = category.UrlWeb;
             }
-            var walletId = expense.WalletId;
-            var wallet = await _walletAppService.GetWalletByIdAsync(walletId);
-
-            if (wallet != null)
-            {
-                expense.WalletId = wallet.Id;
-            }
 
             await _expenseAppService.UpdateExpenseAsync(expense);
             return Ok();
