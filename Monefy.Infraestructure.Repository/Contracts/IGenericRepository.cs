@@ -1,6 +1,7 @@
 ﻿
 
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace Monefy.Infraestructure.Repository.Contracts
 {
@@ -11,5 +12,6 @@ namespace Monefy.Infraestructure.Repository.Contracts
         Task AddAsync(TEntity entity, DbContext context);
         Task UpdateAsync(TEntity entity, DbContext context);
         Task DeleteAsync(int id, DbContext context);
+        Task<TEntity> SingleOrDefaultAsync(Expression<Func<TEntity, bool>> predicate, DbContext context);
     }
 }

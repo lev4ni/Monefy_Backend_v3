@@ -40,5 +40,9 @@ namespace Monefy.Domain.Implementation
 			await _expenseInfraestrucutureService.DeleteAsync(id);
 			await _unitOfWork.SaveChangesAsync();
 		}
-	}
+        public async Task<IEnumerable<EntityExpense>> GetWalletExpensesAsync(int walletId)
+        {
+            return await _expenseInfraestrucutureService.GetWalletExpensesAsync(walletId);
+        }
+    }
 }

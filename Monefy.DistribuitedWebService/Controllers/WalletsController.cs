@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Monefy.Application.Contracts;
 using Monefy.Application.DTOs;
 using Monefy.Application.Implementation;
+using Monefy.Infraestructure.DataModels;
 
 namespace Monefy.DistribuitedWebService.Controllers
 {
@@ -12,6 +13,7 @@ namespace Monefy.DistribuitedWebService.Controllers
     public class WalletsController : Controller
     {
         private readonly IWalletAppService _walletAppService;
+
 
         public WalletsController(IWalletAppService walletAppService)
         {
@@ -60,6 +62,30 @@ namespace Monefy.DistribuitedWebService.Controllers
         {
             await _walletAppService.DeleteWalletAsync(id);
             return Ok();
+        }
+
+        [HttpGet("UsersWallet")]
+        [ApiVersion("1.0")] 
+        public async Task<IActionResult> GetUsersWallet(int idWallet)
+        {
+            var users = await _walletAppService.GetUsersWalletAsync(idWallet);
+            return Ok(users);
+        }
+
+        [HttpGet("{walletId}/incomes")]
+        [ApiVersion("1.0")]
+        public async Task<IActionResult> GetWalletIncomes(int walletId)
+        {
+            var incomes = await _walletAppService.GetWalletIncomesAsync(walletId);
+            return Ok(incomes);
+        }
+
+        [HttpGet("{walletId}/expenses")]
+        [ApiVersion("1.0")]
+        public async Task<IActionResult> GetWalletExpenses(int walletId)
+        {
+            var expenses = await _walletAppService.GetWalletExpensesAsync(walletId);
+            return Ok(expenses);
         }
     }
 }
