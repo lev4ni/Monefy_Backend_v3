@@ -1,13 +1,10 @@
 ﻿
-
-using Monefy.Infraestructure.DataModels;
-
 namespace Monefy.Application.DTOs
 {
     public class IncomeDTO
     {
         public int Id { get; set; }
-        public Category? Category { get; set; }
+        public CategoryDTO? Category { get; set; }
         public decimal Amount { get; set; }
         public string? Description { get; set; }
         public DateTime CreationAt { get; set; }

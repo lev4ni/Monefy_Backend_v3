@@ -5,6 +5,8 @@ using Microsoft.Data.SqlClient;
 using Microsoft.IdentityModel.Tokens;
 using Monefy.Application.Contracts;
 using Monefy.Application.DTOs;
+using Monefy.Application.Implementation;
+using Newtonsoft.Json;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -69,6 +71,58 @@ namespace Monefy.DistribuitedWebService.Controllers
             );
 
             return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
+        [HttpGet("{id}/wallets")]
+        [ApiVersion("1.0")]
+        [Authorize]
+        public async Task<IActionResult> GetUserWallets(int id)
+        {
+            var wallets = new List<WalletDTO>
+        {
+            new WalletDTO
+            {
+                Id = 1,
+                Name = "ALL",
+                UserId = 1,
+                CurrencyId = 1,
+                TotalIncome = 5.8m,
+                TotalExpent = 3,
+                TotalBalance = 210,
+                CreationAt = DateTime.Parse("2023-07-06T20:22:19.1558205Z")
+            },
+            new WalletDTO
+            {
+                Id = 2,
+                Name = "CASH",
+                UserId = 1,
+                CurrencyId = 1,
+                TotalIncome = 300,
+                TotalExpent = 100,
+                TotalBalance = 200,
+                CreationAt = DateTime.Parse("2023-07-06T20:22:19.1558205Z")
+            },
+            new WalletDTO
+            {
+                Id = 3,
+                Name = "CARD",
+                UserId = 1,
+                CurrencyId = 1,
+                TotalIncome = 2000,
+                TotalExpent = 400,
+                TotalBalance = 1600,
+                CreationAt = DateTime.Parse("2023-07-06T20:22:19.1558205Z")
+            }
+            };
+            var response = new
+            {
+                Success = true,
+                Message = "Wallets got successfully",
+                Data = wallets
+            };
+
+
+            return Ok(response);
         }
 
         [HttpGet]
