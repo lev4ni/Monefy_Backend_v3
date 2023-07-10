@@ -2,14 +2,13 @@
 using Microsoft.AspNetCore.Mvc;
 using Monefy.Application.Contracts;
 using Monefy.Application.DTOs;
-using Monefy.Application.Implementation;
-using Monefy.Infraestructure.DataModels;
+using System.Web.Http.Filters;
 
 namespace Monefy.DistribuitedWebService.Controllers
 {
     [ApiController]
     [Route("v{version:apiVersion}/[controller]")]
-    [Authorize]
+    [TypeFilter(typeof(CustomAuthorizationFilter))]
     public class WalletsController : Controller
     {
         private readonly IWalletAppService _walletAppService;
@@ -65,7 +64,7 @@ namespace Monefy.DistribuitedWebService.Controllers
         }
 
         [HttpGet("UsersWallet")]
-        [ApiVersion("1.0")] 
+        [ApiVersion("1.0")]
         public async Task<IActionResult> GetUsersWallet(int idWallet)
         {
             var users = await _walletAppService.GetUsersWalletAsync(idWallet);

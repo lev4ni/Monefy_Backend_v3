@@ -9,7 +9,7 @@ namespace Monefy.DistribuitedWebService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    [TypeFilter(typeof(CustomAuthorizationFilter))]
     public class ExpensesController : Controller
     {
         private readonly IExpenseAppService _expenseAppService;
