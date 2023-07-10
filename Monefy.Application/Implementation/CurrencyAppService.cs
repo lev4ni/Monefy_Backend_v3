@@ -16,15 +16,10 @@ namespace Monefy.Application.Implementation
             _currencyBusinessService = currencyBusinessService;
         }
 
-        public async Task CreateCurrencyAsync(CurrencyDTO currencyDTO)
+        public async Task<CurrencyDTO> CreateCurrencyAsync(CurrencyDTO currencyDTO)
         {
             await _currencyBusinessService.CreateCurrencyAsync(_mapper.Map<EntityCurrency>(currencyDTO));
-        }
-
-        public async Task DeleteCurrencyAsync(int id)
-
-        {
-            await _currencyBusinessService.DeleteCurrencyAsync(id);
+            return currencyDTO;
         }
 
         public async Task<IEnumerable<CurrencyDTO>> GetAllCurrenciesAsync()
@@ -40,9 +35,16 @@ namespace Monefy.Application.Implementation
             return _mapper.Map<CurrencyDTO>(currency);
         }
 
-        public async Task UpdateCurrencyAsync(CurrencyDTO currencyDTO)
+        public async Task<CurrencyDTO> UpdateCurrencyAsync(CurrencyDTO currencyDTO)
         {
             await _currencyBusinessService.UpdateCurrencyAsync(_mapper.Map<EntityCurrency>(currencyDTO));
+            return currencyDTO;
+        }
+
+        public async Task<CurrencyDTO> DeleteCurrencyAsync(int id)
+        {
+            await _currencyBusinessService.DeleteCurrencyAsync(id);
+            return _mapper.Map<CurrencyDTO>(id);
         }
     }
 }

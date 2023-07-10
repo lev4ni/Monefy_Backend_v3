@@ -14,18 +14,12 @@ namespace Monefy.Application.Implementation
         {
             _mapper = mapper;
             _userBusinessService = userBusinessService;
-
         }
 
-        public async Task CreateUserAsync(UserDTO userDTO)
+        public async Task<UserDTO> CreateUserAsync(UserDTO userDTO)
         {
             await _userBusinessService.CreateUserAsync(_mapper.Map<EntityUser>(userDTO));
-        }
-
-        public async Task DeleteUserAsync(int id)
-
-        {
-            await _userBusinessService.DeleteUserAsync(id);
+            return userDTO;
         }
 
         public async Task<IEnumerable<UserDTO>> GetAllUsersAsync()
@@ -35,21 +29,26 @@ namespace Monefy.Application.Implementation
         }
 
         public async Task<UserDTO> GetUserByIdAsync(int id)
-
         {
             var user = await _userBusinessService.GetUserByIdAsync(id);
             return _mapper.Map<UserDTO>(user);
-        }
-
-        public async Task UpdateUseryAsync(UserDTO userDTO)
-        {
-            await _userBusinessService.UpdateUserAsync(_mapper.Map<EntityUser>(userDTO));
         }
 
         public async Task<UserDTO> ExistsUser(UserDTO userDTO)
         {
             var user = await _userBusinessService.ExistsUser(_mapper.Map<EntityUser>(userDTO));
             return _mapper.Map<UserDTO>(user);
+        }
+
+        public async Task<UserDTO> UpdateUseryAsync(UserDTO userDTO)
+        {
+            await _userBusinessService.UpdateUserAsync(_mapper.Map<EntityUser>(userDTO));
+            return userDTO;
+        }
+        public async Task<UserDTO> DeleteUserAsync(int id)
+        {
+            await _userBusinessService.DeleteUserAsync(id);
+            return _mapper.Map<UserDTO>(id);
         }
     }
   }

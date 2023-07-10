@@ -19,18 +19,12 @@ namespace Monefy.Application.Implementation
 			_walletBusinessService = walletBusinessService;
             _incomeBusinessService = incomeBusinessService;
             _expenseBusinessService = expenseBusinessService;
-
         }
 
-        public async Task CreateWalletAsync(WalletDTO walletDTO)
+        public async Task<WalletDTO> CreateWalletAsync(WalletDTO walletDTO)
         {
             await _walletBusinessService.CreateWalletAsync(_mapper.Map<EntityWallet>(walletDTO));
-        }
-
-        public async Task DeleteWalletAsync(int id)
-
-        {
-            await _walletBusinessService.DeleteWalletAsync(id);
+            return walletDTO;
         }
 
         public async Task<IEnumerable<WalletDTO>> GetAllWalletsAsync()
@@ -40,22 +34,17 @@ namespace Monefy.Application.Implementation
         }
 
         public async Task<WalletDTO> GetWalletByIdAsync(int id)
-
         {
             var wallet = await _walletBusinessService.GetWalletByIdAsync(id);
             return _mapper.Map<WalletDTO>(wallet);
         }
 
-        public async Task UpdateWalletAsync(WalletDTO walletDTO)
-        {
-            await _walletBusinessService.UpdateWalletAsync(_mapper.Map<EntityWallet>(walletDTO));
-        }
-
-        public async Task <IEnumerable<WalletDTO>> GetUsersWalletAsync(int id)
+        public async Task<IEnumerable<WalletDTO>> GetUsersWalletAsync(int id)
         {
             var usersWallet = await _walletBusinessService.GetUsersWalletAsync(id);
             return _mapper.Map < IEnumerable<WalletDTO>>(usersWallet);
         }
+
         public async Task<IEnumerable<IncomeDTO>> GetWalletIncomesAsync(int walletId)
         {
             var incomes = await _incomeBusinessService.GetWalletIncomesAsync(walletId);
@@ -66,6 +55,18 @@ namespace Monefy.Application.Implementation
         {
             var expenses = await _expenseBusinessService.GetWalletExpensesAsync(walletId);
             return _mapper.Map<IEnumerable<ExpenseDTO>>(expenses);
+        }
+
+        public async Task<WalletDTO> UpdateWalletAsync(WalletDTO walletDTO)
+        {
+            await _walletBusinessService.UpdateWalletAsync(_mapper.Map<EntityWallet>(walletDTO));
+            return walletDTO;
+        }
+
+        public async Task<WalletDTO> DeleteWalletAsync(int id)
+        {
+            await _walletBusinessService.DeleteWalletAsync(id);
+            return _mapper.Map<WalletDTO>(id);
         }
     }
 }

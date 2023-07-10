@@ -7,9 +7,9 @@ namespace Monefy.Application.Contracts
     {
         Task<IEnumerable<WalletDTO>> GetAllWalletsAsync();
         Task<WalletDTO> GetWalletByIdAsync(int id);
-        Task CreateWalletAsync(WalletDTO walletDTO);
-        Task UpdateWalletAsync(WalletDTO walletDTO);
-        Task DeleteWalletAsync(int id);
+        Task<WalletDTO> CreateWalletAsync(WalletDTO walletDTO);
+        Task<WalletDTO> UpdateWalletAsync(WalletDTO walletDTO);
+        Task<WalletDTO> DeleteWalletAsync(int id);
         Task<IEnumerable<WalletDTO>> GetUsersWalletAsync(int id);
         Task<IEnumerable<IncomeDTO>> GetWalletIncomesAsync(int walletId);
         Task<IEnumerable<ExpenseDTO>> GetWalletExpensesAsync(int walletId);

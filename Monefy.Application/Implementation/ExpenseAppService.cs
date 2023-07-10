@@ -16,14 +16,15 @@ namespace Monefy.Application.Implementation
 			_expenseBusinessService = expenseBusinessService;
         }
 
-        public async Task CreateExpenseAsync(ExpenseDTO ExpenseDTO)
+        public async Task<ExpenseDTO> CreateExpenseAsync(ExpenseDTO expenseDTO)
         {
-            await _expenseBusinessService.CreateExpenseAsync(_mapper.Map<EntityExpense>(ExpenseDTO));
+            await _expenseBusinessService.CreateExpenseAsync(_mapper.Map<EntityExpense>(expenseDTO));
+            return expenseDTO;
         }
-
-        public async Task DeleteExpenseAsync(int id)
+        public async Task<ExpenseDTO> GetExpenseByIdAsync(int id)
         {
-            await _expenseBusinessService.DeleteExpenseAsync(id);
+            var Expense = await _expenseBusinessService.GetExpenseByIdAsync(id);
+            return _mapper.Map<ExpenseDTO>(Expense);
         }
 
         public async Task<IEnumerable<ExpenseDTO>> GetAllExpensesAsync()
@@ -32,15 +33,16 @@ namespace Monefy.Application.Implementation
             return _mapper.Map<IEnumerable<ExpenseDTO>>(ExpenseList);
         }
 
-        public async Task<ExpenseDTO> GetExpenseByIdAsync(int id)
-        {
-            var Expense = await _expenseBusinessService.GetExpenseByIdAsync(id);
-            return _mapper.Map<ExpenseDTO>(Expense);
-        }
 
-        public async Task UpdateExpenseAsync(ExpenseDTO ExpenseDTO)
+        public async Task<ExpenseDTO> UpdateExpenseAsync(ExpenseDTO expenseDTO)
         {
-            await _expenseBusinessService.UpdateExpenseAsync(_mapper.Map<EntityExpense>(ExpenseDTO));
+            await _expenseBusinessService.UpdateExpenseAsync(_mapper.Map<EntityExpense>(expenseDTO));
+            return expenseDTO;
+        }
+        public async Task<ExpenseDTO> DeleteExpenseAsync(int id)
+        {
+            await _expenseBusinessService.DeleteExpenseAsync(id);
+            return _mapper.Map<ExpenseDTO>(id);
         }
     }
 }

@@ -2,8 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Monefy.Application.Contracts;
 using Monefy.Application.DTOs;
-using Monefy.Application.Implementation;
-using Monefy.Infraestructure.DataModels;
 
 namespace Monefy.DistribuitedWebService.Controllers
 {
@@ -13,7 +11,6 @@ namespace Monefy.DistribuitedWebService.Controllers
     public class WalletsController : Controller
     {
         private readonly IWalletAppService _walletAppService;
-
 
         public WalletsController(IWalletAppService walletAppService)
         {
@@ -48,22 +45,6 @@ namespace Monefy.DistribuitedWebService.Controllers
             return Ok();
         }
 
-        [HttpPost("update")]
-        [ApiVersion("1.0")]
-        public async Task<IActionResult> UpdateWallet(WalletDTO wallet)
-        {
-            await _walletAppService.UpdateWalletAsync(wallet);
-            return Ok(wallet);
-        }
-
-        [HttpDelete("{id}")]
-        [ApiVersion("1.0")]
-        public async Task<IActionResult> DeleteWallet(int id)
-        {
-            await _walletAppService.DeleteWalletAsync(id);
-            return Ok();
-        }
-
         [HttpGet("UsersWallet")]
         [ApiVersion("1.0")] 
         public async Task<IActionResult> GetUsersWallet(int idWallet)
@@ -87,5 +68,22 @@ namespace Monefy.DistribuitedWebService.Controllers
             var expenses = await _walletAppService.GetWalletExpensesAsync(walletId);
             return Ok(expenses);
         }
+
+        [HttpPut("update")]
+        [ApiVersion("1.0")]
+        public async Task<IActionResult> UpdateWallet(WalletDTO wallet)
+        {
+            await _walletAppService.UpdateWalletAsync(wallet);
+            return Ok(wallet);
+        }
+
+        [HttpDelete("{id}")]
+        [ApiVersion("1.0")]
+        public async Task<IActionResult> DeleteWallet(int id)
+        {
+            await _walletAppService.DeleteWalletAsync(id);
+            return Ok();
+        }
+
     }
 }

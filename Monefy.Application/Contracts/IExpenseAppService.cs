@@ -11,8 +11,8 @@ namespace Monefy.Application.Contracts
     {
         Task<IEnumerable<ExpenseDTO>> GetAllExpensesAsync();
         Task<ExpenseDTO> GetExpenseByIdAsync(int id);
-        Task CreateExpenseAsync(ExpenseDTO ExpenseDTO);
-        Task UpdateExpenseAsync(ExpenseDTO ExpenseDTO);
-        Task DeleteExpenseAsync(int id);
+        Task<ExpenseDTO> CreateExpenseAsync(ExpenseDTO ExpenseDTO);
+        Task<ExpenseDTO> UpdateExpenseAsync(ExpenseDTO ExpenseDTO);
+        Task<ExpenseDTO> DeleteExpenseAsync(int id);
     }
 }

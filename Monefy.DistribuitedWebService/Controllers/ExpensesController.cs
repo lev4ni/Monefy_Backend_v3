@@ -49,7 +49,7 @@ namespace Monefy.DistribuitedWebService.Controllers
             return Ok();
         }
 
-        [HttpPost("update")]
+        [HttpPut("update")]
         [ApiVersion("1.0")]
         public async Task<IActionResult> UpdateExpense(ExpenseDTO expense) 
         { 

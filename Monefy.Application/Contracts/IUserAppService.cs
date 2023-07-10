@@ -6,9 +6,9 @@ namespace Monefy.Application.Contracts
     {
         Task<IEnumerable<UserDTO>> GetAllUsersAsync();
         Task<UserDTO> GetUserByIdAsync(int id);
-        Task CreateUserAsync(UserDTO UserDTO);
-        Task UpdateUseryAsync(UserDTO UserDTO);
-        Task DeleteUserAsync(int id);
+        Task<UserDTO> CreateUserAsync(UserDTO UserDTO);
+        Task<UserDTO> UpdateUseryAsync(UserDTO UserDTO);
+        Task<UserDTO> DeleteUserAsync(int id);
         Task<UserDTO> ExistsUser(UserDTO userDTO);
 
     }

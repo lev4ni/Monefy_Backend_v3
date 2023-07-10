@@ -11,8 +11,8 @@ namespace Monefy.Application.Contracts
     {
         Task<IEnumerable<CurrencyDTO>> GetAllCurrenciesAsync();
         Task<CurrencyDTO> GetCurrencyByIdAsync(int id);
-        Task CreateCurrencyAsync(CurrencyDTO currencyDTO);
-        Task UpdateCurrencyAsync(CurrencyDTO currencyDTO);
-        Task DeleteCurrencyAsync(int id);
+        Task<CurrencyDTO> CreateCurrencyAsync(CurrencyDTO currencyDTO);
+        Task<CurrencyDTO> UpdateCurrencyAsync(CurrencyDTO currencyDTO);
+        Task<CurrencyDTO> DeleteCurrencyAsync(int id);
     }
 }

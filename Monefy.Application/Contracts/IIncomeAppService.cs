@@ -7,8 +7,8 @@ namespace Monefy.Application.Contracts
     {
         Task<IEnumerable<IncomeDTO>> GetAllIncomesAsync();
         Task<IncomeDTO> GetIncomeByIdAsync(int id);
-        Task CreateIncomeAsync(IncomeDTO incomeDTO);
-        Task UpdateIncomeAsync(IncomeDTO incomeDTO);
-        Task DeleteIncomeAsync(int id);
+        Task<IncomeDTO> CreateIncomeAsync(IncomeDTO incomeDTO);
+        Task<IncomeDTO> UpdateIncomeAsync(IncomeDTO incomeDTO);
+        Task<IncomeDTO> DeleteIncomeAsync(int id);
     }
 }

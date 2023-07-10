@@ -2,7 +2,6 @@
 using Monefy.Application.Contracts;
 using Monefy.Application.DTOs;
 using Monefy.Domain.Contracts;
-using Monefy.Domain.Implementation;
 using Monefy.Entities;
 
 namespace Monefy.Application.Implementation
@@ -17,14 +16,10 @@ namespace Monefy.Application.Implementation
 			_incomeBusinessService = incomeBusinessService;
         }
 
-        public async Task CreateIncomeAsync(IncomeDTO incomeDTO)
+        public async Task<IncomeDTO> CreateIncomeAsync(IncomeDTO incomeDTO)
         {
             await _incomeBusinessService.CreateIncomeAsync(_mapper.Map<EntityIncome>(incomeDTO));
-        }
-
-        public async Task DeleteIncomeAsync(int id)
-        {
-            await _incomeBusinessService.DeleteIncomeAsync(id);
+            return incomeDTO;
         }
 
         public async Task<IEnumerable<IncomeDTO>> GetAllIncomesAsync()
@@ -40,9 +35,15 @@ namespace Monefy.Application.Implementation
             return _mapper.Map<IncomeDTO>(income);
         }
 
-        public async Task UpdateIncomeAsync(IncomeDTO incomeDTO)
+        public async Task<IncomeDTO> UpdateIncomeAsync(IncomeDTO incomeDTO)
         {
             await _incomeBusinessService.UpdateIncomeAsync(_mapper.Map<EntityIncome>(incomeDTO));
+            return incomeDTO;
+        }
+        public async Task<IncomeDTO> DeleteIncomeAsync(int id)
+        {
+            await _incomeBusinessService.DeleteIncomeAsync(id);
+            return _mapper.Map<IncomeDTO>(id);
         }
     }
 }

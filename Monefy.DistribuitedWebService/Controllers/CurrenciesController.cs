@@ -37,7 +37,7 @@ namespace Monefy.DistribuitedWebService.Controllers
             await _currencyAppService.CreateCurrencyAsync(currencyDTO);
             return Ok(currencyDTO);
         }
-        [HttpPost("update")]
+        [HttpPut("update")]
         [ApiVersion("1.0")]
         public async Task<IActionResult> UpdateCurrency(CurrencyDTO currencyDTO)
         {
