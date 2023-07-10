@@ -69,20 +69,28 @@ builder.Services.AddApiVersioning(options => {
     options.DefaultApiVersion = new ApiVersion(1, 0);
 });
 
+try
+{
 
-var app = builder.Build();
+    var app = builder.Build();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 
-app.UseSwagger();
-app.UseSwaggerUI();
+
+    app.UseHttpsRedirection();
+
+    app.UseAuthentication();
+    app.UseAuthorization();
+
+    app.UseCors();
+
+    app.MapControllers();
+
+    app.Run();
+}
+catch(Exception ex)
+{
+    Console.WriteLine(ex);
+}
 
 
-app.UseHttpsRedirection();
-
-app.UseAuthentication();
-app.UseAuthorization();
-
-app.UseCors();
-
-app.MapControllers();
-
-app.Run();

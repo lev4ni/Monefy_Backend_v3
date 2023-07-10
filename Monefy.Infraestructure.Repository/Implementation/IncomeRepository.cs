@@ -4,57 +4,48 @@ using Monefy.Business.RepositoryContracts;
 using Monefy.Entities;
 using Monefy.Infraestructure.DataModels;
 using Monefy.Infraestructure.DBContext;
-using Monefy.Infraestructure.Repository.Contracts;
+using Monefy.Infraestructure.Repository.services;
 
 namespace Monefy.Infraestructure.Repository.Implementations
 {
-    public class IncomeInfraestrucutureService : IIncomeInfraestrucutureService
+    public class IncomeRepository : GenericRepository<Income>, IIncomeRepository
     {
         private readonly IMapper _mapper;
-        private readonly IGenericRepository<Income> _genericRepositoryIncome;
-        private readonly IGenericRepository<Wallet> _genericRepositoryWallet;
         private readonly DataBaseContext _dataBaseContext;
 
-        public IncomeInfraestrucutureService(IMapper mapper, IGenericRepository<Income> genericRepositoryIncome, IGenericRepository<Wallet> genericRepositoryWallet, DataBaseContext context)
+        public IncomeRepository(IMapper mapper, DataBaseContext context) : base(context)
         {
             _mapper = mapper;
-            _genericRepositoryIncome = genericRepositoryIncome;
-            _genericRepositoryWallet = genericRepositoryWallet;
             _dataBaseContext = context;
         }
 
-        public async Task<IEnumerable<EntityIncome>> GetAllAsync()
+        public new async Task<IEnumerable<EntityIncome>> GetAllAsync()
         {
-            var incomeDataModels = await _genericRepositoryIncome.GetAllAsync(_dataBaseContext);
+            var incomeDataModels = await base.GetAllAsync();
             return _mapper.Map<IEnumerable<EntityIncome>>(incomeDataModels);
         }
 
-        public async Task<EntityIncome> GetByIdAsync(int id)
+        public new async Task<EntityIncome> GetByIdAsync(int id)
         {
-            var incomeDataModels = await _genericRepositoryIncome.GetByIdAsync(id, _dataBaseContext);
+            var incomeDataModels = await base.GetByIdAsync(id);
             return _mapper.Map<EntityIncome>(incomeDataModels);
         }
 
         public async Task AddAsync(EntityIncome income)
         {
             var incomeDataModels = _mapper.Map<Income>(income);
-            await _genericRepositoryIncome.AddAsync(incomeDataModels, _dataBaseContext);
+            await base.AddAsync(incomeDataModels);
         }
 
         public async Task UpdateAsync(EntityIncome income)
         {
             var incomeDataModels = _mapper.Map<Income>(income);
-            await _genericRepositoryIncome.UpdateAsync(incomeDataModels, _dataBaseContext);
-        }
-
-        public async Task DeleteAsync(int id)
-        {
-            await _genericRepositoryIncome.DeleteAsync(id, _dataBaseContext);
+            await base.UpdateAsync(incomeDataModels);
         }
 
         public async Task<IEnumerable<EntityIncome>> GetWalletIncomesAsync(int walletId)
         {
-            var wallet = await _genericRepositoryWallet.GetByIdAsync(walletId, _dataBaseContext);
+            var wallet = await base.GetByIdAsync(walletId);
             if (wallet != null)
             {
                 var walletIncomes = await _dataBaseContext.Income

@@ -7,8 +7,8 @@ namespace Monefy.Domain.Implementation
 	public class CurrencyBusinessService : ICurrencyBusinessService
 	{
 		private readonly IUnitOfWork _unitOfWork;
-		private readonly ICurrencyInfraestrucutureService _currencyInfraestrucutureService;
-		public CurrencyBusinessService(IUnitOfWork unitOfWork, ICurrencyInfraestrucutureService currencyInfraestrucutureService)
+		private readonly ICurrencyRepository _currencyInfraestrucutureService;
+		public CurrencyBusinessService(IUnitOfWork unitOfWork, ICurrencyRepository currencyInfraestrucutureService)
 		{
 			_unitOfWork = unitOfWork;
 			_currencyInfraestrucutureService = currencyInfraestrucutureService;

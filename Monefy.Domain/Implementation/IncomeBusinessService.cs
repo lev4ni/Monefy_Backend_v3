@@ -8,8 +8,8 @@ namespace Monefy.Domain.Implementation
 	public class IncomeBusinessService : IIncomeBusinessService
 	{
 		private readonly IUnitOfWork _unitOfWork;
-		private readonly IIncomeInfraestrucutureService _incomeInfraestrucuture;
-		public IncomeBusinessService(IUnitOfWork unitOfWork, IIncomeInfraestrucutureService incomeInfraestrucuture)
+		private readonly IIncomeRepository _incomeInfraestrucuture;
+		public IncomeBusinessService(IUnitOfWork unitOfWork, IIncomeRepository incomeInfraestrucuture)
 		{
 			_unitOfWork = unitOfWork;
 			_incomeInfraestrucuture = incomeInfraestrucuture;

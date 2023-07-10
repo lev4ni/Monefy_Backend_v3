@@ -100,7 +100,7 @@ namespace Monefy.DistribuitedWebService.Controllers
 
             var token = new JwtSecurityToken(
                 claims: claims,
-                expires: DateTime.UtcNow.AddMinutes(5),
+                expires: DateTime.UtcNow.AddMinutes(60),
                 signingCredentials: singIn
             );
 

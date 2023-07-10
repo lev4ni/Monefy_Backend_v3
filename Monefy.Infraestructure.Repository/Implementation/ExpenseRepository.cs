@@ -4,56 +4,47 @@ using Monefy.Business.RepositoryContracts;
 using Monefy.Entities;
 using Monefy.Infraestructure.DataModels;
 using Monefy.Infraestructure.DBContext;
-using Monefy.Infraestructure.Repository.Contracts;
+using Monefy.Infraestructure.Repository.services;
 
 namespace Monefy.Infraestructure.Repository.Implementations
 {
-    public class ExpenseInfraestrucutureService : IExpenseInfraestrucutureService
+    public class ExpenseRepository : GenericRepository<Expense>, IExpenseRepository
     {
         private readonly IMapper _mapper;
-        private readonly IGenericRepository<Expense> _genericRepositoryExpense;
-        private readonly IGenericRepository<Wallet> _genericRepositoryWallet;
         private readonly DataBaseContext _dataBaseContext;
 
-        public ExpenseInfraestrucutureService(IMapper mapper, IGenericRepository<Expense> genericRepositoryExpense, IGenericRepository<Wallet> genericRepositoryWallet, DataBaseContext context)
+        public ExpenseRepository(IMapper mapper, DataBaseContext context) : base(context)
         {
             _mapper = mapper;
-            _genericRepositoryExpense = genericRepositoryExpense;
-            _genericRepositoryWallet = genericRepositoryWallet;
             _dataBaseContext = context;
         }
-        public async Task<IEnumerable<EntityExpense>> GetAllAsync()
+        public new async Task<IEnumerable<EntityExpense>> GetAllAsync()
         {
-            var expenseDataModels = await _genericRepositoryExpense.GetAllAsync( _dataBaseContext);
+            var expenseDataModels = await base.GetAllAsync();
             return _mapper.Map<IEnumerable<EntityExpense>>(expenseDataModels);
         }
 
-        public async Task<EntityExpense> GetByIdAsync(int id)
+        public new async Task<EntityExpense> GetByIdAsync(int id)
         {
-            var expensetDataModel = await _genericRepositoryExpense.GetByIdAsync(id, _dataBaseContext);
+            var expensetDataModel = await base.GetByIdAsync(id);
             return _mapper.Map<EntityExpense>(expensetDataModel);
         }
 
         public async Task AddAsync(EntityExpense expense)
         {
             var expensetDataModel = _mapper.Map<Expense>(expense);
-            await _genericRepositoryExpense.AddAsync(expensetDataModel, _dataBaseContext);
+            await base.AddAsync(expensetDataModel);
         }
 
         public async Task UpdateAsync(EntityExpense expense)
         {
             var expensetDataModel = _mapper.Map<Expense>(expense);
-            await _genericRepositoryExpense.UpdateAsync(expensetDataModel, _dataBaseContext);
-        }
-
-        public async Task DeleteAsync(int id)
-        {
-            await _genericRepositoryExpense.DeleteAsync(id, _dataBaseContext);
+            await base.UpdateAsync(expensetDataModel);
         }
 
         public async Task<IEnumerable<EntityExpense>> GetWalletExpensesAsync(int walletId)
         {
-            var wallet = await _genericRepositoryWallet.GetByIdAsync(walletId, _dataBaseContext);
+            var wallet = await base.GetByIdAsync(walletId);
             if (wallet != null)
             {
                 var walletExpenses = await _dataBaseContext.Expenses
@@ -67,5 +58,5 @@ namespace Monefy.Infraestructure.Repository.Implementations
             }
         }
     }
- 
+
 }

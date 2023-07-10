@@ -8,12 +8,12 @@ namespace Monefy.Domain.Implementation
 	public class WalletBusinessService : IWalletBusinessService
 	{
 		private readonly IUnitOfWork _unitOfWork;
-		private readonly IWalletInfraestrucutureService _walletInfraestrucutureService;
-        private readonly IIncomeInfraestrucutureService _incomeInfraestrucutureService;
-        private readonly IExpenseInfraestrucutureService _expenseInfraestrucutureService;
+		private readonly IWalletRepository _walletInfraestrucutureService;
+        private readonly IIncomeRepository _incomeInfraestrucutureService;
+        private readonly IExpenseRepository _expenseInfraestrucutureService;
 
-        public WalletBusinessService(IUnitOfWork unitOfWork, IWalletInfraestrucutureService walletInfraestrucutureService,
-        IIncomeInfraestrucutureService incomeInfraestrucutureService, IExpenseInfraestrucutureService expenseInfraestrucutureService)
+        public WalletBusinessService(IUnitOfWork unitOfWork, IWalletRepository walletInfraestrucutureService,
+        IIncomeRepository incomeInfraestrucutureService, IExpenseRepository expenseInfraestrucutureService)
         {
 			_unitOfWork = unitOfWork;
 			_walletInfraestrucutureService = walletInfraestrucutureService;

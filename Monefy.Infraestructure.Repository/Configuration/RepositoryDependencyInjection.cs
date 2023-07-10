@@ -1,36 +1,33 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Monefy.Business.RepositoryContracts;
 using Monefy.Infraestructure.DBContext;
 using Monefy.Infraestructure.Repository.Implementations;
-using Microsoft.EntityFrameworkCore;
-using Monefy.Business.RepositoryContracts;
-using Monefy.Infraestructure.Repository.Contracts;
-using Monefy.Infraestructure.Repository.repositories;
-
+using Monefy.Infraestructure.Repository.services;
 
 namespace Monefy.Infraestructure.Repository.Configuration
 {
     public static class RepositoryDependencyInjection
 
     {
-       public static IServiceCollection AddInfraestructure(this IServiceCollection services, string connectionString)
+        public static IServiceCollection AddInfraestructure(this IServiceCollection services, string connectionString)
         {
             services.AddTransient<IUnitOfWork, UnitOfWork>();
 
-            services.AddAutoMapper(typeof(CategoryInfraestrucutureService));
+            services.AddAutoMapper(typeof(CategoryRepository));
 
             services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+
+            services.AddTransient<ICategoryRepository, CategoryRepository>();
+
+            services.AddTransient<ICurrencyRepository, CurrencyRepository>();
+            services.AddTransient<IExpenseRepository, ExpenseRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IWalletRepository, WalletRepository>();
+            services.AddTransient<IIncomeRepository, IncomeRepository>();
 
-            services.AddTransient<ICategoryInfraestrucutureService, CategoryInfraestrucutureService>();
-
-            services.AddTransient<ICurrencyInfraestrucutureService, CurrencyInfraestrucutureService>();
-            services.AddTransient<IExpenseInfraestrucutureService, ExpenseInfraestrucutureService>();
-            services.AddTransient<IUserInfraestrucutureService, UserInfraestrucutureService>();
-            services.AddTransient<IWalletInfraestrucutureService, WalletInfraestrucutureService>();
-            services.AddTransient<IIncomeInfraestrucutureService, IncomeInfraestrucutureService>();
-
-            services.AddTransient<IIncomeInfraestrucutureService, IncomeInfraestrucutureService>();
-            services.AddTransient<IExpenseInfraestrucutureService, ExpenseInfraestrucutureService>();
+            services.AddTransient<IIncomeRepository, IncomeRepository>();
+            services.AddTransient<IExpenseRepository, ExpenseRepository>();
 
             services.AddDbContext<DataBaseContext>(
                 options =>

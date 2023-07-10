@@ -7,8 +7,8 @@ namespace Monefy.Domain.Implementation
 	public class ExpenseBusinessService : IExpenseBusinessService
 	{
 		private readonly IUnitOfWork _unitOfWork;
-		private readonly IExpenseInfraestrucutureService _expenseInfraestrucutureService;
-		public ExpenseBusinessService(IUnitOfWork unitOfWork, IExpenseInfraestrucutureService expenseInfraestrucutureService)
+		private readonly IExpenseRepository _expenseInfraestrucutureService;
+		public ExpenseBusinessService(IUnitOfWork unitOfWork, IExpenseRepository expenseInfraestrucutureService)
 		{
 			_unitOfWork = unitOfWork;
 			_expenseInfraestrucutureService = expenseInfraestrucutureService;
