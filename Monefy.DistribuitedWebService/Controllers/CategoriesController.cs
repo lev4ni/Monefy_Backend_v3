@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Monefy.Application.Contracts;
 using Monefy.Application.DTOs;
+using Monefy.Infraestructure.DataModels;
 
 namespace Monefy.DistribuitedWebService.Controllers
 {
@@ -34,7 +35,7 @@ namespace Monefy.DistribuitedWebService.Controllers
         public async Task<IActionResult> GetCategoryById(int id)
         {
             var category = await _categoryAppService.GetCategoryByIdAsync(id);
-           
+            
             if (category == null)
             {
                 return NotFound();

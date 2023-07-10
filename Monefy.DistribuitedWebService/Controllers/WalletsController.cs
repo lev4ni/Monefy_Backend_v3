@@ -81,6 +81,7 @@ namespace Monefy.DistribuitedWebService.Controllers
         [ApiVersion("1.0")]
         public async Task<IActionResult> DeleteWallet(int id)
         {
+
             await _walletAppService.DeleteWalletAsync(id);
             return Ok();
         }
