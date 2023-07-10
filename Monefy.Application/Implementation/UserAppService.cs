@@ -13,7 +13,7 @@ namespace Monefy.Application.Implementation
         public UserAppService(IMapper mapper, IUserBusinessService userBusinessService)
         {
             _mapper = mapper;
-			_userBusinessService = userBusinessService;
+            _userBusinessService = userBusinessService;
 
         }
 
@@ -52,4 +52,4 @@ namespace Monefy.Application.Implementation
             return _mapper.Map<UserDTO>(user);
         }
     }
-}
+  }

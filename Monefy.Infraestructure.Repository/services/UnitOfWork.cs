@@ -7,16 +7,16 @@ namespace Monefy.Infraestructure.Repository.Implementations
 {
     public class UnitOfWork : IUnitOfWork, IDisposable
     {
-        private readonly DataBaseContext _categoryContext;
+        private readonly DataBaseContext _dbContext;
 
         public UnitOfWork(DataBaseContext categoryContext)
         {
-            _categoryContext = categoryContext;
+            _dbContext = categoryContext;
         }
 
         public async Task<int> SaveChangesAsync()
         {
-            return await _categoryContext.SaveChangesAsync();
+            return await _dbContext.SaveChangesAsync();
         }
 
         private bool disposed = false;
@@ -27,7 +27,7 @@ namespace Monefy.Infraestructure.Repository.Implementations
             {
                 if (disposing)
                 {
-                    _categoryContext.Dispose();
+                    _dbContext.Dispose();
                     
                 }
             }

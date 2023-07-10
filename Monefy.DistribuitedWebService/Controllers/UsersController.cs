@@ -1,12 +1,9 @@
-﻿using Azure;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.IdentityModel.Tokens;
 using Monefy.Application.Contracts;
 using Monefy.Application.DTOs;
-using Monefy.Application.Implementation;
-using Newtonsoft.Json;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -24,6 +21,43 @@ namespace Monefy.DistribuitedWebService.Controllers
         {
             _userAppService = userAppService;
             _configuration = configuration;
+        }
+
+        [HttpGet]
+        [ApiVersion("1.0")]
+        [Authorize]
+        public async Task<IActionResult> GetAllUsers()
+        {
+            var user = await _userAppService.GetAllUsersAsync();
+            if (user == null)
+            {
+                return NotFound();
+            }
+            return Ok(user);
+        }
+
+        [HttpGet("{id}")]
+        [ApiVersion("1.0")]
+        [Authorize]
+        public async Task<IActionResult> GetUserById(int id)
+        {
+            var user = await _userAppService.GetUserByIdAsync(id);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(user);
+        }
+
+        [HttpDelete]
+        [ApiVersion("1.0")]
+        [Authorize]
+        public async Task<IActionResult> DeleteUser(int id)
+        {
+            await _userAppService.DeleteUserAsync(id);
+            return Ok();
         }
 
         [HttpPost("login")]
@@ -73,85 +107,6 @@ namespace Monefy.DistribuitedWebService.Controllers
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        [HttpGet("{id}/wallets")]
-        [ApiVersion("1.0")]
-        [Authorize]
-        public async Task<IActionResult> GetUserWallets(int id)
-        {
-            var wallets = new List<WalletDTO>
-        {
-            new WalletDTO
-            {
-                Id = 1,
-                Name = "ALL",
-                UserId = 1,
-                CurrencyId = 1,
-                TotalIncome = 5.8m,
-                TotalExpent = 3,
-                TotalBalance = 210,
-                CreationAt = DateTime.Parse("2023-07-06T20:22:19.1558205Z")
-            },
-            new WalletDTO
-            {
-                Id = 2,
-                Name = "CASH",
-                UserId = 1,
-                CurrencyId = 1,
-                TotalIncome = 300,
-                TotalExpent = 100,
-                TotalBalance = 200,
-                CreationAt = DateTime.Parse("2023-07-06T20:22:19.1558205Z")
-            },
-            new WalletDTO
-            {
-                Id = 3,
-                Name = "CARD",
-                UserId = 1,
-                CurrencyId = 1,
-                TotalIncome = 2000,
-                TotalExpent = 400,
-                TotalBalance = 1600,
-                CreationAt = DateTime.Parse("2023-07-06T20:22:19.1558205Z")
-            }
-            };
-            var response = new
-            {
-                Success = true,
-                Message = "Wallets got successfully",
-                Data = wallets
-            };
-
-
-            return Ok(response);
-        }
-
-        [HttpGet]
-        [ApiVersion("1.0")]
-        [Authorize]
-        public async Task<IActionResult> GetAllUsers()
-        {
-            var user = await _userAppService.GetAllUsersAsync();
-            if (user == null)
-            {
-                return NotFound();
-            }
-            return Ok(user);
-        }
-
-        [HttpGet("{id}")]
-        [ApiVersion("1.0")]
-        [Authorize]
-        public async Task<IActionResult> GetUserById(int id)
-        {
-            var user = await _userAppService.GetUserByIdAsync(id);
-
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(user);
-        }
         [HttpPost]
         [ApiVersion("1.0")]
         public async Task<IActionResult> Register(UserDTO userDTO)
@@ -168,15 +123,6 @@ namespace Monefy.DistribuitedWebService.Controllers
                     return BadRequest(new { Success = false, Message = "That name or email already exists." });
                 else return BadRequest(new { Success = false, Message = "Error creating user." });
             }
-        }
-
-        [HttpDelete]
-        [ApiVersion("1.0")]
-        [Authorize]
-        public async Task<IActionResult> DeleteUser(int id)
-        {
-            await _userAppService.DeleteUserAsync(id);
-            return Ok();
         }
 
     }

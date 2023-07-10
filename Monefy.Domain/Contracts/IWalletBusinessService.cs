@@ -9,6 +9,8 @@ namespace Monefy.Domain.Contracts
         Task CreateWalletAsync(EntityWallet wallet);
         Task UpdateWalletAsync(EntityWallet wallet);
         Task DeleteWalletAsync(int id);
-
+        Task<IEnumerable<EntityWallet>> GetUsersWalletAsync(int id);
+        Task<IEnumerable<EntityIncome>> GetWalletIncomesAsync(int walletId);
+        Task<IEnumerable<EntityExpense>> GetWalletExpensesAsync(int walletId);
     }
 }

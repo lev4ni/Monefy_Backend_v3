@@ -29,6 +29,9 @@ namespace Monefy.Infraestructure.Repository.Configuration
             services.AddTransient<IWalletInfraestrucutureService, WalletInfraestrucutureService>();
             services.AddTransient<IIncomeInfraestrucutureService, IncomeInfraestrucutureService>();
 
+            services.AddTransient<IIncomeInfraestrucutureService, IncomeInfraestrucutureService>();
+            services.AddTransient<IExpenseInfraestrucutureService, ExpenseInfraestrucutureService>();
+
             services.AddDbContext<DataBaseContext>(
                 options =>
                 {

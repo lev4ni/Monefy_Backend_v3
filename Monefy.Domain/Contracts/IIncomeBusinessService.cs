@@ -14,5 +14,7 @@ namespace Monefy.Domain.Contracts
         Task CreateIncomeAsync(EntityIncome income);
         Task UpdateIncomeAsync(EntityIncome income);
         Task DeleteIncomeAsync(int id);
+
+        Task<IEnumerable<EntityIncome>> GetWalletIncomesAsync(int walletId);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Monefy.Business.RepositoryContracts;
 using Monefy.Infraestructure.Repository.Contracts;
+using System.Linq.Expressions;
 
 namespace Monefy.Infraestructure.Repository.repositories
 {
@@ -41,7 +42,10 @@ namespace Monefy.Infraestructure.Repository.repositories
             }
             await Task.CompletedTask;
         }
-
+        public async virtual Task<TEntity> SingleOrDefaultAsync(Expression<Func<TEntity, bool>> predicate, DbContext context)
+        {
+            return await context.Set<TEntity>().SingleOrDefaultAsync(predicate);
+        }
 
     }
 }

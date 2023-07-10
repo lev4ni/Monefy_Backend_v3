@@ -10,5 +10,6 @@ namespace Monefy.Application.Contracts
         Task UpdateUseryAsync(UserDTO UserDTO);
         Task DeleteUserAsync(int id);
         Task<UserDTO> ExistsUser(UserDTO userDTO);
+
     }
 }
