@@ -34,7 +34,7 @@ namespace Monefy.Infraestructure.Repository.Implementations
         public async Task AddAsync(EntityWallet wallet)
         {
             var walletDataModel = _mapper.Map<Wallet>(wallet);
-            await _genericRepositoryWallet.AddAsync(walletDataModel, _dataBaseContext);
+            //await _genericRepositoryWallet.AddAsync(walletDataModel, _dataBaseContext);
             /*var existingUser = await _genericRepositoryUser.GetByIdAsync(wallet.User.Id, _dataBaseContext);
             if (existingUser != null)
             {
@@ -57,7 +57,7 @@ namespace Monefy.Infraestructure.Repository.Implementations
         public async Task<IEnumerable<EntityWallet>> GetUsersWalletAsync(int id)
         {
 
-            var userWallets = await _genericRepositoryUser.GetByIdAsync(id, _dataBaseContext);
+            var userWallets = await _genericRepositoryUser.GetByIdAsync(id);
             return _mapper.Map<IEnumerable<EntityWallet>>(userWallets);
             /*if (user != null)
             {

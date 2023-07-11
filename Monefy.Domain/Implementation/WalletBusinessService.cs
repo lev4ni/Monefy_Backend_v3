@@ -19,7 +19,6 @@ namespace Monefy.Domain.Implementation
 			_walletInfraestrucutureService = walletInfraestrucutureService;
             _incomeInfraestrucutureService = incomeInfraestrucutureService;
             _expenseInfraestrucutureService = expenseInfraestrucutureService;
-            _userBusinessService = userInfraestrucutureService;
 
         }
 		public async Task<IEnumerable<EntityWallet>> GetAllWalletsAsync()
@@ -51,19 +50,9 @@ namespace Monefy.Domain.Implementation
 		{
 			 await _walletInfraestrucutureService.GetUsersWalletAsync(id);
 
-            /*Implementar aquí la porción de codigo de la capa de Infraestrcutura*/
-            var user = await _userBusinessService.GetUserByIdAsync(id);
-            if (user != null)
-            {
-                var wallets = await _walletInfraestrucutureService.GetUsersWalletAsync(id);
-                return wallets;
-            }
-            else
-            {
-                throw new Exception("User does not exist.");
-            }
-
-            //return usersWallet;
+            var wallets = await _walletInfraestrucutureService.GetUsersWalletAsync(id);
+            return wallets;
+        
         }
 
 

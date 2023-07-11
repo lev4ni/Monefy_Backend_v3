@@ -115,21 +115,16 @@ app.UseSwaggerUI();
 
 app.UseSerilogRequestLogging(); // Agrega el registro de solicitudes HTTP a Serilog
 
-    app.UseHttpsRedirection();
+app.UseHttpsRedirection();
 
-    app.UseAuthentication();
-    app.UseAuthorization();
+app.UseAuthentication();
+app.UseAuthorization();
 
-    app.UseCors();
+app.UseCors();
 
 
 app.MapControllers();
 
-    app.Run();
-}
-catch(Exception ex)
-{
-    Console.WriteLine(ex);
-}
+app.Run();
 
 
