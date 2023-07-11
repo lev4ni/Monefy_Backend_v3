@@ -19,7 +19,9 @@ namespace Monefy.Infraestructure.Repository.services
 
         public async virtual Task<TEntity> GetByIdAsync(int id)
         {
-            return await context.Set<TEntity>().FindAsync(id);
+            var entity = await context.Set<TEntity>().FindAsync(id);
+            context.Entry(entity).State = EntityState.Detached;
+            return entity;
         }
 
         public async virtual Task<IEnumerable<TEntity>> GetAllAsync()

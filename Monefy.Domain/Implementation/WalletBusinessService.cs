@@ -1,6 +1,8 @@
 using Monefy.Business.RepositoryContracts;
 using Monefy.Domain.Contracts;
 using Monefy.Entities;
+using Monefy.Infraestructure.DataModels;
+using Monefy.Infraestructure.Repository.Implementations;
 
 
 namespace Monefy.Domain.Implementation
@@ -34,8 +36,17 @@ namespace Monefy.Domain.Implementation
 		}
 		public async Task CreateWalletAsync(EntityWallet wallet)
 		{
-			await _walletRepository.AddAsync(wallet);
-			await _unitOfWork.SaveChangesAsync();
+            var user = await _userRepository.GetByIdAsync(wallet.User.Id);
+
+            if (user == null)
+            {
+                throw new ArgumentException("Invalid user");
+            }
+
+            wallet.User = user;
+
+            await _walletRepository.AddAsync(wallet);
+            await _unitOfWork.SaveChangesAsync();
 		}
 		public async Task UpdateWalletAsync(EntityWallet wallet)
 		{
@@ -49,7 +60,6 @@ namespace Monefy.Domain.Implementation
 		}
 		public async Task<IEnumerable<EntityWallet>> GetUsersWalletAsync(int id)
 		{
-			 await _walletRepository.GetUsersWalletAsync(id);
 
             var user = await _userRepository.GetByIdAsync(id);
             if (user != null)

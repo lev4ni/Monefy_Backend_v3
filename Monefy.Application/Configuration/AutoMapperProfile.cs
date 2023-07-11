@@ -16,12 +16,12 @@ namespace Monefy.Application.Configuration
 
             CreateMap<ExpenseDTO, EntityExpense>()
                 .ForMember(dest => dest.Wallet, opt => opt.MapFrom(src => new EntityWallet { Id = src.WalletId }))
-                .ForMember(dest => dest.Category, opt => opt.MapFrom(src => new EntityCategory { Id = src.Id }));
+                .ForMember(dest => dest.Category, opt => opt.MapFrom(src => new EntityCategory { Id = src.Category.Id }));
             CreateMap<EntityExpense, ExpenseDTO>();
 
             CreateMap<IncomeDTO, EntityIncome>()
                 .ForMember(dest => dest.Wallet, opt => opt.MapFrom(src => new EntityWallet { Id = src.WalletId }))
-                .ForMember(dest => dest.Category, opt => opt.MapFrom(src => new EntityCategory { Id = src.Id }));
+                .ForMember(dest => dest.Category, opt => opt.MapFrom(src => new EntityCategory { Id = src.Category.Id }));
             CreateMap<EntityIncome, IncomeDTO>();
 
             CreateMap<UserDTO, EntityUser>();

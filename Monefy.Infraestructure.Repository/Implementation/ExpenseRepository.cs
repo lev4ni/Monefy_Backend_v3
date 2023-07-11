@@ -33,6 +33,8 @@ namespace Monefy.Infraestructure.Repository.Implementations
         public async Task AddAsync(EntityExpense expense)
         {
             var expensetDataModel = _mapper.Map<Expense>(expense);
+            _dataBaseContext.Attach(expensetDataModel.Category);
+            _dataBaseContext.Attach(expensetDataModel.Wallet);
             await base.AddAsync(expensetDataModel);
         }
 

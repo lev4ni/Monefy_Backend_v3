@@ -7,7 +7,7 @@ using Monefy.Infraestructure.DataModels;
 namespace Monefy.DistribuitedWebService.Controllers
 {
     [ApiController]
-    [Route("{version:apiVersion}/[controller]")]
+    [Route("v{version:apiVersion}/[controller]")]
     [TypeFilter(typeof(CustomAuthorizationFilter))]
     public class CategoriesController : Controller
     {

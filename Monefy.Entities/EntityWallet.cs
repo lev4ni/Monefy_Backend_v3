@@ -6,6 +6,7 @@ namespace Monefy.Entities
     public class EntityWallet
     {
         public int Id { get; set; }
+        public Guid Guid { get; set; } = Guid.NewGuid();
         [Required]
         [StringLength(20, ErrorMessage = "Name length can't be more than 20.")]
         public string? Name { get; set; }
