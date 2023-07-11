@@ -10,7 +10,9 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Serilog;
 using Serilog.AspNetCore;
 using ServiceStack;
-
+using Microsoft.AspNetCore.Localization;
+using System.Globalization;
+using Microsoft.Extensions.Localization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -81,7 +83,7 @@ builder.Services.AddApiVersioning(options =>
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Error() //Debug()
     .Enrich.FromLogContext()
-    .WriteTo.File("logs/logs.txt")
+    .WriteTo.File("logs/logs.txt", rollingInterval: RollingInterval.Day)
 .CreateLogger();
 
 builder.Services.AddLogging(loggingBuilder =>
@@ -91,7 +93,6 @@ builder.Services.AddLogging(loggingBuilder =>
 
 builder.Host.UseSerilog();
 
-
 // Configuración de Health Checks
 builder.Services.AddHealthChecks()
     .AddSqlServer(connectionString: builder.Configuration.GetConnectionString("DefaultConnection"),
@@ -100,8 +101,28 @@ builder.Services.AddHealthChecks()
 
 builder.Services.AddHealthChecksUI().AddInMemoryStorage();
 
+//Recursos-idioma
+builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
 
 var app = builder.Build();
+
+//idiomas
+var supportedCultures = new List<CultureInfo>
+{
+    new CultureInfo("en"),
+    new CultureInfo("es")
+};
+
+app.UseRequestLocalization(options =>
+{
+    options.DefaultRequestCulture = new RequestCulture("en");
+    options.SupportedCultures = supportedCultures;
+    options.SupportedUICultures = supportedCultures;
+});
+
+app.UseRouting();
+
+
 
 app.MapHealthChecks("/healthCheck", new HealthCheckOptions
 {
@@ -122,7 +143,24 @@ app.UseAuthorization();
 
 app.UseCors();
 
+app.Use((context, next) =>
+{
+    var lang = context.Request.Query["lang"].ToString();
+    if (!string.IsNullOrEmpty(lang) && supportedCultures.Any(c => c.Name == lang))
+    {
+        var culture = new CultureInfo(lang);
+        CultureInfo.CurrentCulture = culture;
+        CultureInfo.CurrentUICulture = culture;
+    }
+    return next();
+});
 
+app.UseRequestLocalization(options =>
+{
+    options.DefaultRequestCulture = new RequestCulture("en");
+    options.SupportedCultures = supportedCultures;
+    options.SupportedUICultures = supportedCultures;
+});
 app.MapControllers();
 
 app.Run();
