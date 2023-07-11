@@ -7,16 +7,14 @@ using Microsoft.OpenApi.Models;
 using Monefy.Application.Configuration;
 using System.Text;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-
-
+using Serilog;
+using Serilog.AspNetCore;
+using ServiceStack;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
-
-
 
 builder.Services.AddControllers();
 
@@ -72,11 +70,27 @@ builder.Services.AddCors(options =>
     });
 });
 
-builder.Services.AddApiVersioning(options => {
+builder.Services.AddApiVersioning(options =>
+{
     options.ReportApiVersions = true;
     options.AssumeDefaultVersionWhenUnspecified = true;
     options.DefaultApiVersion = new ApiVersion(1, 0);
 });
+
+// Configuración de Serilog para el registro de solicitudes HTTP
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Error() //Debug()
+    .Enrich.FromLogContext()
+    .WriteTo.File("logs/logs.txt")
+.CreateLogger();
+
+builder.Services.AddLogging(loggingBuilder =>
+{
+    loggingBuilder.AddSerilog(dispose: true);
+});
+
+builder.Host.UseSerilog();
+
 
 // Configuración de Health Checks
 builder.Services.AddHealthChecks()
@@ -99,6 +113,7 @@ app.MapHealthChecksUI();
 app.UseSwagger();
 app.UseSwaggerUI();
 
+app.UseSerilogRequestLogging(); // Agrega el registro de solicitudes HTTP a Serilog
 
 app.UseHttpsRedirection();
 
@@ -106,7 +121,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseCors();
-
 
 
 app.MapControllers();
