@@ -12,10 +12,12 @@ namespace Monefy.DistribuitedWebService.Controllers
     public class WalletsController : Controller
     {
         private readonly IWalletAppService _walletAppService;
+        private readonly ILogger<WalletsController> _logger;
 
-        public WalletsController(IWalletAppService walletAppService)
+        public WalletsController(IWalletAppService walletAppService, ILogger<WalletsController> logger)
         {
             _walletAppService = walletAppService;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -23,6 +25,7 @@ namespace Monefy.DistribuitedWebService.Controllers
         public async Task<IActionResult> GetAllWallets()
         {
             var wallets = await _walletAppService.GetAllWalletsAsync();
+            _logger.LogInformation($"Wallets obtenidas: {wallets}");
             return Ok(wallets);
         }
 
@@ -33,8 +36,10 @@ namespace Monefy.DistribuitedWebService.Controllers
             var wallet = await _walletAppService.GetWalletByIdAsync(id);
             if (wallet == null)
             {
+                _logger.LogError($"No hay wallets");
                 return NotFound();
             }
+            _logger.LogInformation($"Wallet obtenida: {id}");
             return Ok(wallet);
         }
 
@@ -43,6 +48,7 @@ namespace Monefy.DistribuitedWebService.Controllers
         public async Task<IActionResult> CreateWallet(WalletDTO wallet)
         {
             await _walletAppService.CreateWalletAsync(wallet);
+            _logger.LogInformation($"Wallet creada: {wallet}");
             return Ok();
         }
 
@@ -51,6 +57,7 @@ namespace Monefy.DistribuitedWebService.Controllers
         public async Task<IActionResult> GetUsersWallet(int idWallet)
         {
             var users = await _walletAppService.GetUsersWalletAsync(idWallet);
+            _logger.LogInformation($"Users de Wallet: {idWallet}");
             return Ok(users);
         }
 
@@ -59,6 +66,7 @@ namespace Monefy.DistribuitedWebService.Controllers
         public async Task<IActionResult> GetWalletIncomes(int walletId)
         {
             var incomes = await _walletAppService.GetWalletIncomesAsync(walletId);
+            _logger.LogInformation($"Incomes de Wallet: {walletId}");
             return Ok(incomes);
         }
 
@@ -67,6 +75,7 @@ namespace Monefy.DistribuitedWebService.Controllers
         public async Task<IActionResult> GetWalletExpenses(int walletId)
         {
             var expenses = await _walletAppService.GetWalletExpensesAsync(walletId);
+            _logger.LogInformation($"Expenses de Wallet: {walletId}");
             return Ok(expenses);
         }
 
@@ -75,6 +84,7 @@ namespace Monefy.DistribuitedWebService.Controllers
         public async Task<IActionResult> UpdateWallet(WalletDTO wallet)
         {
             await _walletAppService.UpdateWalletAsync(wallet);
+            _logger.LogInformation($"Wallet actualizada: {wallet}");
             return Ok(wallet);
         }
 
@@ -84,6 +94,7 @@ namespace Monefy.DistribuitedWebService.Controllers
         {
 
             await _walletAppService.DeleteWalletAsync(id);
+            _logger.LogInformation($"Wallet borrada: {id}");
             return Ok();
         }
 
