@@ -8,7 +8,8 @@ namespace Monefy.Infraestructure.DataModels
 	public class Income
 	{
 		[Key]
-		public int Id { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
 		public Guid Guid { get; set; } = Guid.NewGuid();
 		[ForeignKey("Wallet")]
 		public int WalletId { get; set; }

@@ -7,7 +7,7 @@ using Monefy.Application.DTOs;
 
 namespace Monefy.DistribuitedWebService.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("v{version:apiVersion}/[controller]")]
     [ApiController]
     [TypeFilter(typeof(CustomAuthorizationFilter))]
     public class CurrenciesController : ControllerBase

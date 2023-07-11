@@ -1,4 +1,5 @@
 ﻿using Monefy.Application.DTOs;
+using Monefy.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +15,6 @@ namespace Monefy.Application.Contracts
         Task<ExpenseDTO> CreateExpenseAsync(ExpenseDTO ExpenseDTO);
         Task<ExpenseDTO> UpdateExpenseAsync(ExpenseDTO ExpenseDTO);
         Task<ExpenseDTO> DeleteExpenseAsync(int id);
+        Task<IEnumerable<ExpenseDTO>> GetExpensesPerMonthAsync(int walletId, DateTime startDate, DateTime endDate);
     }
 }

@@ -100,7 +100,7 @@ namespace Monefy.DistribuitedWebService.Controllers
                 new Claim("id", user.Id.ToString()),
                 new Claim("name", user.Name.ToString()),
                 new Claim("email", user.Email.ToString()),
-                new Claim("expirationTime", DateTime.UtcNow.AddMinutes(10).ToString())
+                new Claim("expirationTime", DateTime.UtcNow.AddMinutes(5).ToString())
             };
 
             var singIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);

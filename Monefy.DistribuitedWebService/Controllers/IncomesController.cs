@@ -15,14 +15,11 @@ namespace Monefy.DistribuitedWebService.Controllers
     public class IncomesController : Controller
     {
         private readonly IIncomeAppService _incomeAppService;
-        private readonly ICategoryAppService _categoryAppService;
-        private readonly IWalletAppService _walletAppService;
         private readonly ILogger<IncomesController> _logger;
 
-        public IncomesController(IIncomeAppService incomeAppService, ICategoryAppService categoryAppService, ILogger<IncomesController> logger)
+        public IncomesController(IIncomeAppService incomeAppService, ILogger<IncomesController> logger)
         {
             _incomeAppService = incomeAppService;
-            _categoryAppService = categoryAppService;
             _logger = logger;
         }
 
@@ -54,25 +51,6 @@ namespace Monefy.DistribuitedWebService.Controllers
         [ApiVersion("1.0")]
         public async Task<IActionResult> CreateIncome(IncomeDTO income)
         {
-            // Obtener la categoría original mediante su ID
-            var categoryId = income.Id;
-            var category = await _categoryAppService.GetCategoryByIdAsync(categoryId);
-
-            if (category != null)
-            {
-                // Actualizar los valores de la categoría en el objeto Expense
-                income.Category.Name = category.Name;
-                income.Category.Description = category.Description;
-                income.Category.UrlWeb = category.UrlWeb;
-            }
-            var walletId = income.WalletId;
-            var wallet = await _walletAppService.GetWalletByIdAsync(walletId);
-
-            if (wallet != null)
-            {
-                // Actualizar el walletId en el objeto Expense
-                income.WalletId = wallet.Id;
-            }
             await _incomeAppService.CreateIncomeAsync(income);
             return Ok();
         }

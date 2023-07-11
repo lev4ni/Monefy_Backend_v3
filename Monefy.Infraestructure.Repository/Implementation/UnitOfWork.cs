@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.EntityFrameworkCore;
 using Monefy.Business.RepositoryContracts;
 using Monefy.Infraestructure.DBContext;
 
@@ -19,6 +20,16 @@ namespace Monefy.Infraestructure.Repository.Implementations
         }
 
         private bool disposed = false;
+
+        public void Detach<TEntity>(TEntity entity) where TEntity : class
+        {
+            if (entity == null)
+            {
+                throw new ArgumentNullException(nameof(entity));
+            }
+
+            _dbContext.Entry(entity).State = EntityState.Detached;
+        }
 
         protected virtual void Dispose(bool disposing)
         {

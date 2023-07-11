@@ -7,6 +7,7 @@ namespace Monefy.Infraestructure.DataModels
     public class Category
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public Guid Guid { get; set; } = Guid.NewGuid();
         public string? Name { get; set; }

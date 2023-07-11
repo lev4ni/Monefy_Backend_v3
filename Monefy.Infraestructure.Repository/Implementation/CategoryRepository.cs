@@ -10,10 +10,12 @@ namespace Monefy.Infraestructure.Repository.Implementations
     public class CategoryRepository : GenericRepository<Category>, ICategoryRepository
     {
         private readonly IMapper _mapper;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public CategoryRepository(IMapper mapper, DataBaseContext context) : base(context)
+        public CategoryRepository(IMapper mapper, DataBaseContext context, IUnitOfWork unitOfWork) : base(context)
         {
             _mapper = mapper;
+            _unitOfWork = unitOfWork;
         }
 
         public new async Task<IEnumerable<EntityCategory>> GetAllAsync()
@@ -25,7 +27,8 @@ namespace Monefy.Infraestructure.Repository.Implementations
         public new async Task<EntityCategory> GetByIdAsync(int id)
         {
             var categoryDataModels = await base.GetByIdAsync(id);
-            return _mapper.Map<EntityCategory>(categoryDataModels);
+            var category = _mapper.Map<EntityCategory>(categoryDataModels);
+            return category;
         }
 
         public async Task AddAsync(EntityCategory category)

@@ -3,6 +3,7 @@ using Monefy.Application.Contracts;
 using Monefy.Application.DTOs;
 using Monefy.Domain.Contracts;
 using Monefy.Entities;
+using Monefy.Infraestructure.DataModels;
 
 namespace Monefy.Application.Implementation
 {
@@ -45,5 +46,9 @@ namespace Monefy.Application.Implementation
             await _incomeBusinessService.DeleteIncomeAsync(id);
             return _mapper.Map<IncomeDTO>(id);
         }
+
+       
+
+        
     }
 }

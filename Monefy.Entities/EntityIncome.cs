@@ -7,6 +7,7 @@ namespace Monefy.Entities
     public class EntityIncome
     {
         public int Id { get; set; }
+        public Guid Guid { get; set; } = Guid.NewGuid();
         public EntityCategory? Category { get; set; }
        
         [Range(0, 99999.99)]

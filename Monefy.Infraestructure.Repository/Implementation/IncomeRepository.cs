@@ -34,6 +34,8 @@ namespace Monefy.Infraestructure.Repository.Implementations
         public async Task AddAsync(EntityIncome income)
         {
             var incomeDataModels = _mapper.Map<Income>(income);
+            _dataBaseContext.Attach(incomeDataModels.Category);
+            _dataBaseContext.Attach(incomeDataModels.Wallet);
             await base.AddAsync(incomeDataModels);
         }
 

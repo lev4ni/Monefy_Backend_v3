@@ -2,11 +2,12 @@
 using Microsoft.AspNetCore.Mvc;
 using Monefy.Application.Contracts;
 using Monefy.Application.DTOs;
+using Serilog;
 
 namespace Monefy.DistribuitedWebService.Controllers
 {
     [ApiController]
-    [Route("{version:apiVersion}/[controller]")]
+    [Route("v{version:apiVersion}/[controller]")]
     [TypeFilter(typeof(CustomAuthorizationFilter))]
     public class CategoriesController : Controller
     {

@@ -7,42 +7,42 @@ namespace Monefy.Domain.Implementation
 	public class UserBusinessService : IUserBusinessService
 	{
 		private readonly IUnitOfWork _unitOfWork;
-		private readonly IUserRepository _userInfraestrucutureService;
-		public UserBusinessService(IUnitOfWork unitOfWork, IUserRepository userInfraestrucutureService)
+		private readonly IUserRepository _userRepository;
+		public UserBusinessService(IUnitOfWork unitOfWork, IUserRepository userRepository)
 		{
 			_unitOfWork = unitOfWork;
-			_userInfraestrucutureService = userInfraestrucutureService;
+			_userRepository = userRepository;
 
 		}
 		public async Task<IEnumerable<EntityUser>> GetAllUsersAsync()
 		{
-			var users = await _userInfraestrucutureService.GetAllAsync();
+			var users = await _userRepository.GetAllAsync();
 			return users;
 		}
 		public async Task<EntityUser> GetUserByIdAsync(int id)
 		{
-			var usersGuid = await _userInfraestrucutureService.GetByIdAsync(id);
+			var usersGuid = await _userRepository.GetByIdAsync(id);
 			return usersGuid;
 		}
 		public async Task CreateUserAsync(EntityUser user)
 		{
-			await _userInfraestrucutureService.AddAsync(user);
+			await _userRepository.AddAsync(user);
 			await _unitOfWork.SaveChangesAsync();
 		}
 		public async Task UpdateUserAsync(EntityUser user)
 		{
-			await _userInfraestrucutureService.UpdateAsync(user);
+			await _userRepository.UpdateAsync(user);
 			await _unitOfWork.SaveChangesAsync();
 		}
 		public async Task DeleteUserAsync(int id)
 		{
-			await _userInfraestrucutureService.DeleteAsync(id);
+			await _userRepository.DeleteAsync(id);
 			await _unitOfWork.SaveChangesAsync();
 		}
 
         public async Task<EntityUser> ExistsUser(EntityUser entityUser)
         {
-			return await _userInfraestrucutureService.ExistsUser(entityUser);
+			return await _userRepository.ExistsUser(entityUser);
         }
     }
 }

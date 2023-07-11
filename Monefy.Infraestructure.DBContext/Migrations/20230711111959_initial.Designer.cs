@@ -12,8 +12,8 @@ using Monefy.Infraestructure.DBContext;
 namespace Monefy.Infraestructure.DBContext.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    [Migration("20230710111743_Initial")]
-    partial class Initial
+    [Migration("20230711111959_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
