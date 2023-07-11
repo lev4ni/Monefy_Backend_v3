@@ -10,14 +10,10 @@ namespace Monefy.Infraestructure.Repository.Implementations
     public class WalletRepository : GenericRepository<Wallet>, IWalletRepository
     {
         private readonly IMapper _mapper;
-        private readonly IGenericRepository<User> _genericRepositoryUser;
-        private readonly DataBaseContext _dataBaseContext;
 
         public WalletRepository(IMapper mapper, IGenericRepository<User> genericRepositoryUser, DataBaseContext context) : base(context)
         {
             _mapper = mapper;
-            _genericRepositoryUser = genericRepositoryUser;
-            _dataBaseContext = context;
         }
         public new async Task<IEnumerable<EntityWallet>> GetAllAsync()
         {
@@ -34,18 +30,7 @@ namespace Monefy.Infraestructure.Repository.Implementations
         public async Task AddAsync(EntityWallet wallet)
         {
             var walletDataModel = _mapper.Map<Wallet>(wallet);
-            await _genericRepositoryWallet.AddAsync(walletDataModel, _dataBaseContext);
-            /*var existingUser = await _genericRepositoryUser.GetByIdAsync(wallet.User.Id, _dataBaseContext);
-            if (existingUser != null)
-            {
-                walletDataModel.User = existingUser;
-                await base.AddAsync(walletDataModel);
-            }
-            else
-            {
-                throw new Exception("User does not exists.");
-            }*/
-
+            await base.AddAsync(walletDataModel);
         }
 
         public async Task UpdateAsync(EntityWallet wallet)
@@ -56,22 +41,8 @@ namespace Monefy.Infraestructure.Repository.Implementations
 
         public async Task<IEnumerable<EntityWallet>> GetUsersWalletAsync(int id)
         {
-
-            var userWallets = await _genericRepositoryUser.GetByIdAsync(id, _dataBaseContext);
+            var userWallets = await base.GetByIdAsync(id);
             return _mapper.Map<IEnumerable<EntityWallet>>(userWallets);
-            /*if (user != null)
-            {
-                var userWallets = await _dataBaseContext.Wallet
-                    .Where(w => w.User.Id == id)
-                    .ToListAsync();
-
-                return _mapper.Map<IEnumerable<EntityWallet>>(userWallets);
-            }
-            else
-            {
-                throw new Exception("User does not exist.");
-            }*/
-
         }
     }
 }

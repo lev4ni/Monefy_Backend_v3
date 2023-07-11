@@ -111,11 +111,7 @@ app.UseSwaggerUI();
 
 app.MapControllers();
 
-    app.Run();
-}
-catch(Exception ex)
-{
-    Console.WriteLine(ex);
-}
+app.Run();
+
 
 
