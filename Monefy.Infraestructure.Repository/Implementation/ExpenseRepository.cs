@@ -59,6 +59,33 @@ namespace Monefy.Infraestructure.Repository.Implementations
                 throw new Exception("Wallet does not exist.");
             }
         }
-    }
 
+
+        public async Task<IEnumerable<EntityExpense>> GetExpensesPerMonth(int walletId, DateTime startDate, DateTime endDate)
+        {
+            var wallet = await base.GetByIdAsync(walletId);
+            if (wallet != null)
+            {
+                var walletExpenses = await _dataBaseContext.Expenses
+                   .Where(e => e.Wallet.Id == walletId 
+                           && e.CreatedAt >= startDate 
+                           && e.CreatedAt <= endDate)
+                          .ToListAsync();
+
+                var filteredExpenses = walletExpenses
+                    .Where(e => e.CreatedAt?.Year == startDate.Year 
+                            && e.CreatedAt?.Month == startDate.Month)
+                           .ToList();
+
+                return _mapper.Map<IEnumerable<EntityExpense>>(filteredExpenses);
+            }
+            else
+            {
+                throw new Exception("wallet does not exist.");
+            }
+
+        }
+    }
 }
+
+

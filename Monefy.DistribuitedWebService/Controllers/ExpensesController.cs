@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Monefy.Application.Contracts;
 using Monefy.Application.DTOs;
 using Monefy.Application.Implementation;
+using Monefy.Infraestructure.DataModels;
 
 namespace Monefy.DistribuitedWebService.Controllers
 {
@@ -13,10 +14,12 @@ namespace Monefy.DistribuitedWebService.Controllers
     public class ExpensesController : Controller
     {
         private readonly IExpenseAppService _expenseAppService;
+        private readonly ICategoryAppService _categoryAppService;
 
-        public ExpensesController(IExpenseAppService expenseAppService)
+        public ExpensesController(IExpenseAppService expenseAppService, ICategoryAppService categoryAppService)
         {
             _expenseAppService = expenseAppService;
+            _categoryAppService = categoryAppService;
         }
 
         [HttpGet]
@@ -45,6 +48,15 @@ namespace Monefy.DistribuitedWebService.Controllers
         [ApiVersion("1.0")]
         public async Task<IActionResult> CreateExpense(ExpenseDTO expense)
         {
+            var categoryId = expense.Category.Id;
+            var category = await _categoryAppService.GetCategoryByIdAsync(categoryId);
+
+            if (category != null)
+            {
+                // Asignar el objeto de categoría completo a expense.Category
+                expense.Category = category;
+            }
+
             await _expenseAppService.CreateExpenseAsync(expense);
             return Ok(expense);
         }
@@ -72,6 +84,13 @@ namespace Monefy.DistribuitedWebService.Controllers
         {
             await _expenseAppService.DeleteExpenseAsync(id);
             return Ok();
+        }
+
+        [HttpGet("{walletId}")]
+        public async Task<IEnumerable<IActionResult>> GetExpensesMonthly(int walletId, DateTime startDate, DateTime endDate)
+        {
+            await _expenseAppService.GetExpensesPerMonthAsync(walletId, startDate, endDate);
+            return (IEnumerable<IActionResult>)Ok();
         }
     }
 }
