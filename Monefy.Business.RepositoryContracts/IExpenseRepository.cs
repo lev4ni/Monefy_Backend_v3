@@ -8,13 +8,8 @@ using System.Threading.Tasks;
 
 namespace Monefy.Business.RepositoryContracts
 {
-    public interface IExpenseInfraestrucutureService
+    public interface IExpenseRepository : IGenericRepository<EntityExpense>
     {
-        Task<IEnumerable<EntityExpense>> GetAllAsync();
-        Task<EntityExpense> GetByIdAsync(int id);
-        Task AddAsync(EntityExpense expense);
-        Task UpdateAsync(EntityExpense expense);
-        Task DeleteAsync(int id);
         Task<IEnumerable<EntityExpense>> GetWalletExpensesAsync(int walletId);
 
     }

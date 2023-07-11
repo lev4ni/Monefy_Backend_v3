@@ -10,7 +10,7 @@ namespace Monefy.DistribuitedWebService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    [TypeFilter(typeof(CustomAuthorizationFilter))]
     public class CurrenciesController : ControllerBase
     {
         private readonly ICurrencyAppService _currencyAppService;

@@ -100,15 +100,22 @@ app.UseSwagger();
 app.UseSwaggerUI();
 
 
-app.UseHttpsRedirection();
+    app.UseHttpsRedirection();
 
-app.UseAuthentication();
-app.UseAuthorization();
+    app.UseAuthentication();
+    app.UseAuthorization();
 
-app.UseCors();
+    app.UseCors();
 
 
 
 app.MapControllers();
 
-app.Run();
+    app.Run();
+}
+catch(Exception ex)
+{
+    Console.WriteLine(ex);
+}
+
+

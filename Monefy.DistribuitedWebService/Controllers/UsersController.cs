@@ -26,7 +26,7 @@ namespace Monefy.DistribuitedWebService.Controllers
 
         [HttpGet]
         [ApiVersion("1.0")]
-        [Authorize]
+        [TypeFilter(typeof(CustomAuthorizationFilter))]
         public async Task<IActionResult> GetAllUsers()
         {
             var user = await _userAppService.GetAllUsersAsync();
@@ -39,7 +39,7 @@ namespace Monefy.DistribuitedWebService.Controllers
 
         [HttpGet("{id}")]
         [ApiVersion("1.0")]
-        [Authorize]
+        [TypeFilter(typeof(CustomAuthorizationFilter))]
         public async Task<IActionResult> GetUserById(int id)
         {
             var user = await _userAppService.GetUserByIdAsync(id);
@@ -54,7 +54,7 @@ namespace Monefy.DistribuitedWebService.Controllers
 
         [HttpDelete]
         [ApiVersion("1.0")]
-        [Authorize]
+        [TypeFilter(typeof(CustomAuthorizationFilter))]
         public async Task<IActionResult> DeleteUser(int id)
         {
             await _userAppService.DeleteUserAsync(id);
@@ -101,7 +101,7 @@ namespace Monefy.DistribuitedWebService.Controllers
 
             var token = new JwtSecurityToken(
                 claims: claims,
-                expires: DateTime.UtcNow.AddMinutes(5),
+                expires: DateTime.UtcNow.AddMinutes(60),
                 signingCredentials: singIn
             );
 

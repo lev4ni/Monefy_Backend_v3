@@ -8,7 +8,7 @@ namespace Monefy.DistribuitedWebService.Controllers
 {
     [ApiController]
     [Route("{version:apiVersion}/[controller]")]
-    [Authorize]
+    [TypeFilter(typeof(CustomAuthorizationFilter))]
     public class CategoriesController : Controller
     {
         private readonly ICategoryAppService _categoryAppService;

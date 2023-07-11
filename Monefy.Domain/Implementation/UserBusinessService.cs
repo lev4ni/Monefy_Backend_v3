@@ -7,8 +7,8 @@ namespace Monefy.Domain.Implementation
 	public class UserBusinessService : IUserBusinessService
 	{
 		private readonly IUnitOfWork _unitOfWork;
-		private readonly IUserInfraestrucutureService _userInfraestrucutureService;
-		public UserBusinessService(IUnitOfWork unitOfWork, IUserInfraestrucutureService userInfraestrucutureService)
+		private readonly IUserRepository _userInfraestrucutureService;
+		public UserBusinessService(IUnitOfWork unitOfWork, IUserRepository userInfraestrucutureService)
 		{
 			_unitOfWork = unitOfWork;
 			_userInfraestrucutureService = userInfraestrucutureService;

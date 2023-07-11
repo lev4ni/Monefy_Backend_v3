@@ -11,7 +11,7 @@ namespace Monefy.DistribuitedWebService.Controllers
 {
     [ApiController]
     [Route("v{version:apiVersion}/[controller]")]
-    [Authorize]
+    [TypeFilter(typeof(CustomAuthorizationFilter))]
     public class IncomesController : Controller
     {
         private readonly IIncomeAppService _incomeAppService;
