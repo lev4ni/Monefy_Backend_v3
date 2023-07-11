@@ -8,11 +8,12 @@ namespace Monefy.Domain.Implementation
 	{
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IUserRepository _userRepository;
-		public UserBusinessService(IUnitOfWork unitOfWork, IUserRepository userRepository)
+		private readonly IWalletRepository _walletRepository;
+		public UserBusinessService(IUnitOfWork unitOfWork, IUserRepository userRepository, IWalletRepository walletRepository)
 		{
 			_unitOfWork = unitOfWork;
 			_userRepository = userRepository;
-
+			_walletRepository = walletRepository;
 		}
 		public async Task<IEnumerable<EntityUser>> GetAllUsersAsync()
 		{
@@ -43,6 +44,12 @@ namespace Monefy.Domain.Implementation
         public async Task<EntityUser> ExistsUser(EntityUser entityUser)
         {
 			return await _userRepository.ExistsUser(entityUser);
+        }
+
+        public async Task<IEnumerable<EntityWallet>> GetUserWallets(int id)
+        {
+			var wallets = await _walletRepository.GetUserWalletsAsync(id);
+            return wallets;
         }
     }
 }

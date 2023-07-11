@@ -4,6 +4,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.IdentityModel.Tokens;
 using Monefy.Application.Contracts;
 using Monefy.Application.DTOs;
+using Monefy.Infraestructure.DataModels;
 using Org.BouncyCastle.Crypto.Generators;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -39,6 +40,23 @@ namespace Monefy.DistribuitedWebService.Controllers
             }
             _logger.LogInformation($"Usuarios encontrados: {user}");
             return Ok(user);
+        }
+
+        [HttpGet("{id}/wallets")]
+        [ApiVersion("1.0")]
+        [TypeFilter(typeof(CustomAuthorizationFilter))]
+        public async Task<IActionResult> GetUserWallets(int id)
+        {
+            var wallets = await _userAppService.GetUserWallets(id);
+
+            var response = new
+            {
+                Success = true,
+                Message = "User wallets got successfully",
+                Data = wallets
+            };
+
+            return Ok(response);
         }
 
         [HttpGet("{id}")]

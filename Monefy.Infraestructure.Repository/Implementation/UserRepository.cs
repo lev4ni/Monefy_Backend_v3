@@ -51,6 +51,7 @@ namespace Monefy.Infraestructure.Repository.Implementations
             if (userDB == null) throw new ArgumentException();
             return _mapper.Map<EntityUser>(userDB);
         }
+
     }
 
 }

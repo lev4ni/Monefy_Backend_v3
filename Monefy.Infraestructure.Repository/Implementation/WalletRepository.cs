@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Monefy.Business.RepositoryContracts;
 using Monefy.Entities;
 using Monefy.Infraestructure.DataModels;
@@ -44,23 +45,13 @@ namespace Monefy.Infraestructure.Repository.Implementations
             await base.UpdateAsync(walletDataModel);
         }
 
-        public async Task<IEnumerable<EntityWallet>> GetUsersWalletAsync(int id)
+        public async Task<IEnumerable<EntityWallet>> GetUserWalletsAsync(int id)
         {
-
-            var userWallets = await _genericRepositoryUser.GetByIdAsync(id);
-            return _mapper.Map<IEnumerable<EntityWallet>>(userWallets);
-            /*if (user != null)
-            {
-                var userWallets = await _dataBaseContext.Wallet
-                    .Where(w => w.User.Id == id)
+            var userWallets = await _dataBaseContext.Wallet
+                    .Where(w => w.UserId == id)
                     .ToListAsync();
 
-                return _mapper.Map<IEnumerable<EntityWallet>>(userWallets);
-            }
-            else
-            {
-                throw new Exception("User does not exist.");
-            }*/
+            return _mapper.Map<IEnumerable<EntityWallet>>(userWallets);
 
         }
     }

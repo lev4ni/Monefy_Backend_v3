@@ -64,7 +64,7 @@ namespace Monefy.Domain.Implementation
             var user = await _userRepository.GetByIdAsync(id);
             if (user != null)
             {
-                var wallets = await _walletRepository.GetUsersWalletAsync(id);
+                var wallets = await _walletRepository.GetUserWalletsAsync(id);
                 return wallets;
             }
             else

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Monefy.Application.Contracts;
 using Monefy.Application.DTOs;
+using Monefy.Infraestructure.DataModels;
 using System.Web.Http.Filters;
 
 namespace Monefy.DistribuitedWebService.Controllers

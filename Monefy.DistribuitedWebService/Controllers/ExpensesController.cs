@@ -28,9 +28,17 @@ namespace Monefy.DistribuitedWebService.Controllers
         [ApiVersion("1.0")]
         public async Task<IActionResult> GetAllExpenses()
         {
-            var expense = await _expenseAppService.GetAllExpensesAsync();
-            _logger.LogInformation("GetAllExpenses: " + expense.ToList());
-            return Ok(expense);
+            var expenses = await _expenseAppService.GetAllExpensesAsync();
+            _logger.LogInformation("GetAllExpenses: " + expenses.ToList());
+
+            var response = new
+            {
+                Success = true,
+                Message = "Expenses got successfully",
+                Data = expenses
+            };
+
+            return Ok(response);
         }
 
         [HttpGet("{id}")]

@@ -29,7 +29,15 @@ namespace Monefy.DistribuitedWebService.Controllers
         {
             var incomes = await _incomeAppService.GetAllIncomesAsync();
             _logger.LogInformation($"Incomes obtenidos: {incomes}");
-            return Ok(incomes);
+
+            var response = new
+            {
+                Success = true,
+                Message = "Incomes got successfully",
+                Data = incomes
+            };
+
+            return Ok(response);
         }
 
         [HttpGet("{id}")]

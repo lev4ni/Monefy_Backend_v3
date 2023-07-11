@@ -50,5 +50,11 @@ namespace Monefy.Application.Implementation
             await _userBusinessService.DeleteUserAsync(id);
             return _mapper.Map<UserDTO>(id);
         }
+
+        public async Task<IEnumerable<WalletDTO>> GetUserWallets(int id)
+        {
+            var wallets = await _userBusinessService.GetUserWallets(id);
+            return _mapper.Map<IEnumerable<WalletDTO>>(wallets);
+        }
     }
   }
