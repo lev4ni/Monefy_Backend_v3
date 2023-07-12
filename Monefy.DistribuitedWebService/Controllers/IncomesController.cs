@@ -17,11 +17,13 @@ namespace Monefy.DistribuitedWebService.Controllers
         private readonly IIncomeAppService _incomeAppService;
         private readonly ICategoryAppService _categoryAppService;
         private readonly IWalletAppService _walletAppService;
+        private readonly ILogger<IncomesController> _logger;
 
-        public IncomesController(IIncomeAppService incomeAppService, ICategoryAppService categoryAppService)
+        public IncomesController(IIncomeAppService incomeAppService, ICategoryAppService categoryAppService, ILogger<IncomesController> logger)
         {
             _incomeAppService = incomeAppService;
             _categoryAppService = categoryAppService;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -29,6 +31,7 @@ namespace Monefy.DistribuitedWebService.Controllers
         public async Task<IActionResult> GetAllIncomes()
         {
             var incomes = await _incomeAppService.GetAllIncomesAsync();
+            _logger.LogInformation($"Incomes obtenidos: {incomes}");
             return Ok(incomes);
         }
 
@@ -40,9 +43,10 @@ namespace Monefy.DistribuitedWebService.Controllers
 
             if (income == null)
             {
+                _logger.LogError("No hay Incomes");
                 return NotFound();
             }
-
+            _logger.LogInformation($"Income: {income}");
             return Ok(income);
         }
 
