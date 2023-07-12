@@ -34,7 +34,7 @@ namespace Monefy.Infraestructure.DBContext
         {
             
         }
-        
+
     }
 }
 

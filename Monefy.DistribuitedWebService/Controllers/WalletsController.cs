@@ -1,9 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Monefy.Application.Contracts;
 using Monefy.Application.DTOs;
 using Monefy.Infraestructure.DataModels;
-using System.Web.Http.Filters;
 
 namespace Monefy.DistribuitedWebService.Controllers
 {
@@ -62,22 +60,36 @@ namespace Monefy.DistribuitedWebService.Controllers
             return Ok(users);
         }
 
-        [HttpGet("{walletId}/incomes")]
+        [HttpGet("incomes")]
         [ApiVersion("1.0")]
-        public async Task<IActionResult> GetWalletIncomes(int walletId)
+        public async Task<IActionResult> GetWalletIncomes(int walletId, DateTime initialDate, DateTime finalDate)
         {
-            var incomes = await _walletAppService.GetWalletIncomesAsync(walletId);
+            var incomes = await _walletAppService.GetWalletIncomesAsync(walletId, initialDate, finalDate);
             _logger.LogInformation($"Incomes de Wallet: {walletId}");
-            return Ok(incomes);
+            var response = new
+            {
+                Success = true,
+                Message = "Wallet incomes got successfully",
+                Data = incomes
+            };
+
+            return Ok(response);
         }
 
-        [HttpGet("{walletId}/expenses")]
+        [HttpGet("expenses")]
         [ApiVersion("1.0")]
-        public async Task<IActionResult> GetWalletExpenses(int walletId)
+        public async Task<IActionResult> GetWalletExpenses(int walletId, DateTime initialDate, DateTime finalDate)
         {
-            var expenses = await _walletAppService.GetWalletExpensesAsync(walletId);
+            var expenses = await _walletAppService.GetWalletExpensesAsync(walletId, initialDate, finalDate);
             _logger.LogInformation($"Expenses de Wallet: {walletId}");
-            return Ok(expenses);
+            var response = new
+            {
+                Success = true,
+                Message = "Wallet expenses got successfully",
+                Data = expenses
+            };
+
+            return Ok(response);
         }
 
         [HttpPut("update")]
