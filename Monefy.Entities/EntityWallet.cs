@@ -15,6 +15,6 @@ namespace Monefy.Entities
         [Range(0, 99999.99)]  public float TotalIncome { get; set; }
         [Range(0, 99999.99)]  public float TotalExpent { get; set; }
         [Range(0, 99999.99)]  public float TotalBalance { get; set; }
-        public DateTime DateCreation { get; set; }
+        public DateTime CreatedAt { get; set; }
     }
 }

@@ -12,7 +12,7 @@ namespace Monefy.Entities
         public float Amount { get; set; }
         [StringLength(50)]
         public string? Description { get; set; }
-        public DateTime DateCreation { get; set; }
+        public DateTime CreatedAt { get; set; }
         public EntityWallet? Wallet { get; set; }
     }
 }

@@ -16,12 +16,12 @@ namespace Monefy.Application.Configuration
 
             CreateMap<ExpenseDTO, EntityExpense>()
                 .ForMember(dest => dest.Wallet, opt => opt.MapFrom(src => new EntityWallet { Id = src.WalletId }))
-                .ForMember(dest => dest.Category, opt => opt.MapFrom(src => new EntityCategory { Id = src.Category.Id }));
+                .ForMember(dest => dest.Category, opt => opt.MapFrom(src => new EntityCategory { Id = src.CategoryId }));
             CreateMap<EntityExpense, ExpenseDTO>();
 
             CreateMap<IncomeDTO, EntityIncome>()
                 .ForMember(dest => dest.Wallet, opt => opt.MapFrom(src => new EntityWallet { Id = src.WalletId }))
-                .ForMember(dest => dest.Category, opt => opt.MapFrom(src => new EntityCategory { Id = src.Category.Id }));
+                .ForMember(dest => dest.Category, opt => opt.MapFrom(src => new EntityCategory { Id = src.CategoryId }));
             CreateMap<EntityIncome, IncomeDTO>();
 
             CreateMap<UserDTO, EntityUser>();
@@ -29,7 +29,8 @@ namespace Monefy.Application.Configuration
 
             CreateMap<WalletDTO, EntityWallet>()
                 .ForMember(dest => dest.User, opt => opt.MapFrom(src => new EntityUser { Id = src.UserId }));
-            CreateMap<EntityWallet, WalletDTO>();
+            CreateMap<EntityWallet, WalletDTO>()
+                .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.User.Id));
         }
     }
 }
