@@ -14,10 +14,14 @@ namespace Monefy.Infraestructure.Repository.Configuration
             CreateMap<Currency, EntityCurrency>();
             CreateMap<EntityCurrency, Currency>();
 
-            CreateMap<Expense, EntityExpense>();
+            CreateMap<Expense, EntityExpense>()
+                .ForPath(dest => dest.Category.Id, opt => opt.MapFrom(src => src.CategoryId))
+                .ForPath(dest => dest.Wallet.Id, opt => opt.MapFrom(src => src.WalletId));
             CreateMap<EntityExpense, Expense>();
 
-            CreateMap<Income, EntityIncome>();
+            CreateMap<Income, EntityIncome>()
+                .ForPath(dest => dest.Category.Id, opt => opt.MapFrom(src => src.CategoryId))
+                .ForPath(dest => dest.Wallet.Id, opt => opt.MapFrom(src => src.WalletId));
             CreateMap<EntityIncome, Income>();
 
             CreateMap<User, EntityUser>();

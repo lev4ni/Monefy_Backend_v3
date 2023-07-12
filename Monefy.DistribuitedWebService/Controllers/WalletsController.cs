@@ -83,33 +83,35 @@ namespace Monefy.DistribuitedWebService.Controllers
             return Ok(response);
         }
 
-        [HttpGet("{walletId}/incomes")]
+        [HttpGet("incomes")]
         [ApiVersion("1.0")]
-        public async Task<IActionResult> GetWalletIncomes(int walletId)
+        public async Task<IActionResult> GetWalletIncomes(int walletId, DateTime initialDate, DateTime finalDate)
         {
-            var incomes = await _walletAppService.GetWalletIncomesAsync(walletId);
+            var incomes = await _walletAppService.GetWalletIncomesAsync(walletId, initialDate, finalDate);
+            Log.Information($"Incomes from Wallet --> ID wallet: {walletId}");
             var response = new
             {
                 Success = true,
-                Message = "Incomes from wallet got successfully",
+                Message = "Wallet incomes got successfully",
                 Data = incomes
             };
-            Log.Information($"Incomes from Wallet --> ID wallet: {walletId}");
+
             return Ok(response);
         }
 
-        [HttpGet("{walletId}/expenses")]
+        [HttpGet("expenses")]
         [ApiVersion("1.0")]
-        public async Task<IActionResult> GetWalletExpenses(int walletId)
+        public async Task<IActionResult> GetWalletExpenses(int walletId, DateTime initialDate, DateTime finalDate)
         {
-            var expenses = await _walletAppService.GetWalletExpensesAsync(walletId);
+            var expenses = await _walletAppService.GetWalletExpensesAsync(walletId, initialDate, finalDate);
+            Log.Information($"Expenses from Wallet --> ID Wallet: {walletId}");
             var response = new
             {
                 Success = true,
                 Message = "Wallet expenses got successfully",
                 Data = expenses
             };
-            Log.Information($"Expenses from Wallet --> ID Wallet: {walletId}");
+
             return Ok(response);
         }
 
