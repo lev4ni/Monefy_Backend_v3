@@ -12,12 +12,10 @@ namespace Monefy.DistribuitedWebService.Controllers
     public class CategoriesController : Controller
     {
         private readonly ICategoryAppService _categoryAppService;
-        private readonly ILogger<CategoriesController> _logger;
 
-        public CategoriesController(ICategoryAppService categoryAppService, ILogger<CategoriesController> logger)
+        public CategoriesController(ICategoryAppService categoryAppService)
         {
             _categoryAppService = categoryAppService;
-            _logger = logger;
         }
 
         [HttpGet]
@@ -27,10 +25,10 @@ namespace Monefy.DistribuitedWebService.Controllers
             var category = await _categoryAppService.GetAllCategoriesAsync();
             if (category == null)
             {
-                _logger.LogWarning("No se han podido obtener todas las categoríasn, no hay.");
+                Log.Error("No se han podido obtener todas las categoríasn, no hay.");
                 return NotFound();
             }
-            _logger.LogInformation("Categiras devueltas: " + category.ToList());
+            Log.Information("Categiras devueltas: " + category.ToList());
             return Ok(category);
         }
 
@@ -42,10 +40,10 @@ namespace Monefy.DistribuitedWebService.Controllers
 
             if (category == null)
             {
-                _logger.LogWarning("No se ha podido obtener la categoríasn, no hay.");
+                Log.Error("No se ha podido obtener la categoríasn, no hay.");
                 return NotFound();
             }
-            _logger.LogInformation("Categiras devuelta: " + category);
+            Log.Information("Categiras devuelta: " + category);
             return Ok(category);
         }
         [HttpPost]
@@ -53,7 +51,7 @@ namespace Monefy.DistribuitedWebService.Controllers
         public async Task<IActionResult> CreateCategory(CategoryDTO categoryDTO)
         {
             await _categoryAppService.CreateCategoryAsync(categoryDTO);
-            _logger.LogInformation("Categoria creada con éxito!");
+            Log.Information("Categoria creada con éxito!");
             return Ok();
         }
 
@@ -63,7 +61,7 @@ namespace Monefy.DistribuitedWebService.Controllers
         public async Task<IActionResult> DeleteCategory(int id)
         {
             await _categoryAppService.DeleteCategoryAsync(id);
-            _logger.LogInformation("Categoria Borrada con éxito!");
+            Log.Information("Categoria Borrada con éxito!");
             return Ok();
         }
 

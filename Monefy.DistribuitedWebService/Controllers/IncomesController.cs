@@ -2,10 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Monefy.Application.Contracts;
 using Monefy.Application.DTOs;
-using Monefy.Application.Implementation;
-using Monefy.Infraestructure.DataModels;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using Serilog;
 
 namespace Monefy.DistribuitedWebService.Controllers
 {
@@ -15,12 +12,10 @@ namespace Monefy.DistribuitedWebService.Controllers
     public class IncomesController : Controller
     {
         private readonly IIncomeAppService _incomeAppService;
-        private readonly ILogger<IncomesController> _logger;
 
-        public IncomesController(IIncomeAppService incomeAppService, ILogger<IncomesController> logger)
+        public IncomesController(IIncomeAppService incomeAppService)
         {
             _incomeAppService = incomeAppService;
-            _logger = logger;
         }
 
         [HttpGet]
@@ -28,7 +23,7 @@ namespace Monefy.DistribuitedWebService.Controllers
         public async Task<IActionResult> GetAllIncomes()
         {
             var incomes = await _incomeAppService.GetAllIncomesAsync();
-            _logger.LogInformation($"Incomes obtenidos: {incomes}");
+            Log.Information($"Incomes obtenidos: {incomes}");
 
             var response = new
             {
@@ -48,10 +43,10 @@ namespace Monefy.DistribuitedWebService.Controllers
 
             if (income == null)
             {
-                _logger.LogError("No hay Incomes");
+                Log.Error("No hay Incomes");
                 return NotFound();
             }
-            _logger.LogInformation($"Income: {income}");
+            Log.Information($"Income: {income}");
             return Ok(income);
         }
 

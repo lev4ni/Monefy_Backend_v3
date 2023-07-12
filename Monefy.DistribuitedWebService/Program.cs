@@ -8,8 +8,6 @@ using Monefy.Application.Configuration;
 using System.Text;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Serilog;
-using Serilog.AspNetCore;
-using ServiceStack;
 
 
 var builder = WebApplication.CreateBuilder(args);

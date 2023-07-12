@@ -1,10 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Monefy.Application.Contracts;
 using Monefy.Application.DTOs;
-using Monefy.Application.Implementation;
-using Monefy.Infraestructure.DataModels;
-
+using Serilog;
 
 namespace Monefy.DistribuitedWebService.Controllers
 {
@@ -14,14 +11,10 @@ namespace Monefy.DistribuitedWebService.Controllers
     public class ExpensesController : Controller
     {
         private readonly IExpenseAppService _expenseAppService;
-        private readonly ICategoryAppService _categoryAppService;
-        private readonly ILogger<ExpensesController> _logger;
 
-        public ExpensesController(IExpenseAppService expenseAppService, ICategoryAppService categoryAppService, ILogger<ExpensesController> logger)
+        public ExpensesController(IExpenseAppService expenseAppService)
         {
             _expenseAppService = expenseAppService;
-            _categoryAppService = categoryAppService;
-            _logger = logger;
         }
 
         [HttpGet]
@@ -29,7 +22,7 @@ namespace Monefy.DistribuitedWebService.Controllers
         public async Task<IActionResult> GetAllExpenses()
         {
             var expenses = await _expenseAppService.GetAllExpensesAsync();
-            _logger.LogInformation("GetAllExpenses: " + expenses.ToList());
+            Log.Information("GetAllExpenses: " + expenses.ToList());
 
             var response = new
             {
@@ -49,10 +42,10 @@ namespace Monefy.DistribuitedWebService.Controllers
 
             if (expense == null)
             {
-                _logger.LogError("No hay Expenses!");
+                Log.Error("No hay Expenses!");
                 return NotFound();
             }
-            _logger.LogInformation($"Expense devuelto con éxtito: {expense}");
+            Log.Information($"Expense devuelto con éxtito: {expense}");
             return Ok(expense);
         }
 
@@ -77,7 +70,7 @@ namespace Monefy.DistribuitedWebService.Controllers
             //    expense.Category.UrlWeb = category.UrlWeb;
             //}
 
-            _logger.LogInformation($"Update expense: {expense}");
+            Log.Information($"Update expense: {expense}");
             await _expenseAppService.UpdateExpenseAsync(expense);
             return Ok();
         }
@@ -86,7 +79,7 @@ namespace Monefy.DistribuitedWebService.Controllers
         public async Task<IActionResult> DeleteExpense(int id)
         {
             await _expenseAppService.DeleteExpenseAsync(id);
-            _logger.LogInformation($"Delete expense {id}");
+            Log.Information($"Delete expense {id}");
             return Ok();
         }
 
