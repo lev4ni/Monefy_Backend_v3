@@ -1,11 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.IdentityModel.Tokens;
 using Monefy.Application.Contracts;
 using Monefy.Application.DTOs;
 using Monefy.Infraestructure.DataModels;
-using Org.BouncyCastle.Crypto.Generators;
+using Serilog;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -18,13 +17,11 @@ namespace Monefy.DistribuitedWebService.Controllers
     {
         private readonly IUserAppService _userAppService;
         private readonly IConfiguration _configuration;
-        private readonly ILogger<UsersController> _logger;
 
-        public UsersController(IUserAppService userAppService, IConfiguration configuration, ILogger<UsersController> logger)
+        public UsersController(IUserAppService userAppService, IConfiguration configuration)
         {
             _userAppService = userAppService;
             _configuration = configuration;
-            _logger = logger;
         }
 
         [HttpGet]
@@ -35,10 +32,10 @@ namespace Monefy.DistribuitedWebService.Controllers
             var user = await _userAppService.GetAllUsersAsync();
             if (user == null)
             {
-                _logger.LogError("No hay usuarios");
+                Log.Error("No hay usuarios");
                 return NotFound();
             }
-            _logger.LogInformation($"Usuarios encontrados: {user}");
+            Log.Information($"Usuarios encontrados: {user}");
             return Ok(user);
         }
 
@@ -68,10 +65,10 @@ namespace Monefy.DistribuitedWebService.Controllers
 
             if (user == null)
             {
-                _logger.LogError("No hay usuarios");
+                Log.Error("No Users yet");
                 return NotFound();
             }
-            _logger.LogInformation($"Usuario encontrado: {user}");
+            Log.Information($"User : {user}");
             return Ok(user);
         }
 
@@ -80,9 +77,15 @@ namespace Monefy.DistribuitedWebService.Controllers
         [TypeFilter(typeof(CustomAuthorizationFilter))]
         public async Task<IActionResult> DeleteUser(int id)
         {
-            await _userAppService.DeleteUserAsync(id);
-            _logger.LogInformation($"Usuario eliminado: {id}");
-            return Ok();
+            var user = await _userAppService.DeleteUserAsync(id);
+            var response = new
+            {
+                Success = true,
+                Message = "User Deleted successfully",
+                Data = user
+            };
+            Log.Information($"User Deleted: {id}");
+            return Ok(response);
         }
 
         [HttpPost("login")]
@@ -128,7 +131,7 @@ namespace Monefy.DistribuitedWebService.Controllers
                 expires: DateTime.UtcNow.AddMinutes(60),
                 signingCredentials: singIn
             );
-            _logger.LogInformation("Token generado con éxito");
+            Log.Information("Token generado con éxito");
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
@@ -140,7 +143,7 @@ namespace Monefy.DistribuitedWebService.Controllers
             {
                 userDTO.Password = BCrypt.Net.BCrypt.HashPassword(userDTO.Password);
                 await _userAppService.CreateUserAsync(userDTO);
-                _logger.LogInformation("Usuario registrado con éxito!");
+                Log.Information("Usuario registrado con éxito!");
                 return Ok();
             }
             catch (Exception ex)

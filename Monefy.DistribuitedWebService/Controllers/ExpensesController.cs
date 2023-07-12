@@ -1,10 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Monefy.Application.Contracts;
 using Monefy.Application.DTOs;
-using Monefy.Application.Implementation;
 using Monefy.Infraestructure.DataModels;
-
+using Serilog;
 
 namespace Monefy.DistribuitedWebService.Controllers
 {
@@ -14,14 +12,10 @@ namespace Monefy.DistribuitedWebService.Controllers
     public class ExpensesController : Controller
     {
         private readonly IExpenseAppService _expenseAppService;
-        private readonly ICategoryAppService _categoryAppService;
-        private readonly ILogger<ExpensesController> _logger;
 
-        public ExpensesController(IExpenseAppService expenseAppService, ICategoryAppService categoryAppService, ILogger<ExpensesController> logger)
+        public ExpensesController(IExpenseAppService expenseAppService)
         {
             _expenseAppService = expenseAppService;
-            _categoryAppService = categoryAppService;
-            _logger = logger;
         }
 
         [HttpGet]
@@ -29,15 +23,13 @@ namespace Monefy.DistribuitedWebService.Controllers
         public async Task<IActionResult> GetAllExpenses()
         {
             var expenses = await _expenseAppService.GetAllExpensesAsync();
-            _logger.LogInformation("GetAllExpenses: " + expenses.ToList());
-
             var response = new
             {
                 Success = true,
                 Message = "Expenses got successfully",
                 Data = expenses
             };
-
+            Log.Information("GetAllExpenses: " + expenses.ToList());
             return Ok(response);
         }
 
@@ -46,14 +38,19 @@ namespace Monefy.DistribuitedWebService.Controllers
         public async Task<IActionResult> GetExpenseById(int id)
         {
             var expense = await _expenseAppService.GetExpenseByIdAsync(id);
-
             if (expense == null)
             {
-                _logger.LogError("No hay Expenses!");
+                Log.Error("No Expenses yet!");
                 return NotFound();
             }
-            _logger.LogInformation($"Expense devuelto con éxtito: {expense}");
-            return Ok(expense);
+            var response = new
+            {
+                Success = true,
+                Message = "Expense got successfully",
+                Data = expense
+            };
+            Log.Information($"Expense got successfully: {expense}");
+            return Ok(response);
         }
 
         [HttpPost]
@@ -61,7 +58,14 @@ namespace Monefy.DistribuitedWebService.Controllers
         public async Task<IActionResult> CreateExpense(ExpenseDTO expense)
         {
             await _expenseAppService.CreateExpenseAsync(expense);
-            return Ok(expense);
+            var response = new
+            {
+                Success = true,
+                Message = "Expense created successfully",
+                Data = expense
+            };
+            Log.Information("Expense created successfully");
+            return Ok(response);
         }
 
         [HttpPut("update")]
@@ -77,24 +81,43 @@ namespace Monefy.DistribuitedWebService.Controllers
             //    expense.Category.UrlWeb = category.UrlWeb;
             //}
 
-            _logger.LogInformation($"Update expense: {expense}");
             await _expenseAppService.UpdateExpenseAsync(expense);
-            return Ok();
+            var response = new
+            {
+                Success = true,
+                Message = "Expenses updated successfully",
+                Data = expense
+            };
+            Log.Information($"Update expense: {expense}");
+            return Ok(response);
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteExpense(int id)
         {
             await _expenseAppService.DeleteExpenseAsync(id);
-            _logger.LogInformation($"Delete expense {id}");
-            return Ok();
+            var response = new
+            {
+                Success = true,
+                Message = "Expense deleted successfully",
+                Data = id
+            };
+            Log.Information($"Delete expense {id}");
+            return Ok(response);
         }
 
         [HttpGet("{walletId}")]
         public async Task<IEnumerable<IActionResult>> GetExpensesMonthly(int walletId, DateTime startDate, DateTime endDate)
         {
-            await _expenseAppService.GetExpensesPerMonthAsync(walletId, startDate, endDate);
-            return (IEnumerable<IActionResult>)Ok();
+           var monthly = await _expenseAppService.GetExpensesPerMonthAsync(walletId, startDate, endDate);
+            var response = new
+            {
+                Success = true,
+                Message = "Expenses Monthly successfully",
+                Data = monthly
+            };
+            Log.Information("Monthly expenses succesfully!");
+            return (IEnumerable<IActionResult>)Ok(response);
         }
     }
 }
