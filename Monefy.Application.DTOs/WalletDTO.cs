@@ -11,7 +11,7 @@ namespace Monefy.Application.DTOs
         public decimal TotalIncome { get; set; }
         public decimal TotalExpent { get; set; }
         public decimal TotalBalance { get; set; }
-        public DateTime CreationAt { get; set; }
+        public DateTime CreatedAt { get; set; }
 
     }
 }
