@@ -10,13 +10,11 @@ namespace Monefy.Infraestructure.Repository.Implementations
     public class WalletRepository : GenericRepository<Wallet>, IWalletRepository
     {
         private readonly IMapper _mapper;
-        private readonly IGenericRepository<User> _genericRepositoryUser;
         private readonly DataBaseContext _dataBaseContext;
 
-        public WalletRepository(IMapper mapper, IGenericRepository<User> genericRepositoryUser, DataBaseContext context) : base(context)
+        public WalletRepository(IMapper mapper, DataBaseContext context) : base(context)
         {
             _mapper = mapper;
-            _genericRepositoryUser = genericRepositoryUser;
             _dataBaseContext = context;
         }
         public new async Task<IEnumerable<EntityWallet>> GetAllAsync()
