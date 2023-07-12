@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Monefy.Application.Contracts;
 using Monefy.Application.DTOs;
+using Monefy.Infraestructure.DataModels;
 using Serilog;
 
 namespace Monefy.DistribuitedWebService.Controllers
@@ -22,15 +23,13 @@ namespace Monefy.DistribuitedWebService.Controllers
         public async Task<IActionResult> GetAllExpenses()
         {
             var expenses = await _expenseAppService.GetAllExpensesAsync();
-            Log.Information("GetAllExpenses: " + expenses.ToList());
-
             var response = new
             {
                 Success = true,
                 Message = "Expenses got successfully",
                 Data = expenses
             };
-
+            Log.Information("GetAllExpenses: " + expenses.ToList());
             return Ok(response);
         }
 
@@ -39,14 +38,19 @@ namespace Monefy.DistribuitedWebService.Controllers
         public async Task<IActionResult> GetExpenseById(int id)
         {
             var expense = await _expenseAppService.GetExpenseByIdAsync(id);
-
             if (expense == null)
             {
-                Log.Error("No hay Expenses!");
+                Log.Error("No Expenses yet!");
                 return NotFound();
             }
-            Log.Information($"Expense devuelto con éxtito: {expense}");
-            return Ok(expense);
+            var response = new
+            {
+                Success = true,
+                Message = "Expense got successfully",
+                Data = expense
+            };
+            Log.Information($"Expense got successfully: {expense}");
+            return Ok(response);
         }
 
         [HttpPost]
@@ -54,7 +58,14 @@ namespace Monefy.DistribuitedWebService.Controllers
         public async Task<IActionResult> CreateExpense(ExpenseDTO expense)
         {
             await _expenseAppService.CreateExpenseAsync(expense);
-            return Ok(expense);
+            var response = new
+            {
+                Success = true,
+                Message = "Expense created successfully",
+                Data = expense
+            };
+            Log.Information("Expense created successfully");
+            return Ok(response);
         }
 
         [HttpPut("update")]
@@ -70,24 +81,43 @@ namespace Monefy.DistribuitedWebService.Controllers
             //    expense.Category.UrlWeb = category.UrlWeb;
             //}
 
-            Log.Information($"Update expense: {expense}");
             await _expenseAppService.UpdateExpenseAsync(expense);
-            return Ok();
+            var response = new
+            {
+                Success = true,
+                Message = "Expenses updated successfully",
+                Data = expense
+            };
+            Log.Information($"Update expense: {expense}");
+            return Ok(response);
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteExpense(int id)
         {
             await _expenseAppService.DeleteExpenseAsync(id);
+            var response = new
+            {
+                Success = true,
+                Message = "Expense deleted successfully",
+                Data = id
+            };
             Log.Information($"Delete expense {id}");
-            return Ok();
+            return Ok(response);
         }
 
         [HttpGet("{walletId}")]
         public async Task<IEnumerable<IActionResult>> GetExpensesMonthly(int walletId, DateTime startDate, DateTime endDate)
         {
-            await _expenseAppService.GetExpensesPerMonthAsync(walletId, startDate, endDate);
-            return (IEnumerable<IActionResult>)Ok();
+           var monthly = await _expenseAppService.GetExpensesPerMonthAsync(walletId, startDate, endDate);
+            var response = new
+            {
+                Success = true,
+                Message = "Expenses Monthly successfully",
+                Data = monthly
+            };
+            Log.Information("Monthly expenses succesfully!");
+            return (IEnumerable<IActionResult>)Ok(response);
         }
     }
 }

@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Monefy.Application.Contracts;
 using Monefy.Application.DTOs;
+using Monefy.Infraestructure.DataModels;
 using Serilog;
 
 namespace Monefy.DistribuitedWebService.Controllers
@@ -24,34 +23,64 @@ namespace Monefy.DistribuitedWebService.Controllers
             var currency = await _currencyAppService.GetAllCurrenciesAsync();
             if (currency == null)
             {
-                Log.Error("Se ha intentado GetAllcurrencies pero no hay ninguna");
+                Log.Error("Not currencies yet!");
                 return NotFound();
             }
-            Log.Information("Currencies obtenidas: " + currency.ToList());
-            return Ok(currency);
+            var response = new
+            {
+                Success = true,
+                Message = "Currencies got successfully",
+                Data = currency
+            };
+
+            Log.Information("Currencies got: " + currency.ToList());
+            return Ok(response);
         }
+
         [HttpPost]
         [ApiVersion("1.0")]
         public async Task<IActionResult> CreateCurrency(CurrencyDTO currencyDTO)
         {
-            await _currencyAppService.CreateCurrencyAsync(currencyDTO);
-            Log.Information("Currency creada con éxito");
-            return Ok(currencyDTO);
+            var currency =  await _currencyAppService.CreateCurrencyAsync(currencyDTO);
+            var response = new
+            {
+                Success = true,
+                Message = "Currency got successfully",
+                Data = currency
+            };
+
+            Log.Information("Currency got successfully");
+            return Ok(response);
         }
+
         [HttpPut("update")]
         [ApiVersion("1.0")]
         public async Task<IActionResult> UpdateCurrency(CurrencyDTO currencyDTO)
         {
-            await _currencyAppService.UpdateCurrencyAsync(currencyDTO);
-            Log.Information("Currency actualizada con éxito");
-            return Ok();
+            var currency = await _currencyAppService.UpdateCurrencyAsync(currencyDTO);
+            var response = new
+            {
+                Success = true,
+                Message = "Currency updated successfully",
+                Data = currency
+            };
+
+            Log.Information("Currency updated successfully");
+            return Ok(response);
         }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCurrency(int id)
         {
-            await _currencyAppService.DeleteCurrencyAsync(id);
-            Log.Information("Currency eliminada con éxito");
-            return Ok();
+            var currency = await _currencyAppService.DeleteCurrencyAsync(id);
+            var response = new
+            {
+                Success = true,
+                Message = "Currency got successfully",
+                Data = currency
+            };
+            Log.Information("Currency deleted successfully");
+            return Ok(response);
         }
     }
 }

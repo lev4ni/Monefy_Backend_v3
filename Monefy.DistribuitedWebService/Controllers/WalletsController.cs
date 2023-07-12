@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Monefy.Application.Contracts;
 using Monefy.Application.DTOs;
+using Monefy.Infraestructure.DataModels;
 using Serilog;
 
 namespace Monefy.DistribuitedWebService.Controllers
@@ -22,8 +23,14 @@ namespace Monefy.DistribuitedWebService.Controllers
         public async Task<IActionResult> GetAllWallets()
         {
             var wallets = await _walletAppService.GetAllWalletsAsync();
-            Log.Information($"Wallets obtenidas: {wallets}");
-            return Ok(wallets);
+            var response = new
+            {
+                Success = true,
+                Message = "Wallet got successfully",
+                Data = wallets
+            };
+            Log.Information($"Wallets got successfully: {wallets}");
+            return Ok(response);
         }
 
         [HttpGet("{id}")]
@@ -33,20 +40,32 @@ namespace Monefy.DistribuitedWebService.Controllers
             var wallet = await _walletAppService.GetWalletByIdAsync(id);
             if (wallet == null)
             {
-                Log.Error($"No hay wallets");
+                Log.Error($"No wallets yet");
                 return NotFound();
             }
-            Log.Information($"Wallet obtenida: {id}");
-            return Ok(wallet);
+            var response = new
+            {
+                Success = true,
+                Message = "Wallet got successfully",
+                Data = wallet
+            };
+            Log.Information($"Wallet got successfully: {id}");
+            return Ok(response);
         }
 
         [HttpPost]
         [ApiVersion("1.0")]
-        public async Task<IActionResult> CreateWallet(WalletDTO wallet)
+        public async Task<IActionResult> CreateWallet(WalletDTO walletDTO)
         {
-            await _walletAppService.CreateWalletAsync(wallet);
-            Log.Information($"Wallet creada: {wallet}");
-            return Ok();
+            var wallet = await _walletAppService.CreateWalletAsync(walletDTO);
+            var response = new
+            {
+                Success = true,
+                Message = "Wallet created successfully",
+                Data = wallet
+            };
+            Log.Information($"Wallet created: {wallet}");
+            return Ok(response);
         }
 
         [HttpGet("UsersWallet")]
@@ -54,8 +73,14 @@ namespace Monefy.DistribuitedWebService.Controllers
         public async Task<IActionResult> GetUsersWallet(int idWallet)
         {
             var users = await _walletAppService.GetUsersWalletAsync(idWallet);
-            Log.Information($"Users de Wallet: {idWallet}");
-            return Ok(users);
+            var response = new
+            {
+                Success = true,
+                Message = "Users from wallet got successfully",
+                Data = users
+            };
+            Log.Information($"Users from Wallet --> ID wallet: {idWallet}");
+            return Ok(response);
         }
 
         [HttpGet("{walletId}/incomes")]
@@ -63,8 +88,14 @@ namespace Monefy.DistribuitedWebService.Controllers
         public async Task<IActionResult> GetWalletIncomes(int walletId)
         {
             var incomes = await _walletAppService.GetWalletIncomesAsync(walletId);
-            Log.Information($"Incomes de Wallet: {walletId}");
-            return Ok(incomes);
+            var response = new
+            {
+                Success = true,
+                Message = "Incomes from wallet got successfully",
+                Data = incomes
+            };
+            Log.Information($"Incomes from Wallet --> ID wallet: {walletId}");
+            return Ok(response);
         }
 
         [HttpGet("{walletId}/expenses")]
@@ -72,16 +103,28 @@ namespace Monefy.DistribuitedWebService.Controllers
         public async Task<IActionResult> GetWalletExpenses(int walletId)
         {
             var expenses = await _walletAppService.GetWalletExpensesAsync(walletId);
-            Log.Information($"Expenses de Wallet: {walletId}");
-            return Ok(expenses);
+            var response = new
+            {
+                Success = true,
+                Message = "Wallet expenses got successfully",
+                Data = expenses
+            };
+            Log.Information($"Expenses from Wallet --> ID Wallet: {walletId}");
+            return Ok(response);
         }
 
         [HttpPut("update")]
         [ApiVersion("1.0")]
-        public async Task<IActionResult> UpdateWallet(WalletDTO wallet)
+        public async Task<IActionResult> UpdateWallet(WalletDTO walletDTO)
         {
-            await _walletAppService.UpdateWalletAsync(wallet);
-            Log.Information($"Wallet actualizada: {wallet}");
+            var wallet = await _walletAppService.UpdateWalletAsync(walletDTO);
+            var response = new
+            {
+                Success = true,
+                Message = "Wallet updated successfully",
+                Data = wallet
+            };
+            Log.Information($"Wallet updated successfully: {wallet}");
             return Ok(wallet);
         }
 
@@ -89,10 +132,15 @@ namespace Monefy.DistribuitedWebService.Controllers
         [ApiVersion("1.0")]
         public async Task<IActionResult> DeleteWallet(int id)
         {
-
-            await _walletAppService.DeleteWalletAsync(id);
-            Log.Information($"Wallet borrada: {id}");
-            return Ok();
+            var wallet = await _walletAppService.DeleteWalletAsync(id);
+            var response = new
+            {
+                Success = true,
+                Message = "Wallet deleted successfully",
+                Data = wallet
+            };
+            Log.Information($"Wallet Deleted: {id}");
+            return Ok(response);
         }
     }
 }

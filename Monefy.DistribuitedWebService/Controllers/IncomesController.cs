@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Monefy.Application.Contracts;
 using Monefy.Application.DTOs;
+using Monefy.Infraestructure.DataModels;
 using Serilog;
 
 namespace Monefy.DistribuitedWebService.Controllers
@@ -23,8 +23,6 @@ namespace Monefy.DistribuitedWebService.Controllers
         public async Task<IActionResult> GetAllIncomes()
         {
             var incomes = await _incomeAppService.GetAllIncomesAsync();
-            Log.Information($"Incomes obtenidos: {incomes}");
-
             var response = new
             {
                 Success = true,
@@ -32,6 +30,7 @@ namespace Monefy.DistribuitedWebService.Controllers
                 Data = incomes
             };
 
+            Log.Information($"Incomes obtenidos: {incomes}");
             return Ok(response);
         }
 
@@ -43,26 +42,46 @@ namespace Monefy.DistribuitedWebService.Controllers
 
             if (income == null)
             {
-                Log.Error("No hay Incomes");
+                Log.Error("No Incomes yet");
                 return NotFound();
             }
+            var response = new
+            {
+                Success = true,
+                Message = "Income got successfully",
+                Data = income
+            };
             Log.Information($"Income: {income}");
-            return Ok(income);
+            return Ok(response);
         }
 
         [HttpPost]
         [ApiVersion("1.0")]
-        public async Task<IActionResult> CreateIncome(IncomeDTO income)
+        public async Task<IActionResult> CreateIncome(IncomeDTO incomeDTO)
         {
-            await _incomeAppService.CreateIncomeAsync(income);
-            return Ok();
+            var income = await _incomeAppService.CreateIncomeAsync(incomeDTO);
+            var response = new
+            {
+                Success = true,
+                Message = "Income created successfully",
+                Data = income
+            };
+            Log.Information($"Income created successfully {incomeDTO}");
+            return Ok(response);
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteIncome(int id)
         {
-            await _incomeAppService.DeleteIncomeAsync(id);
-            return Ok();
+            var income = await _incomeAppService.DeleteIncomeAsync(id);
+            var response = new
+            {
+                Success = true,
+                Message = "Currency got successfully",
+                Data = income
+            };
+            Log.Information($"Delete income: {income}");
+            return Ok(response);
         }
     }
 }

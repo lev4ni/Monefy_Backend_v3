@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.IdentityModel.Tokens;
 using Monefy.Application.Contracts;
 using Monefy.Application.DTOs;
+using Monefy.Infraestructure.DataModels;
 using Serilog;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -65,10 +65,10 @@ namespace Monefy.DistribuitedWebService.Controllers
 
             if (user == null)
             {
-                Log.Error("No hay usuarios");
+                Log.Error("No Users yet");
                 return NotFound();
             }
-            Log.Information($"Usuario encontrado: {user}");
+            Log.Information($"User : {user}");
             return Ok(user);
         }
 
@@ -77,9 +77,15 @@ namespace Monefy.DistribuitedWebService.Controllers
         [TypeFilter(typeof(CustomAuthorizationFilter))]
         public async Task<IActionResult> DeleteUser(int id)
         {
-            await _userAppService.DeleteUserAsync(id);
-            Log.Information($"Usuario eliminado: {id}");
-            return Ok();
+            var user = await _userAppService.DeleteUserAsync(id);
+            var response = new
+            {
+                Success = true,
+                Message = "User Deleted successfully",
+                Data = user
+            };
+            Log.Information($"User Deleted: {id}");
+            return Ok(response);
         }
 
         [HttpPost("login")]
