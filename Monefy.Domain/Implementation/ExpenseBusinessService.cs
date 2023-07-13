@@ -26,8 +26,8 @@ namespace Monefy.Domain.Implementation
 
         public async Task<EntityExpense> GetExpenseByIdAsync(int id)
         {
-            var expenseGuid = await _expenseRepository.GetByIdAsync(id);
-            return expenseGuid;
+            var expense = await _expenseRepository.GetByIdAsync(id);
+            return expense;
         }
         public async Task CreateExpenseAsync(EntityExpense expense)
         {

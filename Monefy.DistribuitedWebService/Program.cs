@@ -10,6 +10,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Serilog;
 
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -88,6 +89,9 @@ builder.Services.AddLogging(loggingBuilder =>
 });
 
 builder.Host.UseSerilog();
+
+//Validators
+
 
 
 // Configuración de Health Checks

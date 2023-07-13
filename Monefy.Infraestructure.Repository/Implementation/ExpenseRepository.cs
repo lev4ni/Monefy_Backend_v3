@@ -5,6 +5,8 @@ using Monefy.Entities;
 using Monefy.Infraestructure.DataModels;
 using Monefy.Infraestructure.DBContext;
 using Monefy.Infraestructure.Repository.services;
+using ServiceStack;
+using System.Collections.Generic;
 
 namespace Monefy.Infraestructure.Repository.Implementations
 {
@@ -26,8 +28,8 @@ namespace Monefy.Infraestructure.Repository.Implementations
 
         public new async Task<EntityExpense> GetByIdAsync(int id)
         {
-            var expensetDataModel = await base.GetByIdAsync(id);
-            return _mapper.Map<EntityExpense>(expensetDataModel);
+            var expenseDataModel = await base.GetByIdAsync(id);
+            return _mapper.Map<EntityExpense>(expenseDataModel);
         }
 
         public async Task AddAsync(EntityExpense expense)
@@ -46,8 +48,8 @@ namespace Monefy.Infraestructure.Repository.Implementations
 
         public async Task UpdateAsync(EntityExpense expense)
         {
-            var expensetDataModel = _mapper.Map<Expense>(expense);
-            await base.UpdateAsync(expensetDataModel);
+            var expenseDataModel = _mapper.Map<Expense>(expense);
+            await base.UpdateAsync(expenseDataModel);
         }
 
         public async Task<IEnumerable<EntityExpense>> GetWalletExpensesAsync(int walletId, DateTime initialDate, DateTime finalDate)

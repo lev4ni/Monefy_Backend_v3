@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Monefy.Application.DTOs;
 using Monefy.Entities;
+using Monefy.Infraestructure.DataModels;
 
 namespace Monefy.Application.Configuration
 {
@@ -23,6 +24,9 @@ namespace Monefy.Application.Configuration
                 .ForMember(dest => dest.Wallet, opt => opt.MapFrom(src => new EntityWallet { Id = src.WalletId }))
                 .ForMember(dest => dest.Category, opt => opt.MapFrom(src => new EntityCategory { Id = src.CategoryId }));
             CreateMap<EntityIncome, IncomeDTO>();
+
+            CreateMap<UserDTO, EntityUser>();
+            CreateMap<EntityUser, UserDTO>();
 
             CreateMap<UserDTO, EntityUser>();
             CreateMap<EntityUser, UserDTO>();

@@ -3,6 +3,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.IdentityModel.Tokens;
 using Monefy.Application.Contracts;
 using Monefy.Application.DTOs;
+using Monefy.Application.Services;
 using Monefy.Infraestructure.DataModels;
 using Serilog;
 using System.IdentityModel.Tokens.Jwt;
@@ -139,6 +140,17 @@ namespace Monefy.DistribuitedWebService.Controllers
         [ApiVersion("1.0")]
         public async Task<IActionResult> Register(UserDTO userDTO)
         {
+            // Valida el objeto userDTO utilizando UserDTOValidator
+            var validator = new UserDTOValidator();
+            var validationResult = await validator.ValidateAsync(userDTO);
+
+            if (!validationResult.IsValid)
+            {
+                // Si la validación falla, devuelve un BadRequest con los mensajes de error
+                var errors = validationResult.Errors.Select(error => error.ErrorMessage);
+                return BadRequest(new { Success = false, Message = "Validation error", Errors = errors });
+            }
+
             try
             {
                 userDTO.Password = BCrypt.Net.BCrypt.HashPassword(userDTO.Password);

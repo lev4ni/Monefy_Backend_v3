@@ -1,5 +1,7 @@
+using FluentValidation;
 using Monefy.Business.RepositoryContracts;
 using Monefy.Domain.Contracts;
+using Monefy.Domain.Services;
 using Monefy.Entities;
 
 namespace Monefy.Domain.Implementation
@@ -9,13 +11,17 @@ namespace Monefy.Domain.Implementation
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IUserRepository _userRepository;
 		private readonly IWalletRepository _walletRepository;
-		public UserBusinessService(IUnitOfWork unitOfWork, IUserRepository userRepository, IWalletRepository walletRepository)
+		private readonly UserValidator _userValidator;
+		public UserBusinessService(IUnitOfWork unitOfWork, IUserRepository userRepository, IWalletRepository walletRepository, UserValidator validator)
 		{
 			_unitOfWork = unitOfWork;
 			_userRepository = userRepository;
 			_walletRepository = walletRepository;
+			_userValidator = validator;
 		}
-		public async Task<IEnumerable<EntityUser>> GetAllUsersAsync()
+        
+
+        public async Task<IEnumerable<EntityUser>> GetAllUsersAsync()
 		{
 			var users = await _userRepository.GetAllAsync();
 			return users;
@@ -27,7 +33,16 @@ namespace Monefy.Domain.Implementation
 		}
 		public async Task CreateUserAsync(EntityUser user)
 		{
-			await _userRepository.AddAsync(user);
+            var validationResult = _userValidator.Validate(user);
+
+            if (!validationResult.IsValid)
+            {
+                var errors = validationResult.Errors.Select(error => error.ErrorMessage).ToList();
+                // Puedes manejar los errores de validación de acuerdo a tus necesidades, lanzar una excepción, etc.
+                throw new ValidationException("User validation failed", (IEnumerable<FluentValidation.Results.ValidationFailure>)errors);
+            }
+
+            await _userRepository.AddAsync(user);
 			await _unitOfWork.SaveChangesAsync();
 		}
 		public async Task UpdateUserAsync(EntityUser user)
@@ -51,5 +66,7 @@ namespace Monefy.Domain.Implementation
 			var wallets = await _walletRepository.GetUserWalletsAsync(id);
             return wallets;
         }
+
+       
     }
 }

@@ -3,6 +3,7 @@ using Monefy.Application.Contracts;
 using Monefy.Application.DTOs;
 using Monefy.Infraestructure.DataModels;
 using Serilog;
+using System.Threading.Tasks;
 
 namespace Monefy.DistribuitedWebService.Controllers
 {
