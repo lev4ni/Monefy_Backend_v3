@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Monefy.Infraestructure.DBContext.Migrations
 {
     /// <inheritdoc />
-    public partial class Migrain : Migration
+    public partial class Migratios : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
