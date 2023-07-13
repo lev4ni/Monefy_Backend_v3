@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Monefy.Application.Contracts;
 using Monefy.Application.DTOs;
+using Monefy.Application.Services;
 using Monefy.Infraestructure.DataModels;
 using Serilog;
 
@@ -57,6 +58,17 @@ namespace Monefy.DistribuitedWebService.Controllers
         [ApiVersion("1.0")]
         public async Task<IActionResult> CreateWallet(WalletDTO walletDTO)
         {
+            // Valida el objeto walleyDTO utilizando walletDTOValidator
+            var validator = new WalletDTOValidator();
+            var validationResult = await validator.ValidateAsync(walletDTO);
+
+            if (!validationResult.IsValid)
+            {
+                // Si la validación falla, devuelve un BadRequest con los mensajes de error
+                var errors = validationResult.Errors.Select(error => error.ErrorMessage);
+                return BadRequest(new { Success = false, Message = "Validation error", Errors = errors });
+            }
+
             var wallet = await _walletAppService.CreateWalletAsync(walletDTO);
             var response = new
             {
