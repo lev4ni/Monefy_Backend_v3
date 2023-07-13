@@ -45,15 +45,15 @@ namespace Monefy.Application.Implementation
             return _mapper.Map < IEnumerable<WalletDTO>>(usersWallet);
         }
 
-        public async Task<IEnumerable<IncomeDTO>> GetWalletIncomesAsync(int walletId)
+        public async Task<IEnumerable<IncomeDTO>> GetWalletIncomesAsync(int walletId, DateTime initialDate, DateTime finalDate)
         {
-            var incomes = await _incomeBusinessService.GetWalletIncomesAsync(walletId);
+            var incomes = await _walletBusinessService.GetWalletIncomesAsync(walletId, initialDate, finalDate);
             return _mapper.Map<IEnumerable<IncomeDTO>>(incomes);
         }
 
-        public async Task<IEnumerable<ExpenseDTO>> GetWalletExpensesAsync(int walletId)
+        public async Task<IEnumerable<ExpenseDTO>> GetWalletExpensesAsync(int walletId, DateTime initialDate, DateTime finalDate)
         {
-            var expenses = await _expenseBusinessService.GetWalletExpensesAsync(walletId);
+            var expenses = await _walletBusinessService.GetWalletExpensesAsync(walletId, initialDate, finalDate);
             return _mapper.Map<IEnumerable<ExpenseDTO>>(expenses);
         }
 

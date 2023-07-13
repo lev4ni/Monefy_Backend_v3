@@ -45,20 +45,12 @@ namespace Monefy.Infraestructure.Repository.Implementations
             await base.UpdateAsync(incomeDataModels);
         }
 
-        public async Task<IEnumerable<EntityIncome>> GetWalletIncomesAsync(int walletId)
+        public async Task<IEnumerable<EntityIncome>> GetWalletIncomesAsync(int walletId, DateTime initialDate, DateTime finalDate)
         {
-            var wallet = await base.GetByIdAsync(walletId);
-            if (wallet != null)
-            {
-                var walletIncomes = await _dataBaseContext.Income
-                    .Where(i => i.Wallet.Id == walletId)
+            var walletIncomes = await _dataBaseContext.Income
+                    .Where(i => i.Wallet.Id == walletId && i.Wallet.CreatedAt >= initialDate && i.Wallet.CreatedAt <= finalDate)
                     .ToListAsync();
-                return _mapper.Map<IEnumerable<EntityIncome>>(walletIncomes);
-            }
-            else
-            {
-                throw new Exception("Wallet does not exist.");
-            }
+            return _mapper.Map<IEnumerable<EntityIncome>>(walletIncomes);
         }
     }
 }
