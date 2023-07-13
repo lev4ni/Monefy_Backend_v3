@@ -37,6 +37,7 @@ namespace Monefy.Infraestructure.Repository.Implementations
             _dataBaseContext.Attach(incomeDataModels.Category);
             _dataBaseContext.Attach(incomeDataModels.Wallet);
             await base.AddAsync(incomeDataModels);
+            _dataBaseContext.Entry(incomeDataModels.Wallet.User).State = EntityState.Detached;
         }
 
         public async Task UpdateAsync(EntityIncome income)
@@ -48,7 +49,7 @@ namespace Monefy.Infraestructure.Repository.Implementations
         public async Task<IEnumerable<EntityIncome>> GetWalletIncomesAsync(int walletId, DateTime initialDate, DateTime finalDate)
         {
             var walletIncomes = await _dataBaseContext.Income
-                    .Where(i => i.Wallet.Id == walletId && i.Wallet.CreatedAt >= initialDate && i.Wallet.CreatedAt <= finalDate)
+                    .Where(i => i.Wallet.Id == walletId && i.CreatedAt >= initialDate && i.CreatedAt <= finalDate)
                     .ToListAsync();
             return _mapper.Map<IEnumerable<EntityIncome>>(walletIncomes);
         }

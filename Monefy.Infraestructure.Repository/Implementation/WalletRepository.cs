@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Abp.Domain.Entities;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Monefy.Business.RepositoryContracts;
 using Monefy.Entities;
@@ -11,13 +12,11 @@ namespace Monefy.Infraestructure.Repository.Implementations
     public class WalletRepository : GenericRepository<Wallet>, IWalletRepository
     {
         private readonly IMapper _mapper;
-        private readonly IGenericRepository<User> _genericRepositoryUser;
         private readonly DataBaseContext _dataBaseContext;
 
-        public WalletRepository(IMapper mapper, IGenericRepository<User> genericRepositoryUser, DataBaseContext context) : base(context)
+        public WalletRepository(IMapper mapper, DataBaseContext context) : base(context)
         {
             _mapper = mapper;
-            _genericRepositoryUser = genericRepositoryUser;
             _dataBaseContext = context;
         }
         public new async Task<IEnumerable<EntityWallet>> GetAllAsync()
@@ -28,7 +27,9 @@ namespace Monefy.Infraestructure.Repository.Implementations
 
         public new async Task<EntityWallet> GetByIdAsync(int id)
         {
-            var walletDataModel = await base.GetByIdAsync(id);
+            var walletDataModel = await _dataBaseContext.Set<Wallet>().FindAsync(id);
+            _dataBaseContext.Entry(walletDataModel.User).State = EntityState.Detached;
+            _dataBaseContext.Entry(walletDataModel).State = EntityState.Detached;
             return _mapper.Map<EntityWallet>(walletDataModel);
         }
 
@@ -39,10 +40,11 @@ namespace Monefy.Infraestructure.Repository.Implementations
             await base.AddAsync(walletDataModel);
         }
 
-        public async Task UpdateAsync(EntityWallet wallet)
+        public new async Task UpdateAsync(EntityWallet wallet)
         {
             var walletDataModel = _mapper.Map<Wallet>(wallet);
-            await base.UpdateAsync(walletDataModel);
+            _dataBaseContext.Attach(walletDataModel);
+            _dataBaseContext.Entry(walletDataModel).State = EntityState.Modified;
         }
 
         public async Task<IEnumerable<EntityWallet>> GetUserWalletsAsync(int id)
@@ -53,6 +55,18 @@ namespace Monefy.Infraestructure.Repository.Implementations
 
             return _mapper.Map<IEnumerable<EntityWallet>>(userWallets);
 
+        }
+
+        public async Task<EntityWallet> getWalletByUserAndName(int id, string name)
+        {
+            var walletDataModel = await _dataBaseContext.Wallet.FirstOrDefaultAsync(w => w.Name == "all" && w.UserId == id);
+            if (walletDataModel != null)
+            {
+                _dataBaseContext.Entry(walletDataModel.User).State = EntityState.Detached;
+                _dataBaseContext.Entry(walletDataModel).State = EntityState.Detached;
+                return _mapper.Map<EntityWallet>(walletDataModel);
+            }
+            else throw new ArgumentException();
         }
     }
 }

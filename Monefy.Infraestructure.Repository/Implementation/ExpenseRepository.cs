@@ -32,10 +32,11 @@ namespace Monefy.Infraestructure.Repository.Implementations
 
         public async Task AddAsync(EntityExpense expense)
         {
-            var expensetDataModel = _mapper.Map<Expense>(expense);
-            _dataBaseContext.Attach(expensetDataModel.Category);
-            _dataBaseContext.Attach(expensetDataModel.Wallet);
-            await base.AddAsync(expensetDataModel);
+            var expenseDataModel = _mapper.Map<Expense>(expense);
+            _dataBaseContext.Attach(expenseDataModel.Category);
+            _dataBaseContext.Attach(expenseDataModel.Wallet);
+            await base.AddAsync(expenseDataModel);
+            _dataBaseContext.Entry(expenseDataModel.Wallet.User).State = EntityState.Detached;
         }
 
         public async Task UpdateAsync(EntityExpense expense)
@@ -47,7 +48,7 @@ namespace Monefy.Infraestructure.Repository.Implementations
         public async Task<IEnumerable<EntityExpense>> GetWalletExpensesAsync(int walletId, DateTime initialDate, DateTime finalDate)
         {
             var walletExpenses = await _dataBaseContext.Expenses
-                    .Where(e => e.Wallet.Id == walletId && e.Wallet.CreatedAt >= initialDate && e.Wallet.CreatedAt <= finalDate)
+                    .Where(e => e.Wallet.Id == walletId && e.CreatedAt >= initialDate && e.CreatedAt <= finalDate)
                     .ToListAsync();
             return _mapper.Map<IEnumerable<EntityExpense>>(walletExpenses);
         }
@@ -76,6 +77,14 @@ namespace Monefy.Infraestructure.Repository.Implementations
                 throw new Exception("wallet does not exist.");
             }
 
+        }
+
+        public async Task<IEnumerable<EntityExpense>> GetUserExpensesAsync(int userId, DateTime initialDate, DateTime finalDate)
+        {
+            var expenses = await _dataBaseContext.Expenses
+                .Where(e => e.Wallet.User.Id == userId && e.CreatedAt >= initialDate && e.CreatedAt <= finalDate)
+                .ToListAsync();
+            return _mapper.Map<IEnumerable<EntityExpense>>(expenses);
         }
     }
 }

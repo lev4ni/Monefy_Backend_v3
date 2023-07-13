@@ -9,7 +9,7 @@ namespace Monefy.Application.DTOs
         public int UserId { get; set; }
         public int CurrencyId { get; set; }
         public decimal TotalIncome { get; set; }
-        public decimal TotalExpent { get; set; }
+        public decimal TotalExpense { get; set; }
         public decimal TotalBalance { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
 

@@ -46,8 +46,19 @@ namespace Monefy.Domain.Implementation
 
             expense.Category = category;
             expense.Wallet = wallet;
-
             await _expenseRepository.AddAsync(expense);
+
+            wallet.TotalExpense += expense.Amount; 
+            wallet.TotalBalance -= expense.Amount;
+            await _walletRepository.UpdateAsync(wallet);
+
+            var totalWallet = await _walletRepository.getWalletByUserAndName(wallet.User.Id, "all");
+            totalWallet.TotalExpense += expense.Amount;
+            totalWallet.TotalBalance -= expense.Amount;
+            await _walletRepository.UpdateAsync(totalWallet);
+
+            
+            
             await _unitOfWork.SaveChangesAsync();
         }
 
