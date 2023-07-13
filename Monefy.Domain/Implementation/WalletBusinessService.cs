@@ -76,12 +76,34 @@ namespace Monefy.Domain.Implementation
 
         public async Task<IEnumerable<EntityIncome>> GetWalletIncomesAsync(int walletId, DateTime initialDate, DateTime finalDate)
         {
-            return await _incomeRepository.GetWalletIncomesAsync(walletId, initialDate, finalDate);
+            var wallet = await _walletRepository.GetByIdAsync(walletId);
+
+            if (wallet != null)
+            {
+                if (wallet.Name == "all")
+                {
+                    return await _incomeRepository.GetUserIncomesAsync(wallet.User.Id, initialDate, finalDate);
+                }
+                return await _incomeRepository.GetWalletIncomesAsync(walletId, initialDate, finalDate);
+            }
+            throw new ArgumentNullException();
         }
 
         public async Task<IEnumerable<EntityExpense>> GetWalletExpensesAsync(int walletId, DateTime initialDate, DateTime finalDate)
         {
-            return await _expenseRepository.GetWalletExpensesAsync(walletId, initialDate, finalDate);
+            var wallet = await _walletRepository.GetByIdAsync(walletId);
+
+            if (wallet != null)
+            {
+                if (wallet.Name == "all")
+                {
+                    return await _expenseRepository.GetUserExpensesAsync(wallet.User.Id, initialDate, finalDate);
+                }
+                return await _expenseRepository.GetWalletExpensesAsync(walletId, initialDate, finalDate);
+            }
+            throw new ArgumentNullException();
+
+            
         }
     }
 }

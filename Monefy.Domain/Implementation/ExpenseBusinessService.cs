@@ -46,8 +46,19 @@ namespace Monefy.Domain.Implementation
 
             expense.Category = category;
             expense.Wallet = wallet;
-
             await _expenseRepository.AddAsync(expense);
+
+            wallet.TotalExpense += expense.Amount;
+            wallet.TotalBalance -= expense.Amount;
+            await _walletRepository.UpdateAsync(wallet);
+
+            var totalWallet = await _walletRepository.getWalletByUserAndName(wallet.User.Id, "all");
+            totalWallet.TotalExpense += expense.Amount;
+            totalWallet.TotalBalance -= expense.Amount;
+            await _walletRepository.UpdateAsync(totalWallet);
+
+
+
             await _unitOfWork.SaveChangesAsync();
         }
 
@@ -64,12 +75,6 @@ namespace Monefy.Domain.Implementation
         public async Task<IEnumerable<EntityExpense>> GetWalletExpensesAsync(int walletId, DateTime initialDate, DateTime finalDate)
         {
             return await _expenseRepository.GetWalletExpensesAsync(walletId, initialDate, finalDate);
-        }
-
-
-        public async Task<IEnumerable<EntityExpense>> GetExpensesPerMonth(int walletId, DateTime initialDate, DateTime finalDate)
-        {
-            return await _expenseRepository.GetExpensesPerMonth(walletId, initialDate, finalDate);
         }
     }
 }

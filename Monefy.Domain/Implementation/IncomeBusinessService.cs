@@ -1,6 +1,8 @@
 ﻿using Monefy.Business.RepositoryContracts;
 using Monefy.Domain.Contracts;
 using Monefy.Entities;
+using Monefy.Infraestructure.DataModels;
+using Monefy.Infraestructure.Repository.Implementations;
 
 namespace Monefy.Domain.Implementation
 {
@@ -45,8 +47,17 @@ namespace Monefy.Domain.Implementation
 
             income.Category = category;
             income.Wallet = wallet;
-
             await _incomeRepository.AddAsync(income);
+
+            wallet.TotalIncome += income.Amount;
+            wallet.TotalBalance += income.Amount;
+            await _walletRepository.UpdateAsync(wallet);
+
+            var totalWallet = await _walletRepository.getWalletByUserAndName(wallet.User.Id, "all");
+            totalWallet.TotalIncome += income.Amount;
+            totalWallet.TotalBalance += income.Amount;
+            await _walletRepository.UpdateAsync(totalWallet);
+
             await _unitOfWork.SaveChangesAsync();
         }
 

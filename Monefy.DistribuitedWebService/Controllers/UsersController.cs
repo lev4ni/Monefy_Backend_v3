@@ -98,7 +98,7 @@ namespace Monefy.DistribuitedWebService.Controllers
                 var userDB = await _userAppService.ExistsUser(user);
                 if (BCrypt.Net.BCrypt.Verify(user.Password, userDB.Password))
                 {
-                    var token = GenerateToken(user);
+                    var token = GenerateToken(userDB);
                     return Ok(new
                     {
                         success = true,
