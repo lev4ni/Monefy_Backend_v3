@@ -107,7 +107,7 @@ namespace Monefy.DistribuitedWebService.Controllers
         }
 
         [HttpGet("{walletId}")]
-        public async Task<IEnumerable<IActionResult>> GetExpensesMonthly(int walletId, DateTime startDate, DateTime endDate)
+        public async Task<IActionResult> GetExpensesMonthly(int walletId, DateTime startDate, DateTime endDate)
         {
            var monthly = await _expenseAppService.GetExpensesPerMonthAsync(walletId, startDate, endDate);
             var response = new
@@ -117,7 +117,7 @@ namespace Monefy.DistribuitedWebService.Controllers
                 Data = monthly
             };
             Log.Information("Monthly expenses succesfully!");
-            return (IEnumerable<IActionResult>)Ok(response);
+            return Ok(response);
         }
     }
 }

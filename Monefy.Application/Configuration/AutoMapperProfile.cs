@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Monefy.Application.DTOs;
 using Monefy.Entities;
+using Monefy.Infraestructure.DataModels;
 
 namespace Monefy.Application.Configuration
 {
@@ -15,14 +16,24 @@ namespace Monefy.Application.Configuration
             CreateMap<EntityCurrency, CurrencyDTO>();
 
             CreateMap<ExpenseDTO, EntityExpense>()
-                .ForMember(dest => dest.Wallet, opt => opt.MapFrom(src => new EntityWallet { Id = src.WalletId }))
-                .ForMember(dest => dest.Category, opt => opt.MapFrom(src => new EntityCategory { Id = src.CategoryId }));
-            CreateMap<EntityExpense, ExpenseDTO>();
+            .ForMember(dest => dest.Wallet, opt => opt.MapFrom(src => new EntityWallet { Id = src.WalletId }))
+            .ForMember(dest => dest.Category, opt => opt.MapFrom(src => new EntityCategory { Id = src.CategoryId }));
+
+            CreateMap<EntityExpense, ExpenseDTO>()
+               .ForMember(dest => dest.CategoryId, opt => opt.MapFrom(src => src.Category.Id))
+               .ForMember(dest => dest.WalletId, opt => opt.MapFrom(src => src.Wallet.Id));
+
+            CreateMap<Expense, EntityExpense>()
+            .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Category))
+            .ForMember(dest => dest.Wallet, opt => opt.MapFrom(src => src.Wallet));
 
             CreateMap<IncomeDTO, EntityIncome>()
                 .ForMember(dest => dest.Wallet, opt => opt.MapFrom(src => new EntityWallet { Id = src.WalletId }))
                 .ForMember(dest => dest.Category, opt => opt.MapFrom(src => new EntityCategory { Id = src.CategoryId }));
-            CreateMap<EntityIncome, IncomeDTO>();
+
+            CreateMap<EntityIncome, IncomeDTO>()
+                .ForMember(dest => dest.WalletId, opt => opt.MapFrom(src => src.Wallet.Id))
+                .ForMember(dest => dest.CategoryId, opt => opt.MapFrom(src => src.Category.Id));
 
             CreateMap<UserDTO, EntityUser>();
             CreateMap<EntityUser, UserDTO>();
