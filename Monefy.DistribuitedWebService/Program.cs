@@ -90,9 +90,6 @@ builder.Services.AddLogging(loggingBuilder =>
 
 builder.Host.UseSerilog();
 
-//Validators
-
-
 
 // Configuración de Health Checks
 builder.Services.AddHealthChecks()
