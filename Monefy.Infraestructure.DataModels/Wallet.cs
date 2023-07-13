@@ -19,6 +19,7 @@ namespace Monefy.Infraestructure.DataModels
         public decimal? TotalBalance { get; set; }
 
         public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public Currency? Currency { get; set; }
 
     }
 }

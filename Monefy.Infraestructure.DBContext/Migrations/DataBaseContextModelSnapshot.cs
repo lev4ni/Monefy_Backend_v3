@@ -190,8 +190,10 @@ namespace Monefy.Infraestructure.DBContext.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2");
+
+                    b.Property<int?>("CurrencyId")
+                        .HasColumnType("int");
 
                     b.Property<Guid>("Guid")
                         .HasColumnType("uniqueidentifier");
@@ -212,6 +214,8 @@ namespace Monefy.Infraestructure.DBContext.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CurrencyId");
 
                     b.HasIndex("UserId");
 
@@ -258,11 +262,17 @@ namespace Monefy.Infraestructure.DBContext.Migrations
 
             modelBuilder.Entity("Monefy.Infraestructure.DataModels.Wallet", b =>
                 {
+                    b.HasOne("Monefy.Infraestructure.DataModels.Currency", "Currency")
+                        .WithMany()
+                        .HasForeignKey("CurrencyId");
+
                     b.HasOne("Monefy.Infraestructure.DataModels.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Currency");
 
                     b.Navigation("User");
                 });
