@@ -33,10 +33,15 @@ namespace Monefy.Infraestructure.Repository.Implementations
         public async Task AddAsync(EntityExpense expense)
         {
             var expenseDataModel = _mapper.Map<Expense>(expense);
-            _dataBaseContext.Attach(expenseDataModel.Category);
-            _dataBaseContext.Attach(expenseDataModel.Wallet);
-            await base.AddAsync(expenseDataModel);
-            _dataBaseContext.Entry(expenseDataModel.Wallet.User).State = EntityState.Detached;
+            var walletEF = await _dataBaseContext.Wallet.FindAsync(expenseDataModel.Wallet.Id);
+            var categoryEF = await _dataBaseContext.Category.FindAsync(expenseDataModel.Category.Id);
+            if (walletEF != null && categoryEF != null)
+            {
+                expenseDataModel.Category = categoryEF;
+                expenseDataModel.Wallet = walletEF;
+                await base.AddAsync(expenseDataModel);
+            }
+            else throw new NullReferenceException();
         }
 
         public async Task UpdateAsync(EntityExpense expense)

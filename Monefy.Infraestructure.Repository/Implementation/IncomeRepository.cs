@@ -34,10 +34,15 @@ namespace Monefy.Infraestructure.Repository.Implementations
         public async Task AddAsync(EntityIncome income)
         {
             var incomeDataModels = _mapper.Map<Income>(income);
-            _dataBaseContext.Attach(incomeDataModels.Category);
-            _dataBaseContext.Attach(incomeDataModels.Wallet);
-            await base.AddAsync(incomeDataModels);
-            _dataBaseContext.Entry(incomeDataModels.Wallet.User).State = EntityState.Detached;
+            var walletEF = await _dataBaseContext.Wallet.FindAsync(incomeDataModels.Wallet.Id);
+            var categoryEF = await _dataBaseContext.Category.FindAsync(incomeDataModels.Category.Id);
+            if (walletEF != null && categoryEF != null)
+            {
+                incomeDataModels.Category = categoryEF;
+                incomeDataModels.Wallet = walletEF;
+                await base.AddAsync(incomeDataModels);
+            }
+            else throw new NullReferenceException();
         }
 
         public async Task UpdateAsync(EntityIncome income)
