@@ -72,14 +72,6 @@ namespace Monefy.DistribuitedWebService.Controllers
         [ApiVersion("1.0")]
         public async Task<IActionResult> UpdateExpense(ExpenseDTO expense)
         {
-            //var categoryId = expense.Category.Id;
-            //var category = await _categoryAppService.GetCategoryByIdAsync(categoryId);
-            //if (category != null)
-            //{
-            //    expense.Category.Name = category.Name;
-            //    expense.Category.Description = category.Description;
-            //    expense.Category.UrlWeb = category.UrlWeb;
-            //}
 
             await _expenseAppService.UpdateExpenseAsync(expense);
             var response = new
@@ -104,20 +96,6 @@ namespace Monefy.DistribuitedWebService.Controllers
             };
             Log.Information($"Delete expense {id}");
             return Ok(response);
-        }
-
-        [HttpGet("{walletId}")]
-        public async Task<IEnumerable<IActionResult>> GetExpensesMonthly(int walletId, DateTime startDate, DateTime endDate)
-        {
-           var monthly = await _expenseAppService.GetExpensesPerMonthAsync(walletId, startDate, endDate);
-            var response = new
-            {
-                Success = true,
-                Message = "Expenses Monthly successfully",
-                Data = monthly
-            };
-            Log.Information("Monthly expenses succesfully!");
-            return (IEnumerable<IActionResult>)Ok(response);
         }
     }
 }

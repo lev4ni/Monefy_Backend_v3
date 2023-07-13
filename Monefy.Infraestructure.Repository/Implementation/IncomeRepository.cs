@@ -58,5 +58,13 @@ namespace Monefy.Infraestructure.Repository.Implementations
                     .ToListAsync();
             return _mapper.Map<IEnumerable<EntityIncome>>(walletIncomes);
         }
+
+        public async Task<IEnumerable<EntityIncome>> GetUserIncomesAsync(int userId, DateTime initialDate, DateTime finalDate)
+        {
+            var incomes = await _dataBaseContext.Income
+                .Where(e => e.Wallet.User.Id == userId && e.CreatedAt >= initialDate && e.CreatedAt <= finalDate)
+                .ToListAsync();
+            return _mapper.Map<IEnumerable<EntityIncome>>(incomes);
+        }
     }
 }

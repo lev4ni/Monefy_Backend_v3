@@ -10,6 +10,7 @@ namespace Monefy.Business.RepositoryContracts
 {
     public interface IIncomeRepository : IGenericRepository<EntityIncome>
     {
+        Task<IEnumerable<EntityIncome>> GetUserIncomesAsync(int id, DateTime initialDate, DateTime finalDate);
         Task<IEnumerable<EntityIncome>> GetWalletIncomesAsync(int walletId, DateTime initialDate, DateTime finalDate);
 
     }
