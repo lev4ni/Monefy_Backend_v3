@@ -3,6 +3,7 @@ using Monefy.Application.Contracts;
 using Monefy.Application.DTOs;
 using Monefy.Infraestructure.DataModels;
 using Serilog;
+using System.Threading.Tasks;
 
 namespace Monefy.DistribuitedWebService.Controllers
 {
@@ -107,17 +108,10 @@ namespace Monefy.DistribuitedWebService.Controllers
         }
 
         [HttpGet("{walletId}")]
-        public async Task<IEnumerable<IActionResult>> GetExpensesMonthly(int walletId, DateTime startDate, DateTime endDate)
+        public async Task<IEnumerable<IActionResult>> GetExpensesPerMonth(int walletId, DateTime startDate, DateTime endDate)
         {
-           var monthly = await _expenseAppService.GetExpensesPerMonthAsync(walletId, startDate, endDate);
-            var response = new
-            {
-                Success = true,
-                Message = "Expenses Monthly successfully",
-                Data = monthly
-            };
-            Log.Information("Monthly expenses succesfully!");
-            return (IEnumerable<IActionResult>)Ok(response);
+            await _expenseAppService.GetExpensesPerMonthAsync(walletId, startDate, endDate);
+            return (IEnumerable<IActionResult>)Ok();
         }
     }
 }

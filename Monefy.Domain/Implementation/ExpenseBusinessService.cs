@@ -26,8 +26,8 @@ namespace Monefy.Domain.Implementation
 
         public async Task<EntityExpense> GetExpenseByIdAsync(int id)
         {
-            var expenseGuid = await _expenseRepository.GetByIdAsync(id);
-            return expenseGuid;
+            var expense = await _expenseRepository.GetByIdAsync(id);
+            return expense;
         }
         public async Task CreateExpenseAsync(EntityExpense expense)
         {
@@ -65,6 +65,7 @@ namespace Monefy.Domain.Implementation
         {
             return await _expenseRepository.GetWalletExpensesAsync(walletId, initialDate, finalDate);
         }
+
 
         public async Task<IEnumerable<EntityExpense>> GetExpensesPerMonth(int walletId, DateTime initialDate, DateTime finalDate)
         {

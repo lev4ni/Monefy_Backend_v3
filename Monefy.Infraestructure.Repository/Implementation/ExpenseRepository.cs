@@ -5,6 +5,8 @@ using Monefy.Entities;
 using Monefy.Infraestructure.DataModels;
 using Monefy.Infraestructure.DBContext;
 using Monefy.Infraestructure.Repository.services;
+using ServiceStack;
+using System.Collections.Generic;
 
 namespace Monefy.Infraestructure.Repository.Implementations
 {
@@ -26,22 +28,22 @@ namespace Monefy.Infraestructure.Repository.Implementations
 
         public new async Task<EntityExpense> GetByIdAsync(int id)
         {
-            var expensetDataModel = await base.GetByIdAsync(id);
-            return _mapper.Map<EntityExpense>(expensetDataModel);
+            var expenseDataModel = await base.GetByIdAsync(id);
+            return _mapper.Map<EntityExpense>(expenseDataModel);
         }
 
         public async Task AddAsync(EntityExpense expense)
         {
-            var expensetDataModel = _mapper.Map<Expense>(expense);
-            _dataBaseContext.Attach(expensetDataModel.Category);
-            _dataBaseContext.Attach(expensetDataModel.Wallet);
-            await base.AddAsync(expensetDataModel);
+            var expenseDataModel = _mapper.Map<Expense>(expense);
+            _dataBaseContext.Attach(expenseDataModel.Category);
+            _dataBaseContext.Attach(expenseDataModel.Wallet);
+            await base.AddAsync(expenseDataModel);
         }
 
         public async Task UpdateAsync(EntityExpense expense)
         {
-            var expensetDataModel = _mapper.Map<Expense>(expense);
-            await base.UpdateAsync(expensetDataModel);
+            var expenseDataModel = _mapper.Map<Expense>(expense);
+            await base.UpdateAsync(expenseDataModel);
         }
 
         public async Task<IEnumerable<EntityExpense>> GetWalletExpensesAsync(int walletId, DateTime initialDate, DateTime finalDate)
@@ -53,27 +55,28 @@ namespace Monefy.Infraestructure.Repository.Implementations
         }
 
 
-        public async Task<IEnumerable<EntityExpense>> GetExpensesPerMonth(int walletId, DateTime startDate, DateTime endDate)
+
+        public async Task<IEnumerable<EntityExpense>> GetExpensesPerMonthAsync(int walletId, DateTime startDate, DateTime endDate)
         {
             var wallet = await base.GetByIdAsync(walletId);
             if (wallet != null)
             {
                 var walletExpenses = await _dataBaseContext.Expenses
-                   .Where(e => e.Wallet.Id == walletId 
-                           && e.CreatedAt >= startDate 
-                           && e.CreatedAt <= endDate)
-                          .ToListAsync();
+                .Where(e => e.WalletId == walletId
+                                && e.CreatedAt >= startDate
+                               && e.CreatedAt <= endDate)
+                              .ToListAsync();
 
                 var filteredExpenses = walletExpenses
-                    .Where(e => e.CreatedAt?.Year == startDate.Year 
-                            && e.CreatedAt?.Month == startDate.Month)
-                           .ToList();
+                    .Where(e => e.CreatedAt?.Year == startDate.Year
+                         && e.CreatedAt?.Month == endDate.Month)
+                    .ToList();
 
                 return _mapper.Map<IEnumerable<EntityExpense>>(filteredExpenses);
             }
             else
             {
-                throw new Exception("wallet does not exist.");
+                throw new Exception("No wallet found.");
             }
 
         }

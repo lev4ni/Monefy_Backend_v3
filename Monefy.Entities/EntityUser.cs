@@ -1,5 +1,7 @@
 ﻿
 
+using FluentValidation;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace Monefy.Entities
@@ -19,4 +21,5 @@ namespace Monefy.Entities
         public string? Password { get; set; }
 
     }
+    
 }
