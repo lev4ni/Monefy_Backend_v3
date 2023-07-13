@@ -63,36 +63,32 @@ namespace Monefy.Infraestructure.Repository.Implementations
         }
 
 
-        public async Task<IEnumerable<EntityExpense>> GetExpensesOfCategoryMonthlyAsync(int walletId, DateTime startDate, DateTime endDate)
+
+        public async Task<IEnumerable<EntityExpense>> GetExpensesPerMonthAsync(int walletId, DateTime startDate, DateTime endDate)
         {
-            //await base.GetByIdAsync(walletId);
-            var expenseDataModel = _mapper.Map<Expense>(walletId);
-
-            _dataBaseContext.Attach(expenseDataModel.Category);
-            _dataBaseContext.Attach(expenseDataModel.Wallet);
-
-            var expenses = await _dataBaseContext.Expenses
-                .Where(e => e.WalletId == walletId && e.CreatedAt >= startDate && e.CreatedAt <= endDate)
-                .Include(e => e.Category)
-                .Include(e => e.Wallet)
-                //.FirstOrDefaultAsync(e => e.WalletId == walletId)
-                .ToListAsync();
-
-            if (expenses == null)
+            var wallet = await base.GetByIdAsync(walletId);
+            if (wallet != null)
             {
-                throw new Exception("No expenses found for the given walletId and dates.");
+                var walletExpenses = await _dataBaseContext.Expenses
+                .Where(e => e.WalletId == walletId
+                                && e.CreatedAt >= startDate
+                               && e.CreatedAt <= endDate)
+                              .ToListAsync();
+
+                var filteredExpenses = walletExpenses
+                    .Where(e => e.CreatedAt?.Year == startDate.Year
+                         && e.CreatedAt?.Month == endDate.Month)
+                    .ToList();
+
+                return _mapper.Map<IEnumerable<EntityExpense>>(filteredExpenses);
+            }
+            else
+            {
+                throw new Exception("No wallet found.");
             }
 
-            return _mapper.Map<IEnumerable<EntityExpense>>(expenses);
-
-            //return _mapper.Map<IEnumerable<EntityExpense>>(expenses);
-
-            //return _mapper.Map<IEnumerable<EntityExpense>>(filteredExpenses);
-            //return result;
         }
     }
-
-    
 }
 
 

@@ -65,10 +65,9 @@ namespace Monefy.Domain.Implementation
         {
             return await _expenseRepository.GetWalletExpensesAsync(walletId);
         }
-
-        public async Task<IEnumerable<EntityExpense>> GetExpensesOfCategoryMonthlyAsync(int walletId, DateTime startDate, DateTime endDate)
+        public async Task<IEnumerable<EntityExpense>> GetExpensesPerMonth(int walletId, DateTime startDate, DateTime endDate)
         {
-            return await _expenseRepository.GetExpensesOfCategoryMonthlyAsync(walletId, startDate, endDate);
+            return await _expenseRepository.GetExpensesPerMonthAsync(walletId, startDate, endDate);
         }
     }
 }

@@ -47,7 +47,7 @@ namespace Monefy.Application.Implementation
 
         public async Task<IEnumerable<ExpenseDTO>> GetExpensesPerMonthAsync(int walletId, DateTime startDate, DateTime endDate)
         {
-            var expensesMonth =  await _expenseBusinessService.GetExpensesOfCategoryMonthlyAsync(walletId, startDate, endDate);
+            var expensesMonth = await _expenseBusinessService.GetExpensesPerMonth(walletId, startDate, endDate);
             return _mapper.Map<IEnumerable<ExpenseDTO>>(expensesMonth);
         }
     }

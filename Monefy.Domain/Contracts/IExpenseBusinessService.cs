@@ -15,6 +15,6 @@ namespace Monefy.Domain.Contracts
         Task UpdateExpenseAsync(EntityExpense expense);
         Task DeleteExpenseAsync(int id);
         Task<IEnumerable<EntityExpense>> GetWalletExpensesAsync(int walletId);
-        Task<IEnumerable<EntityExpense>> GetExpensesOfCategoryMonthlyAsync(int walletId, DateTime startDate, DateTime endDate);
+        Task<IEnumerable<EntityExpense>> GetExpensesPerMonth(int walletId, DateTime startDate, DateTime endDate);
     }
 }
