@@ -12,8 +12,8 @@ using Monefy.Infraestructure.DBContext;
 namespace Monefy.Infraestructure.DBContext.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    [Migration("20230711111959_initial")]
-    partial class initial
+    [Migration("20230712102423_addTime")]
+    partial class addTime
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -193,6 +193,7 @@ namespace Monefy.Infraestructure.DBContext.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2");
 
                     b.Property<Guid>("Guid")

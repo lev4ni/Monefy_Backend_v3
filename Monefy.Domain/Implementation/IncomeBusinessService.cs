@@ -60,9 +60,9 @@ namespace Monefy.Domain.Implementation
             await _incomeRepository.DeleteAsync(id);
             await _unitOfWork.SaveChangesAsync();
         }
-        public async Task<IEnumerable<EntityIncome>> GetWalletIncomesAsync(int walletId)
+        public async Task<IEnumerable<EntityIncome>> GetWalletIncomesAsync(int walletId, DateTime initialDate, DateTime finalDate)
         {
-            return await _incomeRepository.GetWalletIncomesAsync(walletId);
+            return await _incomeRepository.GetWalletIncomesAsync(walletId, initialDate, finalDate);
         }
     }
 }
