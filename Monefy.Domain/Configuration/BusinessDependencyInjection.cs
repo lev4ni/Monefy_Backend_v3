@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Monefy.Domain.Contracts;
 using Monefy.Domain.Implementation;
-using Monefy.Domain.Services;
 
 namespace Monefy.Domain.Configuration
 {
@@ -15,7 +14,6 @@ namespace Monefy.Domain.Configuration
             services.AddTransient<IUserBusinessService, UserBusinessService>();
             services.AddTransient<IWalletBusinessService, WalletBusinessService>();
             services.AddTransient<IIncomeBusinessService, IncomeBusinessService>();
-            services.AddTransient<UserValidator>();
 
             return services;
         }

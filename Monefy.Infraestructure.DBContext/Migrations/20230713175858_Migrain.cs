@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Monefy.Infraestructure.DBContext.Migrations
 {
     /// <inheritdoc />
-    public partial class addTime : Migration
+    public partial class Migrain : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -73,11 +73,17 @@ namespace Monefy.Infraestructure.DBContext.Migrations
                     TotalExpense = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     TotalIncome = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     TotalBalance = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CurrencyId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Wallet", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Wallet_Currency_CurrencyId",
+                        column: x => x.CurrencyId,
+                        principalTable: "Currency",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Wallet_User_UserId",
                         column: x => x.UserId,
@@ -181,6 +187,11 @@ namespace Monefy.Infraestructure.DBContext.Migrations
                 filter: "[Name] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Wallet_CurrencyId",
+                table: "Wallet",
+                column: "CurrencyId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Wallet_UserId",
                 table: "Wallet",
                 column: "UserId");
@@ -189,9 +200,6 @@ namespace Monefy.Infraestructure.DBContext.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Currency");
-
             migrationBuilder.DropTable(
                 name: "Expense");
 
@@ -203,6 +211,9 @@ namespace Monefy.Infraestructure.DBContext.Migrations
 
             migrationBuilder.DropTable(
                 name: "Wallet");
+
+            migrationBuilder.DropTable(
+                name: "Currency");
 
             migrationBuilder.DropTable(
                 name: "User");
