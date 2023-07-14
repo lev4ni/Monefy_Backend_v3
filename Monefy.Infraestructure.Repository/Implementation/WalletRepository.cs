@@ -1,5 +1,4 @@
-﻿using Abp.Domain.Entities;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Monefy.Business.RepositoryContracts;
 using Monefy.Entities;
@@ -42,7 +41,7 @@ namespace Monefy.Infraestructure.Repository.Implementations
                 await base.AddAsync(walletDataModel);
             }
             else throw new NullReferenceException();
-           
+
         }
 
         public new async Task UpdateAsync(EntityWallet wallet)
