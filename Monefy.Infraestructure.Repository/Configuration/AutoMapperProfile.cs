@@ -30,6 +30,8 @@ namespace Monefy.Infraestructure.Repository.Configuration
             CreateMap<Wallet, EntityWallet>()
                 .ForPath(dest => dest.User.Id, opt => opt.MapFrom(src => src.UserId));
             CreateMap<EntityWallet, Wallet>();
+
+           
         }
     }
 }

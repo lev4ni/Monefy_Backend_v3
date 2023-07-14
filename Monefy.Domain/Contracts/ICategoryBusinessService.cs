@@ -10,6 +10,5 @@ namespace Monefy.Domain.Contracts
         Task CreateCategoryAsync(EntityCategory category);
         Task UpdateCategoryAsync(EntityCategory category);
         Task DeleteCategoryAsync(int id);
-
     }
 }

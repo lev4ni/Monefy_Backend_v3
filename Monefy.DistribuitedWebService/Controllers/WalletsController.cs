@@ -139,7 +139,7 @@ namespace Monefy.DistribuitedWebService.Controllers
                 Data = wallet
             };
             Log.Information($"Wallet updated successfully: {wallet}");
-            return Ok(wallet);
+            return Ok(response);
         }
 
         [HttpDelete("{id}")]
@@ -154,6 +154,21 @@ namespace Monefy.DistribuitedWebService.Controllers
                 Data = wallet
             };
             Log.Information($"Wallet Deleted: {id}");
+            return Ok(response);
+        }
+
+        [HttpGet("{id}/categories")]
+        [ApiVersion("1.0")]
+        public async Task<IActionResult> GetExpensesWithCategory(int walletId, DateTime initialDate, DateTime finalDate)
+        {
+            var CategoryExpenses = await _walletAppService.GetCategoriesWithExpenses(walletId, initialDate, finalDate);
+            var response = new
+            {
+                Success = true,
+                Message = "Wallet list expenses successfully",
+                Data = CategoryExpenses
+            };
+            Log.Information($"List expenses done!");
             return Ok(response);
         }
     }

@@ -28,6 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Monefy.Application.DTOs\Monefy.Application.DTOs.csproj" />
     <ProjectReference Include="..\Monefy.Business.RepositoryContracts\Monefy.Business.RepositoryContracts.csproj" />
     <ProjectReference Include="..\Monefy.Infraestructure.DataModels\Monefy.Infraestructure.DataModels.csproj" />
     <ProjectReference Include="..\Monefy.Infraestructure.DBContext\Monefy.Infraestructure.DBContext.csproj" />

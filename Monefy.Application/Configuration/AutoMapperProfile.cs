@@ -37,6 +37,15 @@ namespace Monefy.Application.Configuration
             CreateMap<EntityWallet, WalletDTO>()
                 .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.User.Id))
                 .ForMember(dest => dest.CurrencyId, opt => opt.MapFrom(src => src.Currency.Id));
+
+            CreateMap<ExpensesCategoryDTO, EntityCategoryWithExpenses>()
+                .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Category))
+                .ForMember(dest => dest.Expenses, opt => opt.MapFrom(src => src.Expenses));
+            CreateMap<EntityCategoryWithExpenses, ExpensesCategoryDTO>()
+                .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Category))
+                .ForMember(dest => dest.Expenses, opt => opt.MapFrom(src => src.Expenses))
+                .ForMember(dest => dest.TotalAmount, opt => opt.MapFrom(src => src.Expenses.Sum(exp => exp.Amount))); 
+
         }
     }
 }

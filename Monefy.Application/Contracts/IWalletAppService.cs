@@ -13,5 +13,7 @@ namespace Monefy.Application.Contracts
         Task<IEnumerable<WalletDTO>> GetUsersWalletAsync(int id);
         Task<IEnumerable<IncomeDTO>> GetWalletIncomesAsync(int walletId, DateTime initialDate, DateTime finalDate);
         Task<IEnumerable<ExpenseDTO>> GetWalletExpensesAsync(int walletId, DateTime initialDate, DateTime finalDate);
+
+        Task<IEnumerable<ExpensesCategoryDTO>> GetCategoriesWithExpenses(int id, DateTime initialDate, DateTime finalDate);
     }
 }

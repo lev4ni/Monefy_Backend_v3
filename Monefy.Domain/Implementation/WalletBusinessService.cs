@@ -14,15 +14,18 @@ namespace Monefy.Domain.Implementation
         private readonly IIncomeRepository _incomeRepository;
         private readonly IExpenseRepository _expenseRepository;
         private readonly IUserRepository _userRepository;
+        private readonly ICategoryRepository _categoryRepository;
+
 
         public WalletBusinessService(IUnitOfWork unitOfWork, IWalletRepository walletRepository,
-        IIncomeRepository incomeRepository, IExpenseRepository expenseRepository, IUserRepository userRepository)
+        IIncomeRepository incomeRepository, IExpenseRepository expenseRepository, IUserRepository userRepository, ICategoryRepository categoryRepository)
         {
 			_unitOfWork = unitOfWork;
 			_walletRepository = walletRepository;
             _incomeRepository = incomeRepository;
             _expenseRepository = expenseRepository;
 			_userRepository = userRepository;
+            _categoryRepository = categoryRepository;
         }
 		public async Task<IEnumerable<EntityWallet>> GetAllWalletsAsync()
 		{
@@ -105,5 +108,30 @@ namespace Monefy.Domain.Implementation
 
             
         }
+
+
+        public async Task<IEnumerable<EntityCategoryWithExpenses>> GetCategoriesWithExpenses(int walletId, DateTime initialDate, DateTime finalDate)
+        {
+            var categoriesWithExpenses = await _categoryRepository.GetCategoriesWithExpenses(walletId, initialDate, finalDate);
+
+            foreach (var categoryWithExpenses in categoriesWithExpenses)
+            {
+                var totalAmount = 0M;
+                foreach (var expense in categoryWithExpenses.Expenses)
+                {
+                    totalAmount += expense.Amount;
+                }
+
+                categoryWithExpenses.TotalAmount = totalAmount;
+            }
+
+            return categoriesWithExpenses;
+        }
+        //iterar sobre cada entity, y de cada entity, iterar sobre los TotalExpenses para cosneguir TotalAmount
+         
+
     }
+
+       
+    
 }

@@ -12,9 +12,9 @@ namespace Monefy.Entities
         public string? Name { get; set; }
         public EntityUser User { get; set; } = new EntityUser();
         public EntityCurrency Currency { get; set; } = new EntityCurrency();
-        [Range(0, 99999.99)]  public float TotalIncome { get; set; }
-        [Range(0, 99999.99)]  public float TotalExpense { get; set; }
-        [Range(0, 99999.99)]  public float TotalBalance { get; set; }
+        [Range(0, 99999.99)]  public decimal TotalIncome { get; set; }
+        [Range(0, 99999.99)]  public decimal TotalExpense { get; set; }
+        [Range(0, 99999.99)]  public decimal TotalBalance { get; set; }
         public DateTime CreatedAt { get; set; }
     }
 }

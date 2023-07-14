@@ -6,6 +6,8 @@ namespace Monefy.Infraestructure.DataModels
     [Table("Category")]
     public class Category
     {
+        public object Expenses;
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }

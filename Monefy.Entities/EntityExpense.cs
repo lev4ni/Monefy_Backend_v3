@@ -9,7 +9,7 @@ namespace Monefy.Entities
         public Guid Guid { get; set; } = Guid.NewGuid();
         public EntityCategory? Category { get; set; }
         [Range(0, 99999.99)]
-        public float Amount { get; set; }
+        public decimal Amount { get; set; }
         [StringLength(50)]
         public string? Description { get; set; }
         public DateTime CreatedAt { get; set; }
