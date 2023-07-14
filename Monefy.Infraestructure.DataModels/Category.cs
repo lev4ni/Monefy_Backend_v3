@@ -15,5 +15,6 @@ namespace Monefy.Infraestructure.DataModels
         public DateTime DateCreation { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public string? UrlWeb { get; set; }
+        public string Type { get; set; } = "expenses";
     }
 }

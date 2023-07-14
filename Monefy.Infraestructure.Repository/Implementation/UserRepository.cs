@@ -47,7 +47,7 @@ namespace Monefy.Infraestructure.Repository.Implementations
         public async Task<EntityUser> ExistsUser(EntityUser entityUser)
         {
             var user = _mapper.Map<User>(entityUser);
-            var userDB = await _dataBaseContext.Set<User>().FirstOrDefaultAsync(u => (u.Name == user.Name || u.Email == user.Email));
+            var userDB = await _dataBaseContext.Set<User>().FirstOrDefaultAsync(u => (u.Name == user.Name || u.Email == user.Name));
             if (userDB == null) throw new ArgumentException();
             return _mapper.Map<EntityUser>(userDB);
         }

@@ -33,14 +33,14 @@ namespace Monefy.Domain.Implementation
 		}
 		public async Task CreateUserAsync(EntityUser user)
 		{
-            var validationResult = _userValidator.Validate(user);
+            //var validationResult = _userValidator.Validate(user);
 
-            if (!validationResult.IsValid)
-            {
-                var errors = validationResult.Errors.Select(error => error.ErrorMessage).ToList();
-                // Puedes manejar los errores de validación de acuerdo a tus necesidades, lanzar una excepción, etc.
-                throw new ValidationException("User validation failed", (IEnumerable<FluentValidation.Results.ValidationFailure>)errors);
-            }
+            //if (!validationResult.IsValid)
+            //{
+            //    var errors = validationResult.Errors.Select(error => error.ErrorMessage).ToList();
+            //    // Puedes manejar los errores de validación de acuerdo a tus necesidades, lanzar una excepción, etc.
+            //    throw new ValidationException("User validation failed", (IEnumerable<FluentValidation.Results.ValidationFailure>)errors);
+            //}
 
             await _userRepository.AddAsync(user);
 			await _unitOfWork.SaveChangesAsync();

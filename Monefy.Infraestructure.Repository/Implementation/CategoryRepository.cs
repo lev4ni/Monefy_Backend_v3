@@ -11,11 +11,13 @@ namespace Monefy.Infraestructure.Repository.Implementations
     {
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly DataBaseContext _dataBaseContext;
 
         public CategoryRepository(IMapper mapper, DataBaseContext context, IUnitOfWork unitOfWork) : base(context)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
+            _dataBaseContext = context;
         }
 
         public new async Task<IEnumerable<EntityCategory>> GetAllAsync()
@@ -42,6 +44,7 @@ namespace Monefy.Infraestructure.Repository.Implementations
             var categoryDataModels = _mapper.Map<Category>(category);
             await base.UpdateAsync(categoryDataModels);
         }
+
     }
 }
 
