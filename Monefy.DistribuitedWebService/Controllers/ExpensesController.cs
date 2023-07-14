@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Monefy.Application.Contracts;
 using Monefy.Application.DTOs;
+using Monefy.Application.Services;
 using Monefy.Infraestructure.DataModels;
 using Serilog;
 using System.Threading.Tasks;
@@ -56,14 +57,24 @@ namespace Monefy.DistribuitedWebService.Controllers
 
         [HttpPost]
         [ApiVersion("1.0")]
-        public async Task<IActionResult> CreateExpense(ExpenseDTO expense)
+        public async Task<IActionResult> CreateExpense(ExpenseDTO expenseDTO)
         {
-            await _expenseAppService.CreateExpenseAsync(expense);
+            // Valida el objeto expenseDTO utilizando expenseDTOValidator
+            var validator = new ExpenseDTOValidator();
+            var validationResult = await validator.ValidateAsync(expenseDTO);
+
+            if (!validationResult.IsValid)
+            {
+                // Si la validación falla, devuelve un BadRequest con los mensajes de error
+                var errors = validationResult.Errors.Select(error => error.ErrorMessage);
+                return BadRequest(new { Success = false, Message = "Validation error", Errors = errors });
+            }
+            await _expenseAppService.CreateExpenseAsync(expenseDTO);
             var response = new
             {
                 Success = true,
                 Message = "Expense created successfully",
-                Data = expense
+                Data = expenseDTO
             };
             Log.Information("Expense created successfully");
             return Ok(response);

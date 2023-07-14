@@ -1,6 +1,5 @@
 ﻿using Monefy.Entities;
 
-
 namespace Monefy.Business.RepositoryContracts
 {
     public interface IExpenseRepository : IGenericRepository<EntityExpense>

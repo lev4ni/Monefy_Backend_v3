@@ -1,7 +1,5 @@
-using FluentValidation;
 using Monefy.Business.RepositoryContracts;
 using Monefy.Domain.Contracts;
-using Monefy.Domain.Services;
 using Monefy.Entities;
 
 namespace Monefy.Domain.Implementation
@@ -11,13 +9,11 @@ namespace Monefy.Domain.Implementation
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IUserRepository _userRepository;
 		private readonly IWalletRepository _walletRepository;
-		private readonly UserValidator _userValidator;
-		public UserBusinessService(IUnitOfWork unitOfWork, IUserRepository userRepository, IWalletRepository walletRepository, UserValidator validator)
+		public UserBusinessService(IUnitOfWork unitOfWork, IUserRepository userRepository, IWalletRepository walletRepository)
 		{
 			_unitOfWork = unitOfWork;
 			_userRepository = userRepository;
 			_walletRepository = walletRepository;
-			_userValidator = validator;
 		}
         
 

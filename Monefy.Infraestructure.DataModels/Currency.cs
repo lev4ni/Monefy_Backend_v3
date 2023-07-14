@@ -13,5 +13,6 @@ namespace Monefy.Infraestructure.DataModels
         public Guid Guid { get; set; } = Guid.NewGuid();
         public string? CurrencyName { get; set; }
         public bool IsCrypto { get; set; }
+        
     }
 }

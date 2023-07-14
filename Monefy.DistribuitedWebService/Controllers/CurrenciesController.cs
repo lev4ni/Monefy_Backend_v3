@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Monefy.Application.Contracts;
 using Monefy.Application.DTOs;
+using Monefy.Application.Services;
 using Monefy.Infraestructure.DataModels;
 using Serilog;
 
@@ -41,6 +42,17 @@ namespace Monefy.DistribuitedWebService.Controllers
         [ApiVersion("1.0")]
         public async Task<IActionResult> CreateCurrency(CurrencyDTO currencyDTO)
         {
+            // Valida el objeto currencyDTO utilizando currencyDTOValidator
+            var validator = new CurrencyDTOValidator();
+            var validationResult = await validator.ValidateAsync(currencyDTO);
+
+            if (!validationResult.IsValid)
+            {
+                // Si la validación falla, devuelve un BadRequest con los mensajes de error
+                var errors = validationResult.Errors.Select(error => error.ErrorMessage);
+                return BadRequest(new { Success = false, Message = "Validation error", Errors = errors });
+            }
+
             var currency =  await _currencyAppService.CreateCurrencyAsync(currencyDTO);
             var response = new
             {

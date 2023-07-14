@@ -90,9 +90,6 @@ builder.Services.AddLogging(loggingBuilder =>
 
 builder.Host.UseSerilog();
 
-//Validators
-
-
 
 // Configuración de Health Checks
 builder.Services.AddHealthChecks()
@@ -126,6 +123,11 @@ app.UseCors();
 
 
 app.MapControllers();
+
+/*using(var scope = app.Services.CreateScope())
+{
+    scope.ServiceProvider.EnsureDbExists();
+}*/
 
 app.Run();
 
